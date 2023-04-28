@@ -67,20 +67,5 @@ public class ViewStudents {
 	
 	}
 	
-	private static void showSubmittedAlert(boolean createdStudent, String name) {
-		if(createdStudent)
-		{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Student Added!");
-			alert.setContentText(name + " is added into the system!");
-			alert.showAndWait();
-		}
-		else
-		{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Error!");
-			alert.setContentText("There was a problem with adding the student into the system.");
-			alert.showAndWait();
-		}
-	}
+
 }

@@ -56,6 +56,8 @@ public class StudentMenu {
 		
 		
 		
+		
+		
 		VBox vbox = new VBox(text, btnCreateStudent, btnReadStudent, btnUpdateStudent, btnDeleteStudent, btnBack);
 	
 		vbox.setSpacing(50);
