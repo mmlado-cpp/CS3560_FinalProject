@@ -31,6 +31,7 @@ CREATE TABLE public.student (
     bronco_id integer NOT NULL,
     name text,
     course text
+    email text
 );
 
 

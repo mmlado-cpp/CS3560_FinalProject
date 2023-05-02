@@ -27,30 +27,35 @@ public class StudentRegistration {
 		Label broncoIdLbl = new Label("Enter BroncoID: ");
 		Label studentNameLbl = new Label("Enter Student Name: ");
 		Label studentCourseLbl = new Label("Enter Student Course: ");
+		Label studentEmailLbl = new Label("Email: ");
 		
 		TextField broncoIdTxtField = new TextField();
 		TextField studentNameTxtField = new TextField();
 		TextField studentCourseTxtField= new TextField();
+		TextField studentEmailTxtField = new TextField();
+		
 		
 		HBox hbox1 = new HBox(broncoIdLbl, broncoIdTxtField);
 		HBox hbox2 = new HBox(studentNameLbl, studentNameTxtField);
 		HBox hbox3 = new HBox(studentCourseLbl, studentCourseTxtField);
+		HBox hbox4 = new HBox(studentEmailLbl, studentEmailTxtField);
+		
 		hbox1.setSpacing(55);
 		hbox2.setSpacing(27);
 		hbox3.setSpacing(25);
+		hbox4.setSpacing(108);
 		
 		Button btnCreateStudent = new Button("Create Student");
 		Button btnBack = new Button("Back");
 		
-		HBox hbox4 = new HBox(btnBack, btnCreateStudent);
-		hbox4.setSpacing(50);
+		HBox hbox5 = new HBox(btnBack, btnCreateStudent);
+		hbox5.setSpacing(50);
 	
 		text.setFont(new Font(30));
 		
 		btnCreateStudent.setMinWidth(100);
 		btnCreateStudent.setMinHeight(40);
 		
-
 		btnBack.setMinWidth(100);
 		btnBack.setMinHeight(40);
 		
@@ -58,8 +63,9 @@ public class StudentRegistration {
 			int broncoId = Integer.valueOf(broncoIdTxtField.getText());
 			String name = studentNameTxtField.getText();
 			String course = studentCourseTxtField.getText();
-			boolean createdStudent = StudentDataAccess.createStudent(broncoId, name, course);
-			showSubmittedAlert(createdStudent, name);
+			String email = studentEmailTxtField.getText();			
+			boolean createdStudent = StudentDataAccess.createStudent(broncoId, name, course, email);
+			showCreatedAlert(createdStudent, name);
 		});
 		
 		btnBack.setOnAction(e ->{
@@ -67,13 +73,14 @@ public class StudentRegistration {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox4);
+		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox4, hbox5);
 	
 		vbox.setSpacing(50);
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox4,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox5,  new Insets(0, 0, 0, 170));
 		vbox.setAlignment(Pos.CENTER);
 		
 		Scene studentRegistrationScene = new Scene(vbox, 600, 600);
@@ -82,7 +89,7 @@ public class StudentRegistration {
 		return studentRegistrationScene;
 	}
 	
-	private static void showSubmittedAlert(boolean createdStudent, String name) {
+	private static void showCreatedAlert(boolean createdStudent, String name) {
 		if(createdStudent)
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);

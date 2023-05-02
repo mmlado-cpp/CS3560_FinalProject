@@ -17,7 +17,7 @@ public class StudentMenu {
 	{
 		Text text = new Text("Student Menu");
 		Button btnCreateStudent = new Button("Create Student");
-		Button btnReadStudent = new Button("Read Student");
+		Button btnReadStudent = new Button("View Student");
 		Button btnUpdateStudent = new Button("Update Student");
 		Button btnDeleteStudent = new Button("Delete Student");
 		Button btnBack = new Button("Back");
@@ -54,9 +54,15 @@ public class StudentMenu {
 			primaryStage.setScene(scene);
 		});
 		
+		btnUpdateStudent.setOnAction(e ->{
+			Scene scene = UpdateStudents.updateStudentScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
 		
-		
-		
+		btnDeleteStudent.setOnAction(e ->{
+			Scene scene = DeleteStudents.deleteStudentScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
 		
 		VBox vbox = new VBox(text, btnCreateStudent, btnReadStudent, btnUpdateStudent, btnDeleteStudent, btnBack);
 	
