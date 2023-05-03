@@ -19,11 +19,15 @@ public class Student
 	@Column(name="course")
 	private String course;
 	
-	public Student(int broncoId, String name, String course)
+	@Column(name="email")
+	private String email;
+
+	public Student(int broncoId, String name, String course, String email)
 	{
 		this.broncoId = broncoId;
 		this.name = name;
 		this.course = course;
+		this.email = email;
 	}
 	
 	public Student()
@@ -31,23 +35,18 @@ public class Student
 		
 	}
 
-	public int getBroncoName() {
+	public int getBroncoId() {
 		return broncoId;
 	}
 
-	public void setBroncoName(int broncoId) {
+	public void setBroncoId(int broncoId) {
 		this.broncoId = broncoId;
 	}
 
 	public String getName() {
 		return name;
 	}
-
-	@Override
-	public String toString() {
-		return "broncoId=" + broncoId + "\nname=" + name + "\ncourse=" + course;
-	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -59,6 +58,20 @@ public class Student
 	public void setCourse(String course) {
 		this.course = course;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "broncoId=" + broncoId + "\nname=" + name + "\ncourse=" + course + "\nemail=" + email;
+	}
+
 	
 
 }
