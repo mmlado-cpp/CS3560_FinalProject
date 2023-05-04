@@ -33,12 +33,24 @@ public class DocumentaryMenu {
 		
 		btnReadDocumentary.setMinWidth(150);
 		btnReadDocumentary.setMinHeight(50);
+		btnReadDocumentary.setOnAction(e ->{
+			Scene scene = DocumentarySearch.documentarySearchScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
 		
 		btnUpdateDocumentary.setMinWidth(150);
 		btnUpdateDocumentary.setMinHeight(50);
+		btnUpdateDocumentary.setOnAction(e ->{
+			Scene scene = DocumentaryUpdate.documentaryUpdateScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
 		
 		btnDeleteDocumentary.setMinWidth(150);
 		btnDeleteDocumentary.setMinHeight(50);
+		btnDeleteDocumentary.setOnAction(e ->{
+			Scene scene = DocumentaryDelete.deleteDocumentaryScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
 		
 		btnBack.setMinWidth(150);
 		btnBack.setMinHeight(50);
@@ -50,10 +62,7 @@ public class DocumentaryMenu {
 		
 		
 		
-		btnReadDocumentary.setOnAction(e ->{
-			Scene scene = ViewStudents.viewStudentScene(primaryStage);
-			primaryStage.setScene(scene);
-		});
+		
 		
 		
 		
