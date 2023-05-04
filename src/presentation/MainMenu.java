@@ -13,13 +13,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import presentation.StudentMenu;
-
+import presentation.DocumentaryCreate;
 public class MainMenu extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			Scene mainMenu = mainMenuScene(primaryStage);
 			primaryStage.setScene(mainMenu);
+			/*
+			Scene testing = DocumentaryCreate.documentaryCreateScene(primaryStage);
+			primaryStage.setScene(testing);
+			*/
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -39,6 +43,11 @@ public class MainMenu extends Application {
 		
 		btnManageItems.setMinWidth(150);
 		btnManageItems.setMinHeight(50);
+		
+		btnManageItems.setOnAction(e ->{
+			Scene scene = ItemMenu.itemMenuScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
 		
 		btnManageStudents.setMinWidth(150);
 		btnManageStudents.setMinHeight(50);
