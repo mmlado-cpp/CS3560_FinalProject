@@ -28,7 +28,7 @@ public class DocumentaryCreate {
 		Label dailyPriceLbl = new Label("Enter Daily Price: ");
 		Label directorLbl = new Label("Enter Director: ");
 		Label lengthLbl = new Label("Enter Length: ");
-		Label releaseDate = new Label("Enter Release Date: ");
+		Label releaseDateLbl = new Label("Enter Release Date: ");
 		Label statusLbl = new Label("Enter Status: ");
 		
 		
@@ -49,7 +49,7 @@ public class DocumentaryCreate {
 		HBox hbox5 = new HBox(dailyPriceLbl, dailyPriceTxtField);
 		HBox hbox6 = new HBox(directorLbl, directorTxtField);
 		HBox hbox7 = new HBox(lengthLbl, lengthTxtField);
-		HBox hbox8 = new HBox(releaseDate, releaseDateTxtField);
+		HBox hbox8 = new HBox(releaseDateLbl, releaseDateTxtField);
 		HBox hbox9 = new HBox(statusLbl, statusTxtField);
 		
 		hbox1.setSpacing(38);
