@@ -57,6 +57,11 @@ public class MainMenu extends Application {
 			primaryStage.setScene(scene);
 		});
 		
+		btnManageLoans.setOnAction(e ->{
+			Scene scene = LoanMenu.loanMenuScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
+		
 		
 		VBox vbox = new VBox(text, btnManageLoans, btnManageItems, btnManageStudents);
 		
