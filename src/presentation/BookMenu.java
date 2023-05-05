@@ -9,7 +9,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import presentation.StudentRegistration;
 import presentation.MainMenu;
 
 public class BookMenu {
