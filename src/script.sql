@@ -30,12 +30,25 @@ SET default_table_access_method = heap;
 CREATE TABLE public.student (
     bronco_id integer NOT NULL,
     name text,
-    course text
+    course text,
     email text
+);
+
+CREATE TABLE public.documentary (
+    code integer NOT NULL,
+    status boolean,
+    title text,
+    description text,
+    location text,
+    daily_price double precision,
+    director text,
+    length int,
+    release_date text
 );
 
 
 ALTER TABLE public.student OWNER TO postgres;
+ALTER TABLE public.documentary OWNER TO postgres;
 
 --
 -- TOC entry 3173 (class 2606 OID 32775)
@@ -44,6 +57,8 @@ ALTER TABLE public.student OWNER TO postgres;
 
 ALTER TABLE ONLY public.student
     ADD CONSTRAINT "Student_pkey" PRIMARY KEY (bronco_id);
+ALTER TABLE ONLY public.documentary
+    ADD CONSTRAINT "Documentary_pkey" PRIMARY KEY (code);
 
 
 -- Completed on 2023-04-28 15:20:43

@@ -72,7 +72,7 @@ public class UpdateStudents {
 	
 	static Scene updateStudentScene2(Stage primaryStage, int broncoId, String name, String course, String email)
 	{
-		Label studentNameLbl = new Label("UpdateStudent Name: ");
+		Label studentNameLbl = new Label("Update Student Name: ");
 		Label studentCourseLbl = new Label("Update Student Course: ");
 		Label studentEmailLbl = new Label("Update Email: ");
 		

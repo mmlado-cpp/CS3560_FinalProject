@@ -56,6 +56,10 @@ public class Documentary //extends Item //needs Item superclass
 	    this.length = length;
 	    this.releaseDate = releaseDate;
 	}
+	
+	public Documentary() {
+		
+	}
 
 	public int getCode() {
 		return code;
@@ -65,7 +69,7 @@ public class Documentary //extends Item //needs Item superclass
 		this.code = code;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
@@ -121,6 +125,8 @@ public class Documentary //extends Item //needs Item superclass
 		this.length = length;
 	}
 
+	
+
 	public String getReleaseDate() {
 		return releaseDate;
 	}
@@ -129,7 +135,14 @@ public class Documentary //extends Item //needs Item superclass
 		this.releaseDate = releaseDate;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Documentary \ncode=" + code + "\nstatus=" + status + "\ntitle=" + title + "\ndescription=" + description
+				+ "\nlocation=" + location + "\ndailyPrice=" + dailyPrice + "\ndirector=" + director + "\nlength="
+				+ length + "\nreleaseDate=" + releaseDate;
+
+	}
+
 }
 
 /* ITEM ATTRIBUTES
