@@ -2,3 +2,6 @@
 
 # ignore library
 .classpath
+
+# ignore hibernate config
+hibernate.cfg.xml

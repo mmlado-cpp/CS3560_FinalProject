@@ -5,7 +5,7 @@
 -- Dumped from database version 15.2
 -- Dumped by pg_dump version 15.2
 
--- Started on 2023-05-03 14:36:02
+-- Started on 2023-05-03 19:49:48
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -168,7 +168,7 @@ ALTER TABLE ONLY public.author
     ADD CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES public.book(book_id) NOT VALID;
 
 
--- Completed on 2023-05-03 14:36:02
+-- Completed on 2023-05-03 19:49:48
 
 --
 -- PostgreSQL database dump complete
