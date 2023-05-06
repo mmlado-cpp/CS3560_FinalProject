@@ -13,17 +13,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import presentation.StudentMenu;
-import presentation.DocumentaryCreate;
+import presentation.DocumentaryProducerMenu;
 public class MainMenu extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Scene mainMenu = mainMenuScene(primaryStage);
-			primaryStage.setScene(mainMenu);
 			/*
-			Scene testing = DocumentaryCreate.documentaryCreateScene(primaryStage);
+			Scene mainMenu = mainMenuScene(primaryStage);
+			primaryStage.setScene(mainMenu); */
+			
+			Scene testing = DocumentaryProducerMenu.documentaryProducerMenuScene(primaryStage);
 			primaryStage.setScene(testing);
-			*/
+			
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

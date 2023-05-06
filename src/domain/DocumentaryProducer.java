@@ -13,7 +13,7 @@ public class DocumentaryProducer
 {
 	@Id
 	@Column(name = "id")
-	private int id; //pkey
+	private int id; 
 	
 	@Column(name = "name")
 	private String name;
