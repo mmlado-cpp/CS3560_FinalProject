@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import presentation.StudentRegistration;
+import presentation.book.BookMenu;
 import presentation.MainMenu;
 
 public class ItemMenu {
@@ -39,8 +40,8 @@ public class ItemMenu {
 		});
 		
 		btnBook.setOnAction(e ->{
-			//Scene scene = StudentRegistration.studentRegistrationScene(primaryStage);
-			//primaryStage.setScene(scene);
+			Scene scene = BookMenu.bookMenuScene(primaryStage);
+			primaryStage.setScene(scene);
 		});
 		
 		btnDocuementary.setOnAction(e ->{
