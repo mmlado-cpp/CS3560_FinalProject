@@ -11,6 +11,3 @@
 
 # ignore test
 /src/domain/test.java
-
-# ignore settings
-/.settings/
