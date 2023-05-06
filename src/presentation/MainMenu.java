@@ -31,7 +31,7 @@ public class MainMenu extends Application {
 		}
 	}
 	
-	static Scene mainMenuScene(Stage primaryStage) {
+	public static Scene mainMenuScene(Stage primaryStage) {
 		Text text = new Text("CPP Library Management System");
 		Button btnManageLoans = new Button("Manage Loans");
 		Button btnManageItems = new Button("Manage Items");

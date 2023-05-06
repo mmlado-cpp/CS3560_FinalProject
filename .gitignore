@@ -2,3 +2,9 @@
 
 # ignore library
 .classpath
+
+# ignore hibernate config
+/src/hibernate.cfg.xml
+
+# ignore test
+/src/domain/test.java
