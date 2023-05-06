@@ -4,4 +4,10 @@
 .classpath
 
 # ignore hibernate config
-hibernate.cfg.xml
+/src/hibernate.cfg.xml
+
+# ignore bin
+/bin/
+
+# ignore test
+/src/domain/test.java
