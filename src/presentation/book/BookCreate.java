@@ -1,4 +1,4 @@
-package presentation;
+package presentation.book;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import persistence.BookDataAccess;
 import javafx.scene.text.Font;
-import presentation.MainMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
@@ -27,34 +26,24 @@ public class BookCreate {
 		Label locationLbl = new Label("Enter Book Location: ");
 		Label dailyPriceLbl = new Label("Enter Daily Price: ");
 
-		Label lengthLbl = new Label("Enter Length: ");
-		Label releaseDate = new Label("Enter Release Date: ");
+		Label lengthLbl = new Label("Enter Number of Pages: ");
+		Label publisherLbl = new Label("Enter Publisher: ");
+		Label releaseDate = new Label("Enter Publication Date: ");
 		Label statusLbl = new Label("Enter Status: ");
 
 		TextField titleTxtField = new TextField();
 		TextField descTxtField = new TextField();
 		TextField locationTxtField = new TextField();
 		TextField dailyPriceTxtField = new TextField();
-		TextField directorTxtField = new TextField();
 		TextField lengthTxtField = new TextField();
+		TextField publisherTxtField = new TextField();
 		TextField releaseDateTxtField = new TextField();
 		TextField statusTxtField= new TextField();
 
-		HBox hbox2 = new HBox(titleLbl, titleTxtField);
-		HBox hbox3 = new HBox(descLbl, descTxtField);
-		HBox hbox4 = new HBox(locationLbl, locationTxtField);
-		HBox hbox5 = new HBox(dailyPriceLbl, dailyPriceTxtField);
-		HBox hbox7 = new HBox(lengthLbl, lengthTxtField);
-		HBox hbox8 = new HBox(releaseDate, releaseDateTxtField);
-		HBox hbox9 = new HBox(statusLbl, statusTxtField);
-
-		hbox2.setSpacing(40);
-		hbox3.setSpacing(75);
-		hbox4.setSpacing(90);
-		hbox5.setSpacing(80);
-		hbox7.setSpacing(95);
-		hbox8.setSpacing(65);
-		hbox9.setSpacing(98);
+		VBox labelVBox = new VBox(titleLbl, descLbl, locationLbl, dailyPriceLbl, lengthLbl, publisherLbl, releaseDate, statusLbl);
+		labelVBox.setSpacing(14);
+		VBox inputVBox = new VBox(titleTxtField, descTxtField, locationTxtField, dailyPriceTxtField, lengthTxtField, publisherTxtField, releaseDateTxtField, statusTxtField);
+		inputVBox.setSpacing(6);
 
 		Button btnCreateBook = new Button("Create Book");
 		Button btnBack = new Button("Back");
@@ -76,14 +65,13 @@ public class BookCreate {
 			String description = descTxtField.getText();
 			String location = locationTxtField.getText();
 			double dailyPrice = Double.valueOf(dailyPriceTxtField.getText());
-			String director = directorTxtField.getText();
 			int length = Integer.valueOf(lengthTxtField.getText());
-			String release = releaseDateTxtField.getText();
-
+			String publisher = publisherTxtField.getText();
+			String release = releaseDateTxtField.getText(); //TODO: parse Date
 			Boolean status = Boolean.valueOf(statusTxtField.getText());
 
-			boolean createdDocumentary = BookDataAccess.createBook(false, title, description, location, dailyPrice, length, null, release, null);
-			showSubmittedAlert(createdDocumentary, title);
+			boolean createdBook = BookDataAccess.createBook(status, title, description, location, dailyPrice, length, null, publisher, null);
+			showSubmittedAlert(createdBook, title);
 		});
 
 		btnBack.setOnAction(e ->{
@@ -91,20 +79,11 @@ public class BookCreate {
 			primaryStage.setScene(scene);
 		});
 
-		VBox vbox = new VBox(text, hbox2, hbox3, hbox4, hbox5, hbox7, hbox8, hbox9, hbox0);
+		HBox inputFields = new HBox(labelVBox, inputVBox);
+		VBox vbox = new VBox(text, inputFields, hbox0);
 
-//		vbox.setSpacing(15);
-//		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox4,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox5,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox6,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox7,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox8,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox9,  new Insets(0, 0, 0, 170));
-//		vbox.setMargin(hbox0,  new Insets(0, 0, 0, 170));
-//		vbox.setAlignment(Pos.CENTER);
+		vbox.setSpacing(15);
+		vbox.setAlignment(Pos.CENTER);
 
 		Scene bookCreateScene = new Scene(vbox, 600, 600);
 
@@ -112,11 +91,11 @@ public class BookCreate {
 		return bookCreateScene;
 	}
 
-	private static void showSubmittedAlert(boolean createdDocumentary, String title) {
-		if(createdDocumentary)
+	private static void showSubmittedAlert(boolean createdBook, String title) {
+		if(createdBook)
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Documentary Added!");
+			alert.setHeaderText("Book Added!");
 			alert.setContentText(title + " is added into the system!");
 			alert.showAndWait();
 		}
@@ -124,7 +103,7 @@ public class BookCreate {
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Error!");
-			alert.setContentText("There was a problem with adding the documentary into the system.");
+			alert.setContentText("There was a problem with adding the book into the system.");
 			alert.showAndWait();
 		}
 	}
