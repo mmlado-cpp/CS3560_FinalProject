@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "book")
-public class Book //TODO: extends Item
+public class Book extends ItemDetails
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -41,7 +41,7 @@ public class Book //TODO: extends Item
 	public Book(boolean isAvailable, String title, String description, String location, double dailyPrice, 
 			int numberPages, List<Author> authors, String publisher, Date publicationDate)
 	{
-		//TODO: super(bookId, isAvailable, title, description, location, dailyPrice);
+		super(isAvailable, title, description, location, dailyPrice);
 		this.numberPages = numberPages;
 		this.authors = authors;
 		this.publisher = publisher;
