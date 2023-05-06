@@ -19,12 +19,8 @@ public class MainMenu extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			/*
 			Scene mainMenu = mainMenuScene(primaryStage);
-			primaryStage.setScene(mainMenu); */
-			
-			Scene testing = DocumentaryProducerMenu.documentaryProducerMenuScene(primaryStage);
-			primaryStage.setScene(testing);
+			primaryStage.setScene(mainMenu);
 			
 			primaryStage.show();
 		} catch(Exception e) {
