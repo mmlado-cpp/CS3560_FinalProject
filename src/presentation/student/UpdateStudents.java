@@ -1,4 +1,4 @@
-package presentation;
+package presentation.student;
 import domain.Student;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

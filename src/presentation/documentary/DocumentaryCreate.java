@@ -1,4 +1,4 @@
-package presentation;
+package presentation.documentary;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import persistence.DocumentaryAccess;
+import presentation.mainMenu.MainMenu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,10 +16,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import presentation.MainMenu;
 
 public class DocumentaryCreate {
-	static Scene documentaryCreateScene(Stage primaryStage){
+	public static Scene documentaryCreateScene(Stage primaryStage){
 		Text text = new Text("Create Documentary");
 		
 		Label codeLbl = new Label("Enter Documentary Code: ");

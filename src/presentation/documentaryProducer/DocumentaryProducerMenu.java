@@ -1,4 +1,4 @@
-package presentation;
+package presentation.documentaryProducer;
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
@@ -9,11 +9,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import presentation.StudentRegistration;
-import presentation.MainMenu;
+import presentation.documentary.DocumentaryCreate;
+import presentation.documentary.DocumentaryDelete;
+import presentation.documentary.DocumentarySearch;
+import presentation.documentary.DocumentaryUpdate;
+import presentation.mainMenu.MainMenu;
+import presentation.student.StudentRegistration;
 
 public class DocumentaryProducerMenu {
-	static Scene documentaryProducerMenuScene(Stage primaryStage)
+	public static Scene documentaryProducerMenuScene(Stage primaryStage)
 	{
 		Text text = new Text("Documentary Producer Menu");
 		Button btnCreateDocumentaryProducer = new Button("Create Documentary Producer");

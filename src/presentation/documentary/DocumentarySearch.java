@@ -1,4 +1,4 @@
-package presentation;
+package presentation.documentary;
 
 import javafx.scene.Scene;
 import domain.Student;
@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene; 
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
+import persistence.DocumentaryAccess;
 import persistence.StudentDataAccess;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -18,18 +19,19 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import presentation.StudentMenu;
+import presentation.documentary.DocumentaryMenu;
+import presentation.student.StudentMenu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class ViewStudents {
+public class DocumentarySearch {
 	
-	public static Scene viewStudentScene(Stage primaryStage)
+	public static Scene documentarySearchScene(Stage primaryStage)
 	{
-		Text title= new Text("View Student");
+		Text title= new Text("Documentary Search");
 		title.setFont(new Font(30));
 		
-		Label lbl = new Label("Enter Bronco Id: ");
+		Label lbl = new Label("Enter Documentary Code: ");
 		
 		TextField textField = new TextField();
 		
@@ -41,19 +43,19 @@ public class ViewStudents {
 		btnSearch.setMinWidth(100);
 		btnSearch.setMinHeight(40);
 		
-		Text textStudentDetails = new Text();
-		textStudentDetails.setFont(new Font(15));
+		Text textDocumentaryDetails = new Text();
+		textDocumentaryDetails.setFont(new Font(15));
 		
 		
 		
 		btnSearch.setOnAction(e -> {
-			int broncoId = Integer.valueOf(textField.getText());
-			String student = String.valueOf(StudentDataAccess.getStudent(broncoId));
-			textStudentDetails.setText(student);
+			int code = Integer.valueOf(textField.getText());
+			String documentary = String.valueOf(DocumentaryAccess.getDocumentary(code));
+			textDocumentaryDetails.setText(documentary);
 		});
 		
 		btnBack.setOnAction(e ->{
-			Scene scene = StudentMenu.studentMenuScene(primaryStage);
+			Scene scene = DocumentaryMenu.documentaryMenuScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
@@ -62,7 +64,7 @@ public class ViewStudents {
 		HBox hbox2 = new HBox(btnBack, btnSearch);
 		hbox2.setSpacing(50);
 		
-		VBox vbox = new VBox(title, hbox1, hbox2, textStudentDetails);
+		VBox vbox = new VBox(title, hbox1, hbox2, textDocumentaryDetails);
 		
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));

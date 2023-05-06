@@ -1,4 +1,4 @@
-package presentation;
+package presentation.mainMenu;
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
@@ -9,9 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import presentation.StudentRegistration;
 import presentation.book.BookMenu;
-import presentation.MainMenu;
+import presentation.documentary.DocumentaryMenu;
+import presentation.mainMenu.MainMenu;
+import presentation.student.StudentRegistration;
 
 public class ItemMenu {
 	static Scene itemMenuScene(Stage primaryStage)

@@ -1,4 +1,4 @@
-package presentation;
+package presentation.student;
 
 import javafx.scene.Scene;
 import domain.Student;
@@ -8,8 +8,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene; 
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
-import persistence.DocumentaryAccess;
 import persistence.StudentDataAccess;
+import presentation.student.StudentMenu;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -19,19 +19,17 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import presentation.StudentMenu;
-import presentation.DocumentaryMenu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class GenerateFinancialReport {
+public class ViewStudents {
 	
-	static Scene gfrScene(Stage primaryStage)
+	public static Scene viewStudentScene(Stage primaryStage)
 	{
-		Text title= new Text("Generate Financial Report");
+		Text title= new Text("View Student");
 		title.setFont(new Font(30));
 		
-		Label lbl = new Label("Enter Student's Bronco ID: ");
+		Label lbl = new Label("Enter Bronco Id: ");
 		
 		TextField textField = new TextField();
 		
@@ -43,19 +41,19 @@ public class GenerateFinancialReport {
 		btnSearch.setMinWidth(100);
 		btnSearch.setMinHeight(40);
 		
-		Text textDocumentaryDetails = new Text();
-		textDocumentaryDetails.setFont(new Font(15));
+		Text textStudentDetails = new Text();
+		textStudentDetails.setFont(new Font(15));
 		
 		
 		
 		btnSearch.setOnAction(e -> {
-//			int code = Integer.valueOf(textField.getText());
-//			String documentary = String.valueOf(DocumentaryAccess.getDocumentary(code));
-//			textDocumentaryDetails.setText(documentary);
+			int broncoId = Integer.valueOf(textField.getText());
+			String student = String.valueOf(StudentDataAccess.getStudent(broncoId));
+			textStudentDetails.setText(student);
 		});
 		
 		btnBack.setOnAction(e ->{
-			Scene scene = DocumentaryMenu.documentaryMenuScene(primaryStage);
+			Scene scene = StudentMenu.studentMenuScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
@@ -64,7 +62,7 @@ public class GenerateFinancialReport {
 		HBox hbox2 = new HBox(btnBack, btnSearch);
 		hbox2.setSpacing(50);
 		
-		VBox vbox = new VBox(title, hbox1, hbox2, textDocumentaryDetails);
+		VBox vbox = new VBox(title, hbox1, hbox2, textStudentDetails);
 		
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));

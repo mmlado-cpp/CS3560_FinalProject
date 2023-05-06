@@ -1,4 +1,4 @@
-package presentation;
+package presentation.documentaryProducer;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;

@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import persistence.BookDataAccess;
 import persistence.DocumentaryAccess;
+import presentation.documentary.DocumentaryMenu;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -20,7 +21,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import presentation.DocumentaryMenu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
