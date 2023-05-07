@@ -12,7 +12,7 @@ import domain.DocumentaryProducer;
 
 public class DocumentaryProducerAccess {
 	
-	public static boolean createDocumentaryProducer(int id, String name, String email, Documentary[] documentaries)
+	public static boolean createDocumentaryProducer(int id, String name, String email, ArrayList<Integer> documentary_ids)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		boolean flag = false;
@@ -21,7 +21,7 @@ public class DocumentaryProducerAccess {
 		try
 		{
 			
-			DocumentaryProducer documentaryProducer = new DocumentaryProducer(id, name, email, documentaries);
+			DocumentaryProducer documentaryProducer = new DocumentaryProducer(id, name, email, documentary_ids);
 			
 			session.beginTransaction();
 			
@@ -67,7 +67,7 @@ public class DocumentaryProducerAccess {
 		return documentaryProducer;
 	}
 	
-	public static boolean updatedocumentaryProducer(int id, String updated_name, String updated_email, Documentary[] updated_documentaries)
+	public static boolean updatedocumentaryProducer(int id, String updated_name, String updated_email, ArrayList<Integer> updated_documentaries)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();

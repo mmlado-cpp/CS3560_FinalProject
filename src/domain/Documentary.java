@@ -2,6 +2,8 @@ package domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,6 +12,7 @@ import javax.persistence.Table;
 public class Documentary //extends Item //needs Item superclass
 {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "code")
 	private int code;
 	
@@ -37,7 +40,7 @@ public class Documentary //extends Item //needs Item superclass
 	@Column(name = "release_date")
 	private String releaseDate;
 	
-	public Documentary(int code, boolean status, String title, String description, 
+	public Documentary(boolean status, String title, String description, 
 					   String location, double dailyPrice, String director, int length, String releaseDate)
 	{
 		/*
@@ -46,7 +49,6 @@ public class Documentary //extends Item //needs Item superclass
 		this.length = length;
 		this.releaseDate = releaseDate;
 		*/
-		this.code = code;
 	    this.status = status;
 	    this.title = title;
 	    this.description = description;

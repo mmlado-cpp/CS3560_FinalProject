@@ -10,7 +10,7 @@ import domain.Student;
 
 public class DocumentaryAccess {
 	
-	public static boolean createDocumentary(int code, boolean status, String title, String description, 
+	public static boolean createDocumentary(boolean status, String title, String description, 
 			   String location, double dailyPrice, String director, int length, String releaseDate)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).buildSessionFactory();
@@ -20,7 +20,7 @@ public class DocumentaryAccess {
 		try
 		{
 			
-			Documentary documentary = new Documentary(code, status, title, description, 
+			Documentary documentary = new Documentary(status, title, description, 
 				    location, dailyPrice, director, length, releaseDate);
 			
 			session.beginTransaction();
