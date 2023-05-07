@@ -51,6 +51,8 @@ public class GenerateFinancialReport {
 		btnSearch.setOnAction(e -> {
 //			int code = Integer.valueOf(textField.getText());
 //			String documentary = String.valueOf(DocumentaryAccess.getDocumentary(code));
+			Scene scene = FinancialReport.financialReportScene(primaryStage);
+			primaryStage.setScene(scene);
 //			textDocumentaryDetails.setText(documentary);
 		});
 		
