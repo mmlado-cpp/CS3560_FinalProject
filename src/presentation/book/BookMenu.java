@@ -1,8 +1,8 @@
 package presentation.book;
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
-import presentation.MainMenu;
-import presentation.ViewStudents;
+import presentation.mainMenu.MainMenu;
+import presentation.student.ViewStudents;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;

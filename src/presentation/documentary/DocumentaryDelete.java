@@ -1,7 +1,6 @@
-package presentation.book;
+package presentation.documentary;
 
 import javafx.scene.Scene;
-import domain.Book;
 import domain.Documentary;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -9,7 +8,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene; 
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
-import persistence.BookDataAccess;
 import persistence.DocumentaryAccess;
 import presentation.documentary.DocumentaryMenu;
 import javafx.scene.Scene;
@@ -24,14 +22,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class BookDelete {
+public class DocumentaryDelete {
 	
-	static Scene bookDeleteScene(Stage primaryStage)
+	public static Scene deleteDocumentaryScene(Stage primaryStage)
 	{
-		Text title= new Text("Delete Book");
+		Text title= new Text("Delete Documentary");
 		title.setFont(new Font(30));
 		
-		Label lblCode = new Label("Enter Book Code: ");
+		Label lblCode = new Label("Enter Documentary Code: ");
 		
 		TextField textField = new TextField();
 		
@@ -48,12 +46,12 @@ public class BookDelete {
 		
 		btnDelete.setOnAction(e -> {
 			int code = Integer.valueOf(textField.getText());
-			boolean bookDeleted = (BookDataAccess.deleteBook(code) != null);
-			showDeletedAlert(bookDeleted, code);
+			boolean documentaryDeleted = DocumentaryAccess.deleteDocumentary(code);
+			showDeletedAlert(documentaryDeleted, code);
 		});
 		
 		btnBack.setOnAction(e ->{
-			Scene scene = BookMenu.bookMenuScene(primaryStage);
+			Scene scene = DocumentaryMenu.documentaryMenuScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
@@ -76,19 +74,19 @@ public class BookDelete {
 		return scene;
 	}
 	
-	private static void showDeletedAlert(boolean deletedBook, int code) {
-		if(deletedBook)
+	private static void showDeletedAlert(boolean deletedDocumentary, int code) {
+		if(deletedDocumentary)
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Book Deleted!");
-			alert.setContentText("Book with code " + code + " is deleted!");
+			alert.setHeaderText("Documentary Deleted!");
+			alert.setContentText("Documentary with code " + code + " is deleted!");
 			alert.showAndWait();
 		}
 		else
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Error!");
-			alert.setContentText("There was a problem with deleting the book");
+			alert.setContentText("There was a problem with deleting the documentary");
 			alert.showAndWait();
 		}
 	}
