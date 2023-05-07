@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "documentary")
-public class Documentary //extends Item //needs Item superclass
+public class Documentary extends Item//extends Item //needs Item superclass
 {
 	@Id
 	@Column(name = "code")
