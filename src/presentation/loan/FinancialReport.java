@@ -1,4 +1,4 @@
-package presentation;
+package presentation.loan;
 
 import javafx.scene.Scene;
 
@@ -20,8 +20,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import presentation.StudentMenu;
-import presentation.DocumentaryMenu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.collections.FXCollections;
