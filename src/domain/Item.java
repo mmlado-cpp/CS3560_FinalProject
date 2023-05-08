@@ -4,22 +4,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
 
 @MappedSuperclass
 public class Item
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "code")
+	@Column(name = "item_id")
 	private int itemId;
 	
-	@Column(name = "status")
+	@Column(name = "available")
 	private boolean isAvailable;
 	
 	@Column(name = "title")

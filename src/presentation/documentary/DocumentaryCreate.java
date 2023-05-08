@@ -20,8 +20,7 @@ import javafx.scene.text.Font;
 public class DocumentaryCreate {
 	public static Scene documentaryCreateScene(Stage primaryStage){
 		Text text = new Text("Create Documentary");
-		
-		Label codeLbl = new Label("Enter Documentary Code: ");
+
 		Label titleLbl = new Label("Enter Documentary Title: ");
 		Label descLbl = new Label("Enter Description: ");
 		Label locationLbl = new Label("Enter Location: ");
@@ -31,8 +30,6 @@ public class DocumentaryCreate {
 		Label releaseDateLbl = new Label("Enter Release Date: ");
 		Label statusLbl = new Label("Enter Status: ");
 		
-		
-		TextField codeTxtField = new TextField();
 		TextField titleTxtField = new TextField();
 		TextField descTxtField = new TextField();
 		TextField locationTxtField = new TextField();
@@ -42,25 +39,23 @@ public class DocumentaryCreate {
 		TextField releaseDateTxtField = new TextField();
 		TextField statusTxtField= new TextField();
 		
-		HBox hbox1 = new HBox(codeLbl, codeTxtField);
-		HBox hbox2 = new HBox(titleLbl, titleTxtField);
-		HBox hbox3 = new HBox(descLbl, descTxtField);
-		HBox hbox4 = new HBox(locationLbl, locationTxtField);
-		HBox hbox5 = new HBox(dailyPriceLbl, dailyPriceTxtField);
-		HBox hbox6 = new HBox(directorLbl, directorTxtField);
-		HBox hbox7 = new HBox(lengthLbl, lengthTxtField);
-		HBox hbox8 = new HBox(releaseDateLbl, releaseDateTxtField);
-		HBox hbox9 = new HBox(statusLbl, statusTxtField);
+		HBox hbox1 = new HBox(titleLbl, titleTxtField);
+		HBox hbox2 = new HBox(descLbl, descTxtField);
+		HBox hbox3 = new HBox(locationLbl, locationTxtField);
+		HBox hbox4 = new HBox(dailyPriceLbl, dailyPriceTxtField);
+		HBox hbox5 = new HBox(directorLbl, directorTxtField);
+		HBox hbox6 = new HBox(lengthLbl, lengthTxtField);
+		HBox hbox7 = new HBox(releaseDateLbl, releaseDateTxtField);
+		HBox hbox8 = new HBox(statusLbl, statusTxtField);
 		
-		hbox1.setSpacing(38);
-		hbox2.setSpacing(40);
-		hbox3.setSpacing(75);
-		hbox4.setSpacing(90);
-		hbox5.setSpacing(80);
-		hbox6.setSpacing(90);
-		hbox7.setSpacing(95);
-		hbox8.setSpacing(65);
-		hbox9.setSpacing(98);
+		hbox1.setSpacing(40);
+		hbox2.setSpacing(75);
+		hbox3.setSpacing(90);
+		hbox4.setSpacing(80);
+		hbox5.setSpacing(90);
+		hbox6.setSpacing(95);
+		hbox7.setSpacing(65);
+		hbox8.setSpacing(98);
 		
 		Button btnCreateDocumentary = new Button("Create Documentary");
 		Button btnBack = new Button("Back");
@@ -78,7 +73,6 @@ public class DocumentaryCreate {
 		btnBack.setMinHeight(40);
 		
 		btnCreateDocumentary.setOnAction(e ->{
-			int code = Integer.valueOf(codeTxtField.getText());
 			String title = titleTxtField.getText();
 			String description = descTxtField.getText();
 			String location = locationTxtField.getText();
@@ -89,7 +83,7 @@ public class DocumentaryCreate {
 			
 			Boolean status = Boolean.valueOf(statusTxtField.getText());
 			
-			boolean createdDocumentary = DocumentaryAccess.createDocumentary(code, status, title, description, location, dailyPrice, director, length, release);
+			boolean createdDocumentary = DocumentaryAccess.createDocumentary(status, title, description, location, dailyPrice, director, length, release);
 			showSubmittedAlert(createdDocumentary, title);
 		});
 		
@@ -98,7 +92,7 @@ public class DocumentaryCreate {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox4, hbox5, hbox6, hbox7, hbox8, hbox9, hbox0);
+		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox4, hbox5, hbox6, hbox7, hbox8, hbox0);
 	
 		vbox.setSpacing(15);
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
@@ -109,7 +103,6 @@ public class DocumentaryCreate {
 		vbox.setMargin(hbox6,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox7,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox8,  new Insets(0, 0, 0, 170));
-		vbox.setMargin(hbox9,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox0,  new Insets(0, 0, 0, 170));
 		vbox.setAlignment(Pos.CENTER);
 		
