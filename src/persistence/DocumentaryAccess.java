@@ -54,7 +54,7 @@ public class DocumentaryAccess {
 			session.beginTransaction();
 			
 			documentary = session.get(Documentary.class, code);
-			System.out.println(documentary + "0");
+			System.out.println(documentary + documentary.getProducers().toString());
 			session.getTransaction().commit();
 		
 		} catch(Exception e)
@@ -65,7 +65,6 @@ public class DocumentaryAccess {
 			factory.close();
 		
 		}
-		System.out.println(documentary);
 		return documentary;
 	}
 	

@@ -1,7 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -85,7 +87,7 @@ public class Documentary extends Item
 	@Override
 	public String toString() {
 		return super.toString() + "\ndirector=" + director + "\nlength="
-				+ length + "\nreleaseDate=" + releaseDate;
+				+ length + "\nreleaseDate=" + releaseDate + "\nproducers=";
 
 	}
 

@@ -117,7 +117,7 @@ public class Item
 
 	@Override
 	public String toString() {
-		return "Item \ncode=" + itemId + "\nisAvailable=" + isAvailable + "\ntitle=" + title + "\ndescription=" + description
+		return "Item \nitem_id=" + itemId + "\nisAvailable=" + isAvailable + "\ntitle=" + title + "\ndescription=" + description
 				+ "\nlocation=" + location + "\ndailyPrice=" + dailyPrice;
 
 	}
