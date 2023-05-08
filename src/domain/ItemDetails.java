@@ -17,7 +17,7 @@ public class ItemDetails
 	private int code;
 	
 	@Column(name = "status")
-	private boolean status;
+	private boolean isAvailable;
 	
 	@Column(name = "title")
 	private String title;
@@ -31,10 +31,10 @@ public class ItemDetails
 	@Column(name = "daily_price")
 	private double dailyPrice;
 	
-	public ItemDetails(boolean status, String title, String description, 
+	public ItemDetails(boolean isAvailable, String title, String description, 
 					   String location, double dailyPrice)
 	{
-	    this.status = status;
+	    this.isAvailable = isAvailable;
 	    this.title = title;
 	    this.description = description;
 	    this.location = location;
@@ -53,12 +53,12 @@ public class ItemDetails
 		this.code = code;
 	}
 
-	public boolean getStatus() {
-		return status;
+	public boolean getIsAvailable() {
+		return isAvailable;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setIsAvailable(boolean status) {
+		this.isAvailable = status;
 	}
 
 	public String getTitle() {
@@ -92,10 +92,18 @@ public class ItemDetails
 	public void setDailyPrice(double dailyPrice) {
 		this.dailyPrice = dailyPrice;
 	}
+	
+	public void returnItem() {
+		
+	}
+	
+	public void updateItemAvailability(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
 
 	@Override
 	public String toString() {
-		return "Item \ncode=" + code + "\nstatus=" + status + "\ntitle=" + title + "\ndescription=" + description
+		return "Item \ncode=" + code + "\nisAvailable=" + isAvailable + "\ntitle=" + title + "\ndescription=" + description
 				+ "\nlocation=" + location + "\ndailyPrice=" + dailyPrice;
 
 	}
