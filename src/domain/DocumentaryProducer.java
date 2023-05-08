@@ -3,6 +3,8 @@ package domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,8 +15,9 @@ import javax.persistence.Table;
 public class DocumentaryProducer
 {
 	@Id
-	@Column(name = "id")
-	private int id; 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "producer_id")
+	private int id;
 	
 	@Column(name = "name")
 	private String name;
@@ -30,12 +33,9 @@ public class DocumentaryProducer
 		
 	}
 
-	public DocumentaryProducer(int id, String name, String email, Documentary documentary) {
-		super();
-		this.id = id;
+	public DocumentaryProducer(String name, String email) {
 		this.name = name;
 		this.email = email;
-		this.documentary = documentary;
 	}
 	
 	public int getId() {

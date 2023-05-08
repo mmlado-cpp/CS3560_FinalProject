@@ -1,11 +1,14 @@
 package presentation.documentaryProducer;
 
+import domain.Documentary;
+import domain.DocumentaryProducer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene; 
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
+import persistence.DocumentaryAccess;
 import persistence.DocumentaryProducerAccess;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -24,7 +27,7 @@ public class DocumentaryProducerCreate {
 	static Scene documentaryProducerCreateScene(Stage primaryStage){
 		Text text = new Text("Create Documentary Producer");
 		
-		Label idLbl = new Label("Enter id: ");
+		Label idLbl = new Label("Enter documentary ID: ");
 		Label nameLbl = new Label("Enter Name: ");
 		Label emailLbl = new Label("Enter Email: ");
 		
@@ -61,7 +64,11 @@ public class DocumentaryProducerCreate {
 			String name = nameTxtField.getText();
 			String email = emailTxtField.getText();
 			
-			boolean createdProducer = DocumentaryProducerAccess.createDocumentaryProducer(id, name, email, null);
+			Documentary tempDocumentary = DocumentaryAccess.getDocumentary(id);
+			
+			DocumentaryProducer tempProducer = DocumentaryProducerAccess.createDocumentaryProducer(name, email, id);
+			
+			boolean createdProducer = (tempProducer != null);
 			showCreatedAlert(createdProducer, name);
 		});
 		

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "documentary")
@@ -71,7 +72,7 @@ public class Documentary extends Item
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-	
+
 	public void addProducer(DocumentaryProducer tempProducer) {
 		if(producers == null) {
 			producers = new ArrayList<DocumentaryProducer>();

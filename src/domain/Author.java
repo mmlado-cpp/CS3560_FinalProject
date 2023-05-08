@@ -22,17 +22,17 @@ public class Author
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "email")
+	private String email;
+	
 	@ManyToOne(cascade={CascadeType.PERSIST})
 	@JoinColumn(name="item_id")
 	private Book book;
 	
-	public Author(String name, Book book)
+	public Author(String name, String email)
 	{
 		this.name = name;
-	}
-	
-	public Author(String name) {
-		this.name = name;
+		this.email = email;
 	}
 	
 	public Author()
@@ -48,6 +48,14 @@ public class Author
 		this.name = name;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public int getAuthorId() {
 		return authorId;
 	}

@@ -8,7 +8,7 @@ import domain.Author;
 import domain.Book;
 
 public class AuthorDataAccess {
-	public static boolean createAuthor(String name, int bookId)
+	public static boolean createAuthor(String name, String email, int bookId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Book.class)
 																				   .addAnnotatedClass(Author.class).buildSessionFactory();
@@ -20,7 +20,7 @@ public class AuthorDataAccess {
 			session.beginTransaction();
 			
 			Book tempBook = session.get(Book.class, bookId);
-			Author tempAuthor = new Author(name);
+			Author tempAuthor = new Author(name, email);
 			
 			if(tempBook != null) { // Book ID exists
 				tempBook.addAuthor(tempAuthor); //Add author to book
@@ -73,11 +73,11 @@ public class AuthorDataAccess {
 		return tempAuthor;
 	}
 	
-	public static boolean updateAuthor(int authorId, String updatedName) { //Overload
-		return updateAuthor(authorId, updatedName, -1);
+	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail) { //Overload (When you don't want to change book ID)
+		return updateAuthor(authorId, updatedName, updatedEmail, -1);
 	}
 	
-	public static boolean updateAuthor(int authorId, String updatedName, int updatedBookId)
+	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail, int updatedBookId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Author.class)
 																				   .addAnnotatedClass(Book.class).buildSessionFactory();
@@ -95,8 +95,12 @@ public class AuthorDataAccess {
 				System.out.println("Author ID does not match with any existing author");
 				return flag;
 			}
+			if(updatedBookId != -1) {
+				tempAuthor.setBook(session.get(Book.class, updatedBookId));
+			}
 			
 			tempAuthor.setName(updatedName);
+			tempAuthor.setEmail(updatedEmail);
 			
 			Book tempBook = session.get(Book.class, updatedBookId);
 			
