@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import presentation.documentary.DocumentaryCreate;
 import presentation.documentary.DocumentaryDelete;
+import presentation.documentary.DocumentaryMenu;
 import presentation.documentary.DocumentarySearch;
 import presentation.documentary.DocumentaryUpdate;
 import presentation.mainMenu.MainMenu;
@@ -31,28 +32,28 @@ public class DocumentaryProducerMenu {
 		btnCreateDocumentaryProducer.setMinWidth(150);
 		btnCreateDocumentaryProducer.setMinHeight(50);
 		btnCreateDocumentaryProducer.setOnAction(e ->{
-			Scene scene = DocumentaryCreate.documentaryCreateScene(primaryStage);
+			Scene scene = DocumentaryProducerCreate.documentaryProducerCreateScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
 		btnReadDocumentaryProducer.setMinWidth(150);
 		btnReadDocumentaryProducer.setMinHeight(50);
 		btnReadDocumentaryProducer.setOnAction(e ->{
-			Scene scene = DocumentarySearch.documentarySearchScene(primaryStage);
+			Scene scene = DocumentaryProducerSearch.documentaryProducerSearchScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
 		btnUpdateDocumentaryProducer.setMinWidth(150);
 		btnUpdateDocumentaryProducer.setMinHeight(50);
 		btnUpdateDocumentaryProducer.setOnAction(e ->{
-			Scene scene = DocumentaryUpdate.documentaryUpdateScene(primaryStage);
+			Scene scene = DocumentaryProducerUpdate.updateDocumentaryProducerScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
 		btnDeleteDocumentaryProducer.setMinWidth(150);
 		btnDeleteDocumentaryProducer.setMinHeight(50);
 		btnDeleteDocumentaryProducer.setOnAction(e ->{
-			Scene scene = DocumentaryDelete.deleteDocumentaryScene(primaryStage);
+			Scene scene = DocumentaryProducerDelete.deleteProducerScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
@@ -60,16 +61,9 @@ public class DocumentaryProducerMenu {
 		btnBack.setMinHeight(50);
 		
 		btnBack.setOnAction(e ->{
-			Scene scene = MainMenu.mainMenuScene(primaryStage);
+			Scene scene = DocumentaryMenu.documentaryMenuScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		VBox vbox = new VBox(text, btnCreateDocumentaryProducer, btnReadDocumentaryProducer, btnUpdateDocumentaryProducer, btnDeleteDocumentaryProducer, btnBack);
