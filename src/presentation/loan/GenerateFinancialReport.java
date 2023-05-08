@@ -1,4 +1,4 @@
-package presentation;
+package presentation.loan;
 
 import javafx.scene.Scene;
 import domain.Student;
@@ -19,8 +19,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import presentation.StudentMenu;
-import presentation.DocumentaryMenu;
+import presentation.documentary.DocumentaryMenu;
+import presentation.student.StudentMenu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -51,6 +51,8 @@ public class GenerateFinancialReport {
 		btnSearch.setOnAction(e -> {
 //			int code = Integer.valueOf(textField.getText());
 //			String documentary = String.valueOf(DocumentaryAccess.getDocumentary(code));
+			Scene scene = FinancialReport.financialReportScene(primaryStage);
+			primaryStage.setScene(scene);
 //			textDocumentaryDetails.setText(documentary);
 		});
 		

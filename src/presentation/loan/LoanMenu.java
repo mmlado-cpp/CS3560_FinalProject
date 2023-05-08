@@ -1,4 +1,4 @@
-package presentation;
+package presentation.loan;
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
@@ -9,8 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import presentation.StudentRegistration;
-import presentation.MainMenu;
+import presentation.mainMenu.MainMenu;
 //
 //- create loan
 //- update loan
@@ -18,9 +17,10 @@ import presentation.MainMenu;
 //- search loan
 //- check overdue loans
 //- generate financial report
+import presentation.student.StudentRegistration;
 
 public class LoanMenu {
-	static Scene loanMenuScene(Stage primaryStage)
+	public static Scene loanMenuScene(Stage primaryStage)
 	{
 		Text text = new Text("Loan Menu");
 		

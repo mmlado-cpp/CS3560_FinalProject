@@ -1,4 +1,4 @@
-package presentation;
+package presentation.mainMenu;
 	
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -12,18 +12,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import presentation.StudentMenu;
-import presentation.DocumentaryCreate;
+import presentation.documentaryProducer.DocumentaryProducerMenu;
+import presentation.loan.LoanMenu;
+import presentation.student.StudentMenu;
 public class MainMenu extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			Scene mainMenu = mainMenuScene(primaryStage);
 			primaryStage.setScene(mainMenu);
-			/*
-			Scene testing = DocumentaryCreate.documentaryCreateScene(primaryStage);
-			primaryStage.setScene(testing);
-			*/
+			
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

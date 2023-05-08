@@ -1,4 +1,4 @@
-package presentation;
+package presentation.documentary;
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
@@ -9,11 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import presentation.StudentRegistration;
-import presentation.MainMenu;
+import presentation.mainMenu.MainMenu;
+import presentation.student.StudentRegistration;
 
 public class DocumentaryMenu {
-	static Scene documentaryMenuScene(Stage primaryStage)
+	public static Scene documentaryMenuScene(Stage primaryStage)
 	{
 		Text text = new Text("Documentary Menu");
 		Button btnCreateDocumentary = new Button("Create Documentary");

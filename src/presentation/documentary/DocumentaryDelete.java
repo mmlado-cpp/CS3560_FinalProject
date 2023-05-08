@@ -1,7 +1,7 @@
-package presentation;
+package presentation.documentary;
 
 import javafx.scene.Scene;
-import domain.Student;
+import domain.Documentary;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
 import persistence.DocumentaryAccess;
-import persistence.StudentDataAccess;
+import presentation.documentary.DocumentaryMenu;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -19,19 +19,17 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import presentation.StudentMenu;
-import presentation.DocumentaryMenu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class DocumentarySearch {
+public class DocumentaryDelete {
 	
-	static Scene documentarySearchScene(Stage primaryStage)
+	public static Scene deleteDocumentaryScene(Stage primaryStage)
 	{
-		Text title= new Text("Documentary Search");
+		Text title= new Text("Delete Documentary");
 		title.setFont(new Font(30));
 		
-		Label lbl = new Label("Enter Documentary Code: ");
+		Label lblCode = new Label("Enter Documentary Code: ");
 		
 		TextField textField = new TextField();
 		
@@ -39,19 +37,17 @@ public class DocumentarySearch {
 		btnBack.setMinWidth(100);
 		btnBack.setMinHeight(40);
 		
-		Button btnSearch = new Button("Submit");
-		btnSearch.setMinWidth(100);
-		btnSearch.setMinHeight(40);
+		Button btnDelete = new Button("Delete");
+		btnDelete.setMinWidth(100);
+		btnDelete.setMinHeight(40);
 		
 		Text textDocumentaryDetails = new Text();
 		textDocumentaryDetails.setFont(new Font(15));
 		
-		
-		
-		btnSearch.setOnAction(e -> {
+		btnDelete.setOnAction(e -> {
 			int code = Integer.valueOf(textField.getText());
-			String documentary = String.valueOf(DocumentaryAccess.getDocumentary(code));
-			textDocumentaryDetails.setText(documentary);
+			boolean documentaryDeleted = DocumentaryAccess.deleteDocumentary(code);
+			showDeletedAlert(documentaryDeleted, code);
 		});
 		
 		btnBack.setOnAction(e ->{
@@ -59,9 +55,9 @@ public class DocumentarySearch {
 			primaryStage.setScene(scene);
 		});
 		
-		HBox hbox1 = new HBox(lbl, textField);
+		HBox hbox1 = new HBox(lblCode, textField);
 		
-		HBox hbox2 = new HBox(btnBack, btnSearch);
+		HBox hbox2 = new HBox(btnBack, btnDelete);
 		hbox2.setSpacing(50);
 		
 		VBox vbox = new VBox(title, hbox1, hbox2, textDocumentaryDetails);
@@ -76,9 +72,23 @@ public class DocumentarySearch {
 		Scene scene = new Scene(vbox, 600, 600);
 		
 		return scene;
-		
-	
 	}
 	
-
+	private static void showDeletedAlert(boolean deletedDocumentary, int code) {
+		if(deletedDocumentary)
+		{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Documentary Deleted!");
+			alert.setContentText("Documentary with code " + code + " is deleted!");
+			alert.showAndWait();
+		}
+		else
+		{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Error!");
+			alert.setContentText("There was a problem with deleting the documentary");
+			alert.showAndWait();
+		}
+	}
+	
 }

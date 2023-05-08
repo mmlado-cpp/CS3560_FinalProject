@@ -1,4 +1,4 @@
-package presentation;
+package presentation.documentary;
 import domain.Documentary;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,7 +17,7 @@ import persistence.DocumentaryAccess;
 
 public class DocumentaryUpdate {
 	
-	static Scene documentaryUpdateScene(Stage primaryStage)
+	public static Scene documentaryUpdateScene(Stage primaryStage)
 	{
 		Text title= new Text("Update Documentary");
 		title.setFont(new Font(30));

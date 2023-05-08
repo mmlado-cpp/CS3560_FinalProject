@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "book")
-public class Book extends ItemDetails
+public class Book extends ItemDetails//TODO: extends Item
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

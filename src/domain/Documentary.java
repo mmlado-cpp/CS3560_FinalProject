@@ -40,18 +40,7 @@ public class Documentary extends ItemDetails
 	public Documentary(int code, boolean status, String title, String description, 
 					   String location, double dailyPrice, String director, int length, String releaseDate)
 	{
-		/*
-		super(code, status, title, description, location, dailyPrice, status) //needs Item Superclass
-		this.director = director;
-		this.length = length;
-		this.releaseDate = releaseDate;
-		*/
-		this.code = code;
-	    this.status = status;
-	    this.title = title;
-	    this.description = description;
-	    this.location = location;
-	    this.dailyPrice = dailyPrice;
+		super(status, title, description, location, dailyPrice);
 	    this.director = director;
 	    this.length = length;
 	    this.releaseDate = releaseDate;

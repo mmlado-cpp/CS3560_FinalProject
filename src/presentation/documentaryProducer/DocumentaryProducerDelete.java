@@ -1,4 +1,4 @@
-package presentation;
+package presentation.documentaryProducer;
 
 public class DocumentaryProducerDelete {
 
