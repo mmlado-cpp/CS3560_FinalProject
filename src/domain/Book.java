@@ -15,13 +15,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "book")
-public class Book extends ItemDetails//TODO: extends Item
-{
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "book_id")
-	private int bookId;
-	
+public class Book extends Item
+{	
 	@Column(name = "number_pages")
 	private int numberPages;
 
@@ -46,14 +41,6 @@ public class Book extends ItemDetails//TODO: extends Item
 		this.authors = authors;
 		this.publisher = publisher;
 		this.publicationDate = publicationDate;
-	}
-
-	public int getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
 	}
 
 	public int getNumberPages() {

@@ -1,20 +1,23 @@
 package domain;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "item_details")
-public class ItemDetails
+@MappedSuperclass
+public class Item
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "code")
-	private int code;
+	private int itemId;
 	
 	@Column(name = "status")
 	private boolean isAvailable;
@@ -31,7 +34,7 @@ public class ItemDetails
 	@Column(name = "daily_price")
 	private double dailyPrice;
 	
-	public ItemDetails(boolean isAvailable, String title, String description, 
+	public Item(boolean isAvailable, String title, String description, 
 					   String location, double dailyPrice)
 	{
 	    this.isAvailable = isAvailable;
@@ -41,16 +44,16 @@ public class ItemDetails
 	    this.dailyPrice = dailyPrice;
 	}
 	
-	public ItemDetails() {
+	public Item() {
 		
 	}
 
-	public int getCode() {
-		return code;
+	public int getItemId() {
+		return itemId;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 
 	public boolean getIsAvailable() {
@@ -93,17 +96,25 @@ public class ItemDetails
 		this.dailyPrice = dailyPrice;
 	}
 	
-	public void returnItem() {
-		
+	/* End Get Set */
+	
+	/* Start Methods */
+	
+	
+	public String returnItemDueDate() {
+		//Return current time
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
 	}
 	
 	public void updateItemAvailability(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
+	
+	/* End Methods */
 
 	@Override
 	public String toString() {
-		return "Item \ncode=" + code + "\nisAvailable=" + isAvailable + "\ntitle=" + title + "\ndescription=" + description
+		return "Item \ncode=" + itemId + "\nisAvailable=" + isAvailable + "\ntitle=" + title + "\ndescription=" + description
 				+ "\nlocation=" + location + "\ndailyPrice=" + dailyPrice;
 
 	}

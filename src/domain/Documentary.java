@@ -7,27 +7,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "documentary")
-public class Documentary extends ItemDetails
-{
-	@Id
-	@Column(name = "code")
-	private int code;
-	
-	@Column(name = "status")
-	private boolean status;
-	
-	@Column(name = "title")
-	private String title;
-	
-	@Column(name = "description")
-	private String description;
-	
-	@Column(name = "location")
-	private String location;
-	
-	@Column(name = "daily_price")
-	private double dailyPrice;
-	
+public class Documentary extends Item
+{	
 	@Column(name = "director")
 	private String director;
 	
@@ -37,10 +18,10 @@ public class Documentary extends ItemDetails
 	@Column(name = "release_date")
 	private String releaseDate;
 	
-	public Documentary(int code, boolean status, String title, String description, 
+	public Documentary(int code, boolean isAvailable, String title, String description, 
 					   String location, double dailyPrice, String director, int length, String releaseDate)
 	{
-		super(status, title, description, location, dailyPrice);
+		super(isAvailable, title, description, location, dailyPrice);
 	    this.director = director;
 	    this.length = length;
 	    this.releaseDate = releaseDate;
@@ -48,54 +29,6 @@ public class Documentary extends ItemDetails
 	
 	public Documentary() {
 		
-	}
-
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public double getDailyPrice() {
-		return dailyPrice;
-	}
-
-	public void setDailyPrice(double dailyPrice) {
-		this.dailyPrice = dailyPrice;
 	}
 
 	public String getDirector() {
@@ -114,8 +47,6 @@ public class Documentary extends ItemDetails
 		this.length = length;
 	}
 
-	
-
 	public String getReleaseDate() {
 		return releaseDate;
 	}
@@ -126,8 +57,7 @@ public class Documentary extends ItemDetails
 
 	@Override
 	public String toString() {
-		return "Documentary \ncode=" + code + "\nstatus=" + status + "\ntitle=" + title + "\ndescription=" + description
-				+ "\nlocation=" + location + "\ndailyPrice=" + dailyPrice + "\ndirector=" + director + "\nlength="
+		return super.toString() + "\ndirector=" + director + "\nlength="
 				+ length + "\nreleaseDate=" + releaseDate;
 
 	}

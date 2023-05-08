@@ -83,7 +83,7 @@ public class DocumentaryAccess {
 			
 			documentary = session.get(Documentary.class, code);
 			
-			documentary.setStatus(updated_status);
+			documentary.setIsAvailable(updated_status);
 			documentary.setTitle(updated_title);
 			documentary.setDescription(updated_description);
 			documentary.setLocation(updated_location);
