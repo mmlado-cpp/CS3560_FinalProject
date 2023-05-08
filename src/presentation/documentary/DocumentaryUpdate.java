@@ -1,4 +1,6 @@
 package presentation.documentary;
+import java.util.Date;
+
 import domain.Documentary;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -41,7 +43,7 @@ public class DocumentaryUpdate {
 		btnSubmit.setOnAction(e -> {
 			int code = Integer.valueOf(textField.getText());
 			Documentary documentary = DocumentaryAccess.getDocumentary(code);
-			Scene scene = updateDocumentaryScene2(primaryStage, documentary.getCode(), documentary.getStatus(), documentary.getTitle(), documentary.getDescription(), documentary.getLocation(), documentary.getDailyPrice(), documentary.getDirector(), documentary.getLength(), documentary.getReleaseDate());
+			Scene scene = updateDocumentaryScene2(primaryStage, documentary.getItemId(), documentary.getIsAvailable(), documentary.getTitle(), documentary.getDescription(), documentary.getLocation(), documentary.getDailyPrice(), documentary.getDirector(), documentary.getLength(), documentary.getReleaseDate());
 			primaryStage.setScene(scene);
 		});
 		

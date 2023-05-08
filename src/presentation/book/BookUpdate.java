@@ -49,7 +49,7 @@ public class BookUpdate {
 		btnSubmit.setOnAction(e -> {
 			int code = Integer.valueOf(textField.getText());
 			Book book = BookDataAccess.getBook(code);
-			Scene scene = updateBookScene2(primaryStage, book.getBookId(), /*book.getStatus(), documentary.getTitle(), documentary.getDescription(), documentary.getLocation(), documentary.getDailyPrice(),*/ 
+			Scene scene = updateBookScene2(primaryStage, book.getItemId(), /*book.getStatus(), documentary.getTitle(), documentary.getDescription(), documentary.getLocation(), documentary.getDailyPrice(),*/ 
 					book.getNumberPages(), book.getAuthors(), book.getPublisher()/*, book.getPublicationDate()*/);
 			primaryStage.setScene(scene);
 		});

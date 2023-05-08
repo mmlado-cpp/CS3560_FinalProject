@@ -1,11 +1,11 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,19 +22,20 @@ public class DocumentaryProducer
 	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "documentaries")
-	private ArrayList<Integer> documentary_ids;
+	@ManyToOne(cascade={CascadeType.PERSIST})
+	@JoinColumn(name="item_id")
+	private Documentary documentary;
 	
 	public DocumentaryProducer() {
 		
 	}
 
-	public DocumentaryProducer(int id, String name, String email, ArrayList<Integer> documentary_ids) {
+	public DocumentaryProducer(int id, String name, String email, Documentary documentary) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.documentary_ids = documentary_ids;
+		this.documentary = documentary;
 	}
 	
 	public int getId() {
@@ -60,27 +61,19 @@ public class DocumentaryProducer
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public ArrayList<Integer> getDocumentaries() {
-		return documentary_ids;
-	}
-
-	public void setDocumentaries(ArrayList<Integer> documentaries) {
-		this.documentary_ids = documentaries;
-	}
 	
-	public boolean addDocumentary(int documentary_id) {
-		if(this.documentary_ids.add(documentary_id)) {
-			return true;
-		}
-		return false;
+	public Documentary getDocumentary() {
+		return documentary;
 	}
 
-	
+	public void setDocumentary(Documentary documentary) {
+		this.documentary = documentary;
+	}
+
 	@Override
 	public String toString() {
-		return "DocumentaryProducer \nid=" + id + "\nname=" + name + "\nemail=" + email + "\ndocumentaries="
-				;
+		return "DocumentaryProducer \nid=" + id + "\nname=" + name + "\nemail=" + email + "\ndocumentary="
+				+ documentary;
 	}
 
 }

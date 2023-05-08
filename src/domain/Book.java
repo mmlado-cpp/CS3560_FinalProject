@@ -7,21 +7,15 @@ import java.util.ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "book")
-public class Book extends Item//TODO: extends Item
-{
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "book_id")
-	private int bookId;
-	
+@PrimaryKeyJoinColumn(name="item_id")
+public class Book extends Item
+{	
 	@Column(name = "number_pages")
 	private int numberPages;
 
@@ -41,19 +35,11 @@ public class Book extends Item//TODO: extends Item
 	public Book(boolean isAvailable, String title, String description, String location, double dailyPrice, 
 			int numberPages, List<Author> authors, String publisher, Date publicationDate)
 	{
-		//TODO: super(bookId, isAvailable, title, description, location, dailyPrice);
+		super(isAvailable, title, description, location, dailyPrice);
 		this.numberPages = numberPages;
 		this.authors = authors;
 		this.publisher = publisher;
 		this.publicationDate = publicationDate;
-	}
-
-	public int getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
 	}
 
 	public int getNumberPages() {

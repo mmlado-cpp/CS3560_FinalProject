@@ -7,13 +7,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import domain.Documentary;
 import domain.Student;
+import domain.DocumentaryProducer;
 
 public class DocumentaryAccess {
 	
 	public static boolean createDocumentary(boolean status, String title, String description, 
 			   String location, double dailyPrice, String director, int length, String releaseDate)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		boolean flag = false;
 		Session session = factory.getCurrentSession();
 		
@@ -43,7 +44,7 @@ public class DocumentaryAccess {
 	
 	public static Documentary getDocumentary(int code)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		Documentary documentary = null;
 		
@@ -71,7 +72,7 @@ public class DocumentaryAccess {
 	public static boolean updateDocumentary(int code, boolean updated_status, String updated_title, String updated_description, 
 			   String updated_location, double updated_dailyPrice, String updated_director, int updated_length, String updated_releaseDate)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		Documentary documentary = null;
 		boolean flag = false;
@@ -83,7 +84,7 @@ public class DocumentaryAccess {
 			
 			documentary = session.get(Documentary.class, code);
 			
-			documentary.setStatus(updated_status);
+			documentary.setIsAvailable(updated_status);
 			documentary.setTitle(updated_title);
 			documentary.setDescription(updated_description);
 			documentary.setLocation(updated_location);
@@ -108,7 +109,7 @@ public class DocumentaryAccess {
 	
 	public static boolean deleteDocumentary(int code)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		Documentary documentary = null;
 		boolean flag = false;

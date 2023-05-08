@@ -1,6 +1,7 @@
 package presentation.documentaryProducer;
 import java.util.ArrayList;
 
+import domain.Documentary;
 import domain.DocumentaryProducer;
 import domain.Student;
 import javafx.geometry.Insets;
@@ -46,7 +47,7 @@ public class DocumentaryProducerUpdate {
 		btnSubmit.setOnAction(e -> {
 			int id = Integer.valueOf(textField.getText());
 			DocumentaryProducer producer = DocumentaryProducerAccess.getdocumentaryProducer(id);
-			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getDocumentaries());
+			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getDocumentary());
 			primaryStage.setScene(scene);
 		});
 		
@@ -74,7 +75,7 @@ public class DocumentaryProducerUpdate {
 		return scene;
 	}
 	
-	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, ArrayList<Integer> documentaries)
+	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, Documentary documentary)
 	{
 		Label producerNameLbl = new Label("Update Producer Name: ");
 		Label producerEmailLbl = new Label("Update Producer Email: ");
@@ -106,7 +107,7 @@ public class DocumentaryProducerUpdate {
 		btnUpdateProducer.setOnAction(e ->{
 			String updatedName = producerNameTxtField.getText();
 			String updatedEmail = emailTxtField.getText();			
-			boolean updatedProducer = DocumentaryProducerAccess.updatedocumentaryProducer(id, updatedName, updatedEmail, documentaries);
+			boolean updatedProducer = DocumentaryProducerAccess.updatedocumentaryProducer(id, updatedName, updatedEmail, documentary);
 			showUpdatedAlert(updatedProducer, id);
 		});
 		
