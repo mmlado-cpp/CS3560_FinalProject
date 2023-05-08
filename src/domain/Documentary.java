@@ -7,10 +7,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "documentary")
+@PrimaryKeyJoinColumn(name="item_id")
 public class Documentary extends Item
 {	
 	@Column(name = "director")
