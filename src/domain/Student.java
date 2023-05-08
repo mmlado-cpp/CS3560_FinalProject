@@ -21,6 +21,8 @@ public class Student
 	
 	@Column(name="email")
 	private String email;
+	
+	//create a list of loans that the student has 
 
 	public Student(int broncoId, String name, String course, String email)
 	{
