@@ -8,3 +8,6 @@
 
 # ignore test
 /src/domain/test.java
+
+# ignore bin
+/bin/

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,7 @@ public class Loan {
 	@Column(name = "loan_id")
 	private int loanID;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "bronco_id")
 	private Student student;
 	
@@ -53,6 +54,11 @@ public class Loan {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date obj = new Date();
 		this.loanDate = formatter.format(obj);
+	}
+	
+	public Loan()
+	{
+		
 	}
 	
 

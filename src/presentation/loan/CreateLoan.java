@@ -63,7 +63,7 @@ public class CreateLoan {
 				int itemId = Integer.valueOf(itemIdTxtField.getText());
 				String loanDueDate = loanDueDateTxtField.getText();
 				boolean loanCreated = LoanDataAccess.createLoan(broncoId, itemId, loanDueDate);
-				
+				showLoanCreatedAlert(loanCreated);
 		});
 		
 		btnBack.setOnAction(e ->{
@@ -86,7 +86,7 @@ public class CreateLoan {
 		return studentRegistrationScene;
 	}
 	
-	private static void showCreatedAlert(boolean createdStudent) {
+	private static void showLoanCreatedAlert(boolean createdStudent) {
 		if(createdStudent)
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
