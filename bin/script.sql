@@ -5,7 +5,7 @@
 -- Dumped from database version 15.2
 -- Dumped by pg_dump version 15.2
 
--- Started on 2023-05-08 14:33:12
+-- Started on 2023-05-08 22:30:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -53,7 +53,7 @@ CREATE SEQUENCE public.author_author_id_seq
 ALTER TABLE public.author_author_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3365 (class 0 OID 0)
+-- TOC entry 3372 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: author_author_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -93,7 +93,7 @@ CREATE SEQUENCE public.book_book_id_seq
 ALTER TABLE public.book_book_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3366 (class 0 OID 0)
+-- TOC entry 3373 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: book_book_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -117,6 +117,19 @@ CREATE TABLE public.documentary (
 ALTER TABLE public.documentary OWNER TO postgres;
 
 --
+-- TOC entry 225 (class 1259 OID 16583)
+-- Name: documentary_documentary_producer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.documentary_documentary_producer (
+    item_id integer NOT NULL,
+    producer_id integer NOT NULL
+);
+
+
+ALTER TABLE public.documentary_documentary_producer OWNER TO postgres;
+
+--
 -- TOC entry 219 (class 1259 OID 16536)
 -- Name: documentary_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -133,7 +146,7 @@ CREATE SEQUENCE public.documentary_item_id_seq
 ALTER TABLE public.documentary_item_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3367 (class 0 OID 0)
+-- TOC entry 3374 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: documentary_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -149,8 +162,7 @@ ALTER SEQUENCE public.documentary_item_id_seq OWNED BY public.documentary.item_i
 CREATE TABLE public.documentary_producer (
     producer_id integer NOT NULL,
     name text,
-    email text,
-    item_id integer
+    email text
 );
 
 
@@ -173,7 +185,7 @@ CREATE SEQUENCE public.documentary_producer_id_seq
 ALTER TABLE public.documentary_producer_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3368 (class 0 OID 0)
+-- TOC entry 3375 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: documentary_producer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -215,7 +227,7 @@ CREATE SEQUENCE public.item_item_id_seq
 ALTER TABLE public.item_item_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3369 (class 0 OID 0)
+-- TOC entry 3376 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: item_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -239,7 +251,7 @@ CREATE TABLE public.student (
 ALTER TABLE public.student OWNER TO postgres;
 
 --
--- TOC entry 3197 (class 2604 OID 16523)
+-- TOC entry 3201 (class 2604 OID 16523)
 -- Name: author author_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -247,7 +259,7 @@ ALTER TABLE ONLY public.author ALTER COLUMN author_id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3198 (class 2604 OID 16524)
+-- TOC entry 3202 (class 2604 OID 16524)
 -- Name: book item_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -255,7 +267,7 @@ ALTER TABLE ONLY public.book ALTER COLUMN item_id SET DEFAULT nextval('public.bo
 
 
 --
--- TOC entry 3199 (class 2604 OID 16540)
+-- TOC entry 3203 (class 2604 OID 16540)
 -- Name: documentary item_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -263,7 +275,7 @@ ALTER TABLE ONLY public.documentary ALTER COLUMN item_id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 3201 (class 2604 OID 16568)
+-- TOC entry 3205 (class 2604 OID 16568)
 -- Name: documentary_producer producer_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -271,7 +283,7 @@ ALTER TABLE ONLY public.documentary_producer ALTER COLUMN producer_id SET DEFAUL
 
 
 --
--- TOC entry 3200 (class 2604 OID 16549)
+-- TOC entry 3204 (class 2604 OID 16549)
 -- Name: item item_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -279,7 +291,7 @@ ALTER TABLE ONLY public.item ALTER COLUMN item_id SET DEFAULT nextval('public.it
 
 
 --
--- TOC entry 3207 (class 2606 OID 16526)
+-- TOC entry 3211 (class 2606 OID 16526)
 -- Name: student Student_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -288,7 +300,7 @@ ALTER TABLE ONLY public.student
 
 
 --
--- TOC entry 3203 (class 2606 OID 16528)
+-- TOC entry 3207 (class 2606 OID 16528)
 -- Name: author author_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -297,7 +309,7 @@ ALTER TABLE ONLY public.author
 
 
 --
--- TOC entry 3205 (class 2606 OID 16530)
+-- TOC entry 3209 (class 2606 OID 16530)
 -- Name: book book_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -306,7 +318,7 @@ ALTER TABLE ONLY public.book
 
 
 --
--- TOC entry 3209 (class 2606 OID 16544)
+-- TOC entry 3213 (class 2606 OID 16544)
 -- Name: documentary documentary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -315,7 +327,7 @@ ALTER TABLE ONLY public.documentary
 
 
 --
--- TOC entry 3213 (class 2606 OID 16572)
+-- TOC entry 3217 (class 2606 OID 16572)
 -- Name: documentary_producer documentary_producer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -324,7 +336,16 @@ ALTER TABLE ONLY public.documentary_producer
 
 
 --
--- TOC entry 3211 (class 2606 OID 16553)
+-- TOC entry 3219 (class 2606 OID 16587)
+-- Name: documentary_documentary_producer id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documentary_documentary_producer
+    ADD CONSTRAINT id PRIMARY KEY (item_id, producer_id);
+
+
+--
+-- TOC entry 3215 (class 2606 OID 16553)
 -- Name: item item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -333,16 +354,7 @@ ALTER TABLE ONLY public.item
 
 
 --
--- TOC entry 3217 (class 2606 OID 16578)
--- Name: documentary_producer documentary_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.documentary_producer
-    ADD CONSTRAINT documentary_id_fk FOREIGN KEY (item_id) REFERENCES public.documentary(item_id) NOT VALID;
-
-
---
--- TOC entry 3214 (class 2606 OID 16531)
+-- TOC entry 3220 (class 2606 OID 16531)
 -- Name: author fk_book_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -351,7 +363,7 @@ ALTER TABLE ONLY public.author
 
 
 --
--- TOC entry 3216 (class 2606 OID 16554)
+-- TOC entry 3222 (class 2606 OID 16554)
 -- Name: documentary item_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -360,7 +372,7 @@ ALTER TABLE ONLY public.documentary
 
 
 --
--- TOC entry 3215 (class 2606 OID 16559)
+-- TOC entry 3221 (class 2606 OID 16559)
 -- Name: book item_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -368,7 +380,25 @@ ALTER TABLE ONLY public.book
     ADD CONSTRAINT item_id_fk FOREIGN KEY (item_id) REFERENCES public.item(item_id) NOT VALID;
 
 
--- Completed on 2023-05-08 14:33:12
+--
+-- TOC entry 3223 (class 2606 OID 16588)
+-- Name: documentary_documentary_producer item_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documentary_documentary_producer
+    ADD CONSTRAINT item_id_fk FOREIGN KEY (item_id) REFERENCES public.item(item_id);
+
+
+--
+-- TOC entry 3224 (class 2606 OID 16593)
+-- Name: documentary_documentary_producer producer_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documentary_documentary_producer
+    ADD CONSTRAINT producer_id_fk FOREIGN KEY (producer_id) REFERENCES public.documentary_producer(producer_id);
+
+
+-- Completed on 2023-05-08 22:30:17
 
 --
 -- PostgreSQL database dump complete
