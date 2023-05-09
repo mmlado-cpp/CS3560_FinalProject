@@ -9,7 +9,7 @@ import domain.Student;
 
 public class StudentDataAccess {
 	
-	public static boolean createStudent(int broncoId, String name, String course, String email)
+	public static boolean createStudent(String name, String course, String email)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class).buildSessionFactory();
 		boolean flag = false;
@@ -18,7 +18,7 @@ public class StudentDataAccess {
 		try
 		{
 			
-			Student student = new Student(broncoId, name, course, email);
+			Student student = new Student(name, course, email);
 			
 			session.beginTransaction();
 			

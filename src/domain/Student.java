@@ -2,7 +2,10 @@ package domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -10,6 +13,7 @@ import javax.persistence.Table;
 public class Student
 {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "bronco_id")
 	private int broncoId;
 	
@@ -24,9 +28,8 @@ public class Student
 	
 	//create a list of loans that the student has 
 
-	public Student(int broncoId, String name, String course, String email)
+	public Student(String name, String course, String email)
 	{
-		this.broncoId = broncoId;
 		this.name = name;
 		this.course = course;
 		this.email = email;
