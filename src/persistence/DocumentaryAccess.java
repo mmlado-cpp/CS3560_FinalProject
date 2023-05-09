@@ -16,7 +16,7 @@ import domain.DocumentaryProducer;
 public class DocumentaryAccess {
 	
 	public static boolean createDocumentary(boolean status, String title, String description, 
-			   String location, double dailyPrice, String director, int length, String releaseDate)
+			   String location, double dailyPrice, String director, int length, String releaseDate, int producerId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		boolean flag = false;
@@ -29,6 +29,16 @@ public class DocumentaryAccess {
 				    location, dailyPrice, director, length, releaseDate);
 			
 			session.beginTransaction();
+			
+			DocumentaryProducer producer = session.get(DocumentaryProducer.class, producerId);
+			
+			if(producer != null) { // Documentary ID exists
+				producer.addDocumentary(documentary); //Add producer to doc
+				documentary.addProducer(producer); //Add documentary to producer
+				session.save(producer);
+			} else { // Document ID doesn't match with anything
+				System.out.println("Producer ID does not match with any existing producer");
+			}
 			
 			session.save(documentary);
 			

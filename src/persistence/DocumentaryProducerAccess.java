@@ -2,6 +2,10 @@ package persistence;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import java.util.ArrayList;
 
 import org.hibernate.Session;
@@ -136,6 +140,34 @@ public class DocumentaryProducerAccess {
 		
 		}
 		return documentaryIds;
+	}
+	
+	public static List<DocumentaryProducer> getAllProducers(){
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		List<DocumentaryProducer> producers = null;
+		
+		try
+		{
+			
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<DocumentaryProducer> criteria = builder.createQuery(DocumentaryProducer.class);
+			criteria.from(DocumentaryProducer.class);
+			
+			producers = session.createQuery(criteria).getResultList();
+			
+			session.getTransaction().commit();
+		
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return producers;
 	}
 	
 	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, String updated_style, String updated_nationality, int updated_documentary_id, boolean addDocumentary)
