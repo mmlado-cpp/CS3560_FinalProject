@@ -1,6 +1,7 @@
 package persistence;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
@@ -28,6 +29,7 @@ public class DocumentaryProducerAccess {
 			
 			if(tempDocumentary != null) { // Documentary ID exists
 				tempDocumentary.addProducer(documentaryProducer); //Add producer to doc
+				documentaryProducer.addDocumentary(tempDocumentary); //Add documentary to producer
 				session.save(tempDocumentary);
 			} else { // Document ID doesn't match with anything
 				System.out.println("Documentary ID does not match with any existing book");
@@ -75,7 +77,32 @@ public class DocumentaryProducerAccess {
 		return documentaryProducer;
 	}
 	
-	public static boolean updatedocumentaryProducer(int id, String updated_name, String updated_email, Documentary updated_documentary)
+	public static List<Documentary> getDocumentaries(int code){
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		List<Documentary> documentaries = null;
+		
+		try
+		{
+			
+			session.beginTransaction();
+			
+			documentaries = session.get(DocumentaryProducer.class, code).getDocumentaries();
+			
+			session.getTransaction().commit();
+		
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return documentaries;
+	}
+	
+	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, List<Documentary> updated_documentaries)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DocumentaryProducer.class)
 		   																		   .addAnnotatedClass(Documentary.class).buildSessionFactory();
@@ -92,7 +119,7 @@ public class DocumentaryProducerAccess {
 			
 			documentaryProducer.setName(updated_name);
 			documentaryProducer.setEmail(updated_email);
-			documentaryProducer.setDocumentary(updated_documentary);
+			documentaryProducer.setDocumentaries(updated_documentaries);
 			
 			session.getTransaction().commit();
 			

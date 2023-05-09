@@ -64,8 +64,6 @@ public class DocumentaryProducerCreate {
 			String name = nameTxtField.getText();
 			String email = emailTxtField.getText();
 			
-			Documentary tempDocumentary = DocumentaryAccess.getDocumentary(id);
-			
 			DocumentaryProducer tempProducer = DocumentaryProducerAccess.createDocumentaryProducer(name, email, id);
 			
 			boolean createdProducer = (tempProducer != null);

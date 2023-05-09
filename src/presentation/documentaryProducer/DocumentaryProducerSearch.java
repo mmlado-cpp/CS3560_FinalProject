@@ -1,6 +1,7 @@
 package presentation.documentaryProducer;
 
 import javafx.scene.Scene;
+import domain.DocumentaryProducer;
 import domain.Student;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -51,8 +52,9 @@ public class DocumentaryProducerSearch {
 		
 		btnSearch.setOnAction(e -> {
 			int id = Integer.valueOf(textField.getText());
-			String producer = String.valueOf(DocumentaryProducerAccess.getdocumentaryProducer(id));
-			textDocumentaryDetails.setText(producer);
+			DocumentaryProducer producer = DocumentaryProducerAccess.getdocumentaryProducer(id);
+			String producerStr = producer.toString();
+			textDocumentaryDetails.setText(producerStr);
 		});
 		
 		btnBack.setOnAction(e ->{

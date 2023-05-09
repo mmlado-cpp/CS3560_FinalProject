@@ -1,5 +1,6 @@
 package presentation.documentaryProducer;
 import java.util.ArrayList;
+import java.util.List;
 
 import domain.Documentary;
 import domain.DocumentaryProducer;
@@ -47,7 +48,7 @@ public class DocumentaryProducerUpdate {
 		btnSubmit.setOnAction(e -> {
 			int id = Integer.valueOf(textField.getText());
 			DocumentaryProducer producer = DocumentaryProducerAccess.getdocumentaryProducer(id);
-			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getDocumentary());
+			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getDocumentaries());
 			primaryStage.setScene(scene);
 		});
 		
@@ -75,7 +76,7 @@ public class DocumentaryProducerUpdate {
 		return scene;
 	}
 	
-	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, Documentary documentary)
+	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, List<Documentary> documentaries)
 	{
 		Label producerNameLbl = new Label("Update Producer Name: ");
 		Label producerEmailLbl = new Label("Update Producer Email: ");
@@ -107,7 +108,7 @@ public class DocumentaryProducerUpdate {
 		btnUpdateProducer.setOnAction(e ->{
 			String updatedName = producerNameTxtField.getText();
 			String updatedEmail = emailTxtField.getText();			
-			boolean updatedProducer = DocumentaryProducerAccess.updatedocumentaryProducer(id, updatedName, updatedEmail, documentary);
+			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, documentaries);
 			showUpdatedAlert(updatedProducer, id);
 		});
 		
