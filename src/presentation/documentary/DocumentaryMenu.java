@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import presentation.documentaryProducer.DocumentaryProducerMenu;
 import presentation.mainMenu.MainMenu;
 import presentation.student.StudentRegistration;
 
@@ -20,6 +21,7 @@ public class DocumentaryMenu {
 		Button btnReadDocumentary = new Button("Read Documentary");
 		Button btnUpdateDocumentary = new Button("Update Documentary");
 		Button btnDeleteDocumentary = new Button("Delete Documentary");
+		Button btnProducer = new Button("Manage Producers");
 		Button btnBack = new Button("Back");
 		
 		text.setFont(new Font(30));
@@ -52,6 +54,13 @@ public class DocumentaryMenu {
 			primaryStage.setScene(scene);
 		});
 		
+		btnProducer.setMinWidth(150);
+		btnProducer.setMinHeight(50);
+		btnProducer.setOnAction(e ->{
+			Scene scene = DocumentaryProducerMenu.documentaryProducerMenuScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
+		
 		btnBack.setMinWidth(150);
 		btnBack.setMinHeight(50);
 		
@@ -61,16 +70,9 @@ public class DocumentaryMenu {
 		});
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		VBox vbox = new VBox(text, btnCreateDocumentary, btnReadDocumentary, btnUpdateDocumentary, btnDeleteDocumentary, btnBack);
+		VBox vbox = new VBox(text, btnCreateDocumentary, btnReadDocumentary, btnUpdateDocumentary, btnDeleteDocumentary, btnProducer,btnBack);
 	
-		vbox.setSpacing(50);
+		vbox.setSpacing(40);
 		
 		vbox.setAlignment(Pos.CENTER);
 		

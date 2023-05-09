@@ -1,10 +1,11 @@
 package domain;
 
-import java.util.Arrays;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,19 +22,20 @@ public class DocumentaryProducer
 	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "documentaries")
-	private Documentary[] documentaries;
+	@ManyToOne(cascade={CascadeType.PERSIST})
+	@JoinColumn(name="item_id")
+	private Documentary documentary;
 	
 	public DocumentaryProducer() {
 		
 	}
 
-	public DocumentaryProducer(int id, String name, String email, Documentary[] documentaries) {
+	public DocumentaryProducer(int id, String name, String email, Documentary documentary) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.documentaries = documentaries;
+		this.documentary = documentary;
 	}
 	
 	public int getId() {
@@ -59,20 +61,19 @@ public class DocumentaryProducer
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Documentary[] getDocumentaries() {
-		return documentaries;
-	}
-
-	public void setDocumentaries(Documentary[] documentaries) {
-		this.documentaries = documentaries;
-	}
-
 	
+	public Documentary getDocumentary() {
+		return documentary;
+	}
+
+	public void setDocumentary(Documentary documentary) {
+		this.documentary = documentary;
+	}
+
 	@Override
 	public String toString() {
-		return "DocumentaryProducer \nid=" + id + "\nname=" + name + "\nemail=" + email + "\ndocumentaries="
-				+ Arrays.toString(documentaries);
+		return "DocumentaryProducer \nid=" + id + "\nname=" + name + "\nemail=" + email + "\ndocumentary="
+				+ documentary;
 	}
 
 }
