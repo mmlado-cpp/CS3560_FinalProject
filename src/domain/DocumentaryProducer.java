@@ -31,18 +31,28 @@ public class DocumentaryProducer
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "style")
+	private String style;
+	
+	@Column(name = "nationality")
+	private String nationality;
+	
+	
 	@ManyToMany(mappedBy="producers", cascade={CascadeType.PERSIST})
 	private List<Documentary> documentaries;
 	
 	public DocumentaryProducer() {
 		
 	}
-
-	public DocumentaryProducer(String name, String email) {
+	
+	public DocumentaryProducer(String name, String email, String style, String nationality) {
+		super();
 		this.name = name;
 		this.email = email;
+		this.style = style;
+		this.nationality = nationality;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -75,6 +85,24 @@ public class DocumentaryProducer
 		this.documentaries = documentaries;
 	}
 	
+	
+	
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
 	public void addDocumentary(Documentary tempDocumentary) {
 		if(documentaries == null) {
 			documentaries = new ArrayList<Documentary>();
@@ -85,7 +113,7 @@ public class DocumentaryProducer
 
 	@Override
 	public String toString() {
-		return "DocumentaryProducer \nid=" + id + "\nname=" + name + "\nemail=" + email + "\ndocumentary=" + DocumentaryProducerAccess.getDocumentaries(id);
+		return "DocumentaryProducer \nid=" + id + "\nname=" + name + "\nemail=" + email + "\nstyle=" + style + "\nationality=" + nationality + "\ndocumentary=" + DocumentaryProducerAccess.getDocumentaries(id);
 	}
 
 }

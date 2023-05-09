@@ -30,20 +30,26 @@ public class DocumentaryProducerCreate {
 		Label idLbl = new Label("Enter documentary ID: ");
 		Label nameLbl = new Label("Enter Name: ");
 		Label emailLbl = new Label("Enter Email: ");
+		Label styleLbl = new Label("Enter Style: ");
+		Label nationalityLbl = new Label("Enter Nationality: ");
 		
 		
 		TextField idTxtField = new TextField();
 		TextField nameTxtField = new TextField();
 		TextField emailTxtField= new TextField();
+		TextField styleTxtField= new TextField();
+		TextField nationalityTxtField= new TextField();
 		
 		
 		HBox hbox1 = new HBox(idLbl, idTxtField);
 		HBox hbox2 = new HBox(nameLbl, nameTxtField);
-		HBox hbox3 = new HBox(emailLbl, emailTxtField);
+		HBox hbox3 = new HBox(styleLbl, styleTxtField);
+		HBox hbox4 = new HBox(nationalityLbl, nationalityTxtField);
 		
-		hbox1.setSpacing(55);
-		hbox2.setSpacing(27);
-		hbox3.setSpacing(25);
+		hbox1.setSpacing(30);
+		hbox2.setSpacing(80);
+		hbox3.setSpacing(85);
+		hbox4.setSpacing(50);
 		
 		Button btnCreateProducer = new Button("Create Documentary Producer");
 		Button btnBack = new Button("Back");
@@ -63,8 +69,10 @@ public class DocumentaryProducerCreate {
 			int id = Integer.valueOf(idTxtField.getText());
 			String name = nameTxtField.getText();
 			String email = emailTxtField.getText();
+			String style = styleTxtField.getText();
+			String nationality = nationalityTxtField.getText();
 			
-			DocumentaryProducer tempProducer = DocumentaryProducerAccess.createDocumentaryProducer(name, email, id);
+			DocumentaryProducer tempProducer = DocumentaryProducerAccess.createDocumentaryProducer(name, email, style, nationality, id);
 			
 			boolean createdProducer = (tempProducer != null);
 			showCreatedAlert(createdProducer, name);
@@ -75,12 +83,13 @@ public class DocumentaryProducerCreate {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox5);
+		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox4, hbox5);
 	
 		vbox.setSpacing(50);
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox4,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox5,  new Insets(0, 0, 0, 170));
 		vbox.setAlignment(Pos.CENTER);
 		

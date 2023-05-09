@@ -13,7 +13,7 @@ import domain.DocumentaryProducer;
 
 public class DocumentaryProducerAccess {
 	
-	public static DocumentaryProducer createDocumentaryProducer(String name, String email, int documentaryId)
+	public static DocumentaryProducer createDocumentaryProducer(String name, String email, String style, String nationality, int documentaryId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DocumentaryProducer.class)
 																				   .addAnnotatedClass(Documentary.class).buildSessionFactory();
@@ -25,7 +25,7 @@ public class DocumentaryProducerAccess {
 			session.beginTransaction();
 			
 			Documentary tempDocumentary = session.get(Documentary.class, documentaryId);
-			documentaryProducer = new DocumentaryProducer(name, email);
+			documentaryProducer = new DocumentaryProducer(name, email, style, nationality);
 			
 			if(tempDocumentary != null) { // Documentary ID exists
 				tempDocumentary.addProducer(documentaryProducer); //Add producer to doc
@@ -102,7 +102,7 @@ public class DocumentaryProducerAccess {
 		return documentaries;
 	}
 	
-	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, List<Documentary> updated_documentaries)
+	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, String updated_style, String updated_nationality, List<Documentary> updated_documentaries)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DocumentaryProducer.class)
 		   																		   .addAnnotatedClass(Documentary.class).buildSessionFactory();
@@ -119,7 +119,10 @@ public class DocumentaryProducerAccess {
 			
 			documentaryProducer.setName(updated_name);
 			documentaryProducer.setEmail(updated_email);
+			documentaryProducer.setStyle(updated_style);
+			documentaryProducer.setNationality(updated_nationality);
 			documentaryProducer.setDocumentaries(updated_documentaries);
+			
 			
 			session.getTransaction().commit();
 			

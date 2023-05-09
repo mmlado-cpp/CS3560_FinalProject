@@ -48,7 +48,7 @@ public class DocumentaryProducerUpdate {
 		btnSubmit.setOnAction(e -> {
 			int id = Integer.valueOf(textField.getText());
 			DocumentaryProducer producer = DocumentaryProducerAccess.getdocumentaryProducer(id);
-			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getDocumentaries());
+			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getStyle(), producer.getNationality(), producer.getDocumentaries());
 			primaryStage.setScene(scene);
 		});
 		
@@ -76,28 +76,40 @@ public class DocumentaryProducerUpdate {
 		return scene;
 	}
 	
-	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, List<Documentary> documentaries)
+	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, String style, String nationality, List<Documentary> documentaries)
 	{
 		Label producerNameLbl = new Label("Update Producer Name: ");
 		Label producerEmailLbl = new Label("Update Producer Email: ");
+		Label producerStyleLbl = new Label("Update Producer Style: ");
+		Label producerNationalityLbl = new Label("Update Producer Nationality: ");
 		
 		TextField producerNameTxtField = new TextField();
 		producerNameTxtField.setText(String.valueOf(name));
 		
 		TextField emailTxtField= new TextField();
 		emailTxtField.setText(String.valueOf(email));
+
+		TextField styleTxtField= new TextField();
+		styleTxtField.setText(String.valueOf(style));
+		
+		TextField nationalityTxtField= new TextField();
+		styleTxtField.setText(String.valueOf(nationality));
 		
 		HBox hbox1 = new HBox(producerNameLbl, producerNameTxtField);
 		HBox hbox2 = new HBox(producerEmailLbl, emailTxtField);
+		HBox hbox3 = new HBox(producerStyleLbl, styleTxtField);
+		HBox hbox4 = new HBox(producerNationalityLbl, nationalityTxtField);
 		
 		hbox1.setSpacing(27);
 		hbox2.setSpacing(18);
+		hbox3.setSpacing(18);
+		hbox4.setSpacing(18);
 		
 		Button btnUpdateProducer= new Button("Update Producer");
 		Button btnBack = new Button("Back");
 		
-		HBox hbox4 = new HBox(btnBack, btnUpdateProducer);
-		hbox4.setSpacing(50);
+		HBox hbox5 = new HBox(btnBack, btnUpdateProducer);
+		hbox5.setSpacing(50);
 		
 		btnUpdateProducer.setMinWidth(100);
 		btnUpdateProducer.setMinHeight(40);
@@ -108,7 +120,7 @@ public class DocumentaryProducerUpdate {
 		btnUpdateProducer.setOnAction(e ->{
 			String updatedName = producerNameTxtField.getText();
 			String updatedEmail = emailTxtField.getText();			
-			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, documentaries);
+			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, name, email, style, nationality, documentaries);
 			showUpdatedAlert(updatedProducer, id);
 		});
 		
@@ -117,12 +129,14 @@ public class DocumentaryProducerUpdate {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(hbox1, hbox2, hbox4);
+		VBox vbox = new VBox(hbox1, hbox2, hbox3, hbox4, hbox5);
 	
 		vbox.setSpacing(50);
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox4,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox5,  new Insets(0, 0, 0, 170));
 		vbox.setAlignment(Pos.CENTER);
 		
 		Scene producerRegistrationScene = new Scene(vbox, 600, 600);

@@ -25,6 +25,12 @@ public class Author
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "subject")
+	private String subject;
+	
+	@Column(name = "nationality")
+	private String nationality;
+	
 	@ManyToOne(cascade={CascadeType.PERSIST})
 	@JoinColumn(name="item_id")
 	private Book book;
@@ -35,6 +41,14 @@ public class Author
 		this.email = email;
 	}
 	
+	public Author(String name, String email, String subject, String nationality) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.subject = subject;
+		this.nationality = nationality;
+	}
+
 	public Author()
 	{
 		
@@ -72,8 +86,24 @@ public class Author
 		this.book = book;
 	}
 
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
 	@Override
 	public String toString() {
-		return "authorId=" + authorId + "\nname=" + name;
+		return "authorId=" + authorId + "\nname=" + name + "\nsubject=" + subject + "\nnationality=" + nationality;
 	}
 }
