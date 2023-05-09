@@ -1,6 +1,7 @@
 package presentation.documentary;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -25,7 +26,7 @@ public class DocumentaryCreate {
 		Label directorLbl = new Label("Enter Director: ");
 		Label lengthLbl = new Label("Enter Length: ");
 		Label releaseDateLbl = new Label("Enter Release Date: ");
-		Label statusLbl = new Label("Enter Status: ");
+		Label statusLbl = new Label("Available?: ");
 		
 		TextField titleTxtField = new TextField();
 		TextField descTxtField = new TextField();
@@ -34,7 +35,10 @@ public class DocumentaryCreate {
 		TextField directorTxtField = new TextField();
 		TextField lengthTxtField = new TextField();
 		TextField releaseDateTxtField = new TextField();
-		TextField statusTxtField= new TextField();
+		ComboBox<Boolean> statusComboBox = new ComboBox<Boolean>();
+		statusComboBox.getItems().add(true);
+		statusComboBox.getItems().add(false);
+		statusComboBox.getSelectionModel().selectFirst();
 		
 		HBox hbox1 = new HBox(titleLbl, titleTxtField);
 		HBox hbox2 = new HBox(descLbl, descTxtField);
@@ -43,7 +47,7 @@ public class DocumentaryCreate {
 		HBox hbox5 = new HBox(directorLbl, directorTxtField);
 		HBox hbox6 = new HBox(lengthLbl, lengthTxtField);
 		HBox hbox7 = new HBox(releaseDateLbl, releaseDateTxtField);
-		HBox hbox8 = new HBox(statusLbl, statusTxtField);
+		HBox hbox8 = new HBox(statusLbl, statusComboBox);
 		
 		hbox1.setSpacing(40);
 		hbox2.setSpacing(75);
@@ -78,7 +82,7 @@ public class DocumentaryCreate {
 			int length = Integer.valueOf(lengthTxtField.getText());
 			String release = releaseDateTxtField.getText();
 			
-			Boolean status = Boolean.valueOf(statusTxtField.getText());
+			Boolean status = Boolean.valueOf(statusComboBox.getSelectionModel().getSelectedItem());
 			
 			boolean createdDocumentary = DocumentaryAccess.createDocumentary(status, title, description, location, dailyPrice, director, length, release);
 			showSubmittedAlert(createdDocumentary, title);
