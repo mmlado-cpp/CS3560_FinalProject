@@ -53,7 +53,7 @@ public class DocumentaryProducerUpdate {
 		btnSubmit.setOnAction(e -> {
 			int id = Integer.valueOf(textField.getText());
 			DocumentaryProducer producer = DocumentaryProducerAccess.getdocumentaryProducer(id);
-			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getDocumentaries());
+			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getStyle(), producer.getNationality(), producer.getDocumentaries());
 			primaryStage.setScene(scene);
 		});
 		
@@ -81,10 +81,12 @@ public class DocumentaryProducerUpdate {
 		return scene;
 	}
 	
-	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, List<Documentary> documentaries)
+	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, String style, String nationality, List<Documentary> documentaries)
 	{
 		Label producerNameLbl = new Label("Update Producer Name: ");
 		Label producerEmailLbl = new Label("Update Producer Email: ");
+		Label producerStyleLbl = new Label("Update Producer Style: ");
+		Label producerNationalityLbl = new Label("Update Producer Nationality: ");
 		Label documentaryLbl = new Label("Choose Documentary: ");
 		
 		TextField producerNameTxtField = new TextField();
@@ -92,6 +94,12 @@ public class DocumentaryProducerUpdate {
 		
 		TextField emailTxtField= new TextField();
 		emailTxtField.setText(String.valueOf(email));
+
+		TextField styleTxtField= new TextField();
+		styleTxtField.setText(String.valueOf(style));
+		
+		TextField nationalityTxtField= new TextField();
+		nationalityTxtField.setText(String.valueOf(nationality));
 		
 		ComboBox<String> documentariesComboBox = new ComboBox<>();
 		
@@ -101,6 +109,7 @@ public class DocumentaryProducerUpdate {
         ToggleGroup addRemoveGroup = new ToggleGroup();
         add.setToggleGroup(addRemoveGroup);
         remove.setToggleGroup(addRemoveGroup);
+        addRemoveGroup.selectToggle(add);
 		
 		//Add all documentary titles to the Combo box
 		List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
@@ -112,17 +121,21 @@ public class DocumentaryProducerUpdate {
 		
 		HBox hbox1 = new HBox(producerNameLbl, producerNameTxtField);
 		HBox hbox2 = new HBox(producerEmailLbl, emailTxtField);
-		HBox hbox3 = new HBox(documentaryLbl, documentariesComboBox, add, remove);
+		HBox hbox3 = new HBox(producerStyleLbl, styleTxtField);
+		HBox hbox4 = new HBox(producerNationalityLbl, nationalityTxtField);
+		HBox hbox5 = new HBox(documentaryLbl, documentariesComboBox, add, remove);
 		
 		hbox1.setSpacing(27);
 		hbox2.setSpacing(18);
-		hbox3.setSpacing(24);
+		hbox3.setSpacing(18);
+		hbox4.setSpacing(18);
+		hbox5.setSpacing(2);
 		
 		Button btnUpdateProducer= new Button("Update Producer");
 		Button btnBack = new Button("Back");
 		
-		HBox hbox4 = new HBox(btnBack, btnUpdateProducer);
-		hbox4.setSpacing(50);
+		HBox hbox6 = new HBox(btnBack, btnUpdateProducer);
+		hbox5.setSpacing(50);
 		
 		btnUpdateProducer.setMinWidth(100);
 		btnUpdateProducer.setMinHeight(40);
@@ -137,7 +150,8 @@ public class DocumentaryProducerUpdate {
 			int documentaryChosenId = (documentariesComboBox.getSelectionModel().getSelectedIndex() < docs.size()) ? 
 					docs.get(documentariesComboBox.getSelectionModel().getSelectedIndex()).getItemId() : -1;
 			boolean addDocumentary = ((RadioButton) addRemoveGroup.getSelectedToggle()).getText().equalsIgnoreCase("Add") ? true : false;
-			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, documentaryChosenId, addDocumentary);
+			
+			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, style, nationality, documentaryChosenId, addDocumentary);
 			showUpdatedAlert(updatedProducer, id);
 		});
 		
@@ -146,12 +160,14 @@ public class DocumentaryProducerUpdate {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(hbox1, hbox2, hbox3, hbox4);
+		VBox vbox = new VBox(hbox1, hbox2, hbox3, hbox4, hbox5, hbox6);
 	
 		vbox.setSpacing(50);
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox4,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox6,  new Insets(0, 0, 0, 170));
 		vbox.setAlignment(Pos.CENTER);
 		
 		Scene producerRegistrationScene = new Scene(vbox, 600, 600);

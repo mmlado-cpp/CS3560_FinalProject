@@ -8,7 +8,7 @@ import domain.Author;
 import domain.Book;
 
 public class AuthorDataAccess {
-	public static boolean createAuthor(String name, String email, int bookId)
+	public static boolean createAuthor(String name, String email, String subject, String nationality, int bookId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Book.class)
 																				   .addAnnotatedClass(Author.class).buildSessionFactory();
@@ -20,7 +20,7 @@ public class AuthorDataAccess {
 			session.beginTransaction();
 			
 			Book tempBook = session.get(Book.class, bookId);
-			Author tempAuthor = new Author(name, email);
+			Author tempAuthor = new Author(name, email, subject, nationality);
 			
 			if(tempBook != null) { // Book ID exists
 				tempBook.addAuthor(tempAuthor); //Add author to book
@@ -73,11 +73,11 @@ public class AuthorDataAccess {
 		return tempAuthor;
 	}
 	
-	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail) { //Overload (When you don't want to change book ID)
-		return updateAuthor(authorId, updatedName, updatedEmail, -1);
+	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail, String updatedSubject, String updatedNationality) { //Overload (When you don't want to change book ID)
+		return updateAuthor(authorId, updatedName, updatedEmail, updatedSubject, updatedNationality, -1);
 	}
 	
-	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail, int updatedBookId)
+	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail, String updatedSubject, String updatedNationality, int updatedBookId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Author.class)
 																				   .addAnnotatedClass(Book.class).buildSessionFactory();
@@ -101,6 +101,8 @@ public class AuthorDataAccess {
 			
 			tempAuthor.setName(updatedName);
 			tempAuthor.setEmail(updatedEmail);
+			tempAuthor.setSubject(updatedSubject);
+			tempAuthor.setNationality(updatedNationality);
 			
 			Book tempBook = session.get(Book.class, updatedBookId);
 			

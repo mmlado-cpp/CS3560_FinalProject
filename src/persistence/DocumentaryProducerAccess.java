@@ -13,7 +13,7 @@ import domain.DocumentaryProducer;
 
 public class DocumentaryProducerAccess {
 	
-	public static DocumentaryProducer createDocumentaryProducer(String name, String email, int documentaryId)
+	public static DocumentaryProducer createDocumentaryProducer(String name, String email, String style, String nationality, int documentaryId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DocumentaryProducer.class)
 																				   .addAnnotatedClass(Documentary.class).buildSessionFactory();
@@ -25,7 +25,7 @@ public class DocumentaryProducerAccess {
 			session.beginTransaction();
 			
 			Documentary tempDocumentary = session.get(Documentary.class, documentaryId);
-			documentaryProducer = new DocumentaryProducer(name, email);
+			documentaryProducer = new DocumentaryProducer(name, email, style, nationality);
 			
 			if(tempDocumentary != null) { // Documentary ID exists
 				tempDocumentary.addProducer(documentaryProducer); //Add producer to doc
@@ -132,7 +132,7 @@ public class DocumentaryProducerAccess {
 		return documentaries;
 	}
 	
-	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, int updated_documentary_id, boolean addDocumentary)
+	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, String updated_style, String updated_nationality, int updated_documentary_id, boolean addDocumentary)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DocumentaryProducer.class)
 		   																		   .addAnnotatedClass(Documentary.class).buildSessionFactory();
@@ -144,8 +144,6 @@ public class DocumentaryProducerAccess {
 		{
 			
 			session.beginTransaction();
-			
-			
 			
 			documentaryProducer = session.get(DocumentaryProducer.class, id);
 			Documentary tempDocumentary = session.get(Documentary.class, updated_documentary_id);
@@ -172,6 +170,11 @@ public class DocumentaryProducerAccess {
 			}
 			
 			session.save(documentaryProducer);
+			
+			documentaryProducer.setName(updated_name);
+			documentaryProducer.setEmail(updated_email);
+			documentaryProducer.setStyle(updated_style);
+			documentaryProducer.setNationality(updated_nationality);
 			
 			session.getTransaction().commit();
 			
@@ -201,6 +204,10 @@ public class DocumentaryProducerAccess {
 			session.beginTransaction();
 			
 			documentaryProducer = session.get(DocumentaryProducer.class, id);
+			
+			for(Documentary doc : documentaryProducer.getDocumentaries()) {
+				doc.removeProducer(documentaryProducer);
+			}
 			
 			session.delete(documentaryProducer);
 			

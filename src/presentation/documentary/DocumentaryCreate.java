@@ -6,12 +6,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import persistence.DocumentaryAccess;
-import presentation.mainMenu.MainMenu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -95,7 +92,7 @@ public class DocumentaryCreate {
 		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox4, hbox5, hbox6, hbox7, hbox8, hbox0);
 	
 		vbox.setSpacing(15);
-//		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox4,  new Insets(0, 0, 0, 170));
