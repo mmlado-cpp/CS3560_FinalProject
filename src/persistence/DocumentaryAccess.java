@@ -3,6 +3,9 @@ package persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -69,7 +72,34 @@ public class DocumentaryAccess {
 		return documentary;
 	}
 	
-	public static List<DocumentaryProducer> getProducers(int code){
+	public static String getProducers(int code){
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		List<DocumentaryProducer> producers = null;
+		String producersString = "";
+		
+		try
+		{
+			
+			session.beginTransaction();
+			
+			producers = session.get(Documentary.class, code).getProducers();
+			producersString = producers.toString();
+			
+			session.getTransaction().commit();
+		
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return producersString;
+	}
+	
+	public static List<DocumentaryProducer> getProducerList(int code){
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		List<DocumentaryProducer> producers = null;
@@ -92,6 +122,34 @@ public class DocumentaryAccess {
 		
 		}
 		return producers;
+	}
+	
+	public static List<Documentary> getAllDocumentaries(){
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		List<Documentary> documentaries = null;
+		
+		try
+		{
+			
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Documentary> criteria = builder.createQuery(Documentary.class);
+			criteria.from(Documentary.class);
+			
+			documentaries = session.createQuery(criteria).getResultList();
+			
+			session.getTransaction().commit();
+		
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return documentaries;
 	}
 	
 	public static boolean updateDocumentary(int code, boolean updated_status, String updated_title, String updated_description, 

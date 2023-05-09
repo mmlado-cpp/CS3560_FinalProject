@@ -77,7 +77,37 @@ public class DocumentaryProducerAccess {
 		return documentaryProducer;
 	}
 	
-	public static List<Documentary> getDocumentaries(int code){
+	public static String getDocumentaries(int code){
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		List<Documentary> documentaries = null;
+		String documentariesString = "";
+		
+		try
+		{
+			
+			session.beginTransaction();
+			
+			documentaries = session.get(DocumentaryProducer.class, code).getDocumentaries();
+			
+			for(Documentary doc : documentaries) {
+				documentariesString += "[id (" + doc.getItemId() + "): " + doc.getTitle() + "] ";
+			}
+			
+			session.getTransaction().commit();
+		
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return documentariesString;
+	}
+	
+	public static List<Documentary> getDocumentaryList(int code){
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		List<Documentary> documentaries = null;
@@ -102,7 +132,7 @@ public class DocumentaryProducerAccess {
 		return documentaries;
 	}
 	
-	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, List<Documentary> updated_documentaries)
+	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, int updated_documentary_id, boolean addDocumentary)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DocumentaryProducer.class)
 		   																		   .addAnnotatedClass(Documentary.class).buildSessionFactory();
@@ -115,11 +145,33 @@ public class DocumentaryProducerAccess {
 			
 			session.beginTransaction();
 			
-			documentaryProducer = session.get(DocumentaryProducer.class, id);
 			
-			documentaryProducer.setName(updated_name);
-			documentaryProducer.setEmail(updated_email);
-			documentaryProducer.setDocumentaries(updated_documentaries);
+			
+			documentaryProducer = session.get(DocumentaryProducer.class, id);
+			Documentary tempDocumentary = session.get(Documentary.class, updated_documentary_id);
+			
+			if(tempDocumentary != null) { // Documentary ID exists
+				if(addDocumentary) {
+					tempDocumentary.addProducer(documentaryProducer); //Add producer to doc
+					documentaryProducer.addDocumentary(tempDocumentary); //Add documentary to producer
+					session.save(tempDocumentary);
+				} else {
+					tempDocumentary.removeProducer(documentaryProducer);
+					documentaryProducer.removeDocumentary(tempDocumentary);
+					session.save(tempDocumentary);
+				}
+			} else { // Document ID doesn't match with anything (So user chose Clear all Documentaries in the combo box)
+				System.out.println("Document ID doesn't match with anything");
+				//For each documentary that the producer did, remove this from producer list
+				for(Documentary doc : documentaryProducer.getDocumentaries()) {
+					System.out.println("Removing from " + doc);
+					doc.removeProducer(documentaryProducer);
+					session.save(doc);
+				}
+				documentaryProducer.setDocumentaries(null);
+			}
+			
+			session.save(documentaryProducer);
 			
 			session.getTransaction().commit();
 			

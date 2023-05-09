@@ -109,10 +109,6 @@ public class Item
 		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
 	}
 	
-	public void updateItemAvailability(boolean isAvailable) {
-		this.isAvailable = isAvailable;
-	}
-	
 	/* End Methods */
 
 	@Override

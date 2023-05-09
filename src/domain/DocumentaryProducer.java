@@ -31,6 +31,12 @@ public class DocumentaryProducer
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "nationality")
+	private String nationality;
+	
+	@Column(name = "style")
+	private String style;
+	
 	@ManyToMany(mappedBy="producers", cascade={CascadeType.PERSIST})
 	private List<Documentary> documentaries;
 	
@@ -81,6 +87,10 @@ public class DocumentaryProducer
 		}
 		
 		documentaries.add(tempDocumentary);
+	}
+	
+	public void removeDocumentary(Documentary tempDocumentary) {
+		documentaries.remove(tempDocumentary);
 	}
 
 	@Override

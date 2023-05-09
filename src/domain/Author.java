@@ -25,6 +25,12 @@ public class Author
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "nationality")
+	private String nationality;
+	
+	@Column(name = "subject")
+	private String subject;
+	
 	@ManyToOne(cascade={CascadeType.PERSIST})
 	@JoinColumn(name="item_id")
 	private Book book;

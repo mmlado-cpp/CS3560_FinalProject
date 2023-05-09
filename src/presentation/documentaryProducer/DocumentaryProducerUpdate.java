@@ -1,6 +1,7 @@
 package presentation.documentaryProducer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import domain.Documentary;
 import domain.DocumentaryProducer;
@@ -10,14 +11,18 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import persistence.DocumentaryAccess;
 import persistence.DocumentaryProducerAccess;
 import persistence.StudentDataAccess;
 
@@ -80,6 +85,7 @@ public class DocumentaryProducerUpdate {
 	{
 		Label producerNameLbl = new Label("Update Producer Name: ");
 		Label producerEmailLbl = new Label("Update Producer Email: ");
+		Label documentaryLbl = new Label("Choose Documentary: ");
 		
 		TextField producerNameTxtField = new TextField();
 		producerNameTxtField.setText(String.valueOf(name));
@@ -87,11 +93,30 @@ public class DocumentaryProducerUpdate {
 		TextField emailTxtField= new TextField();
 		emailTxtField.setText(String.valueOf(email));
 		
+		ComboBox<String> documentariesComboBox = new ComboBox<>();
+		
+		RadioButton add = new RadioButton("Add");
+        RadioButton remove = new RadioButton("Remove");
+        
+        ToggleGroup addRemoveGroup = new ToggleGroup();
+        add.setToggleGroup(addRemoveGroup);
+        remove.setToggleGroup(addRemoveGroup);
+		
+		//Add all documentary titles to the Combo box
+		List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
+		for(Documentary doc : docs) {
+			documentariesComboBox.getItems().add(doc.getTitle());
+		}
+		
+		documentariesComboBox.getItems().add("Remove All Documentaries");
+		
 		HBox hbox1 = new HBox(producerNameLbl, producerNameTxtField);
 		HBox hbox2 = new HBox(producerEmailLbl, emailTxtField);
+		HBox hbox3 = new HBox(documentaryLbl, documentariesComboBox, add, remove);
 		
 		hbox1.setSpacing(27);
 		hbox2.setSpacing(18);
+		hbox3.setSpacing(24);
 		
 		Button btnUpdateProducer= new Button("Update Producer");
 		Button btnBack = new Button("Back");
@@ -107,8 +132,12 @@ public class DocumentaryProducerUpdate {
 		
 		btnUpdateProducer.setOnAction(e ->{
 			String updatedName = producerNameTxtField.getText();
-			String updatedEmail = emailTxtField.getText();			
-			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, documentaries);
+			String updatedEmail = emailTxtField.getText();
+			//If documentary exists, send the ID, if not send -1 (-1 ID will never match any item)
+			int documentaryChosenId = (documentariesComboBox.getSelectionModel().getSelectedIndex() < docs.size()) ? 
+					docs.get(documentariesComboBox.getSelectionModel().getSelectedIndex()).getItemId() : -1;
+			boolean addDocumentary = ((RadioButton) addRemoveGroup.getSelectedToggle()).getText().equalsIgnoreCase("Add") ? true : false;
+			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, documentaryChosenId, addDocumentary);
 			showUpdatedAlert(updatedProducer, id);
 		});
 		
@@ -117,7 +146,7 @@ public class DocumentaryProducerUpdate {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(hbox1, hbox2, hbox4);
+		VBox vbox = new VBox(hbox1, hbox2, hbox3, hbox4);
 	
 		vbox.setSpacing(50);
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));

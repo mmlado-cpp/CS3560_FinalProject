@@ -62,6 +62,10 @@ public class Documentary extends Item
 	public void setProducers(List<DocumentaryProducer> producers) {
 		this.producers = producers;
 	}
+	
+	public void removeProducer(DocumentaryProducer producer) {
+		producers.remove(producer);
+	}
 
 	public int getLength() {
 		return length;

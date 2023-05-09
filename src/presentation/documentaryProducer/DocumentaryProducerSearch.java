@@ -1,30 +1,17 @@
 package presentation.documentaryProducer;
 
 import javafx.scene.Scene;
-import domain.DocumentaryProducer;
-import domain.Student;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene; 
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
-import persistence.DocumentaryAccess;
 import persistence.DocumentaryProducerAccess;
-import persistence.StudentDataAccess;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import presentation.documentary.DocumentaryMenu;
-import presentation.student.StudentMenu;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class DocumentaryProducerSearch {
 	
@@ -52,9 +39,8 @@ public class DocumentaryProducerSearch {
 		
 		btnSearch.setOnAction(e -> {
 			int id = Integer.valueOf(textField.getText());
-			DocumentaryProducer producer = DocumentaryProducerAccess.getdocumentaryProducer(id);
-			String producerStr = producer.toString();
-			textDocumentaryDetails.setText(producerStr);
+			String producer = String.valueOf(DocumentaryProducerAccess.getdocumentaryProducer(id));
+			textDocumentaryDetails.setText(producer);
 		});
 		
 		btnBack.setOnAction(e ->{
