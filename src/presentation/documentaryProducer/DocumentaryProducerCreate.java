@@ -1,12 +1,15 @@
 package presentation.documentaryProducer;
 
+import java.util.List;
+
 import domain.Documentary;
 import domain.DocumentaryProducer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene; 
-import javafx.scene.control.Button; 
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import persistence.DocumentaryAccess;
 import persistence.DocumentaryProducerAccess;
@@ -27,21 +30,31 @@ public class DocumentaryProducerCreate {
 	static Scene documentaryProducerCreateScene(Stage primaryStage){
 		Text text = new Text("Create Documentary Producer");
 		
-		Label idLbl = new Label("Enter documentary ID: ");
+		Label idLbl = new Label("Choose documentary: ");
 		Label nameLbl = new Label("Enter Name: ");
 		Label emailLbl = new Label("Enter Email: ");
 		Label styleLbl = new Label("Enter Style: ");
 		Label nationalityLbl = new Label("Enter Nationality: ");
 		
 		
-		TextField idTxtField = new TextField();
+		ComboBox<String> documentariesComboBox = new ComboBox<>();
+		//Add all documentary titles to the Combo box
+		List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
+		for(Documentary doc : docs) {
+			documentariesComboBox.getItems().add(doc.getTitle());
+		}
+		
+		documentariesComboBox.getItems().add("None");
+		documentariesComboBox.getSelectionModel().selectLast();
+		
+		
 		TextField nameTxtField = new TextField();
 		TextField emailTxtField= new TextField();
 		TextField styleTxtField= new TextField();
 		TextField nationalityTxtField= new TextField();
 		
 		
-		HBox hbox1 = new HBox(idLbl, idTxtField);
+		HBox hbox1 = new HBox(idLbl, documentariesComboBox);
 		HBox hbox2 = new HBox(nameLbl, nameTxtField);
 		HBox hbox3 = new HBox(emailLbl, emailTxtField);
 		HBox hbox4 = new HBox(styleLbl, styleTxtField);
@@ -68,13 +81,14 @@ public class DocumentaryProducerCreate {
 		btnBack.setMinHeight(40);
 		
 		btnCreateProducer.setOnAction(e ->{
-			int id = Integer.valueOf(idTxtField.getText());
+			int documentaryChosenId = (documentariesComboBox.getSelectionModel().getSelectedIndex() < docs.size()) ? 
+					docs.get(documentariesComboBox.getSelectionModel().getSelectedIndex()).getItemId() : -1;
 			String name = nameTxtField.getText();
 			String email = emailTxtField.getText();
 			String style = styleTxtField.getText();
 			String nationality = nationalityTxtField.getText();
 			
-			DocumentaryProducer tempProducer = DocumentaryProducerAccess.createDocumentaryProducer(name, email, style, nationality, id);
+			DocumentaryProducer tempProducer = DocumentaryProducerAccess.createDocumentaryProducer(name, email, style, nationality, documentaryChosenId);
 			
 			boolean createdProducer = (tempProducer != null);
 			showCreatedAlert(createdProducer, name);

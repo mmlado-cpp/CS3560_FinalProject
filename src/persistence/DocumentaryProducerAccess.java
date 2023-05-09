@@ -107,17 +107,23 @@ public class DocumentaryProducerAccess {
 		return documentariesString;
 	}
 	
-	public static List<Documentary> getDocumentaryList(int code){
+	public static List<Integer> getDocumentaryList(int code){
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
-		List<Documentary> documentaries = null;
+		List<Integer> documentaryIds = new ArrayList<Integer>();
 		
 		try
 		{
 			
 			session.beginTransaction();
 			
-			documentaries = session.get(DocumentaryProducer.class, code).getDocumentaries();
+			List<Documentary> documentaries = session.get(DocumentaryProducer.class, code).getDocumentaries();
+			
+			if(documentaries != null) {
+				for(Documentary doc : documentaries) {
+					documentaryIds.add(doc.getItemId());
+				}
+			}
 			
 			session.getTransaction().commit();
 		
@@ -129,7 +135,7 @@ public class DocumentaryProducerAccess {
 			factory.close();
 		
 		}
-		return documentaries;
+		return documentaryIds;
 	}
 	
 	public static boolean updateDocumentaryProducer(int id, String updated_name, String updated_email, String updated_style, String updated_nationality, int updated_documentary_id, boolean addDocumentary)
@@ -158,8 +164,7 @@ public class DocumentaryProducerAccess {
 					documentaryProducer.removeDocumentary(tempDocumentary);
 					session.save(tempDocumentary);
 				}
-			} else { // Document ID doesn't match with anything (So user chose Clear all Documentaries in the combo box)
-				System.out.println("Document ID doesn't match with anything");
+			} else if (updated_documentary_id == -2){ // Document ID doesn't match with anything (So user chose Clear all Documentaries in the combo box)
 				//For each documentary that the producer did, remove this from producer list
 				for(Documentary doc : documentaryProducer.getDocumentaries()) {
 					System.out.println("Removing from " + doc);

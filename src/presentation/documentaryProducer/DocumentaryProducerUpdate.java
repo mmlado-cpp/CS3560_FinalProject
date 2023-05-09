@@ -112,12 +112,7 @@ public class DocumentaryProducerUpdate {
         addRemoveGroup.selectToggle(add);
 		
 		//Add all documentary titles to the Combo box
-		List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
-		for(Documentary doc : docs) {
-			documentariesComboBox.getItems().add(doc.getTitle());
-		}
-		
-		documentariesComboBox.getItems().add("Remove All Documentaries");
+		addDocumentariesToComboBox(documentariesComboBox, id);
 		
 		HBox hbox1 = new HBox(producerNameLbl, producerNameTxtField);
 		HBox hbox2 = new HBox(producerEmailLbl, emailTxtField);
@@ -129,13 +124,13 @@ public class DocumentaryProducerUpdate {
 		hbox2.setSpacing(18);
 		hbox3.setSpacing(18);
 		hbox4.setSpacing(18);
-		hbox5.setSpacing(2);
+		hbox5.setSpacing(5);
 		
 		Button btnUpdateProducer= new Button("Update Producer");
 		Button btnBack = new Button("Back");
 		
 		HBox hbox6 = new HBox(btnBack, btnUpdateProducer);
-		hbox5.setSpacing(50);
+		hbox6.setSpacing(50);
 		
 		btnUpdateProducer.setMinWidth(100);
 		btnUpdateProducer.setMinHeight(40);
@@ -143,15 +138,37 @@ public class DocumentaryProducerUpdate {
 		btnBack.setMinWidth(100);
 		btnBack.setMinHeight(40);
 		
+		add.setOnAction(e -> {
+			addDocumentariesToComboBox(documentariesComboBox, id);
+		});
+		
+		remove.setOnAction(e -> {
+			removeDocumentariesToComboBox(documentariesComboBox, id);
+		});
+		
 		btnUpdateProducer.setOnAction(e ->{
+			final List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
+			
 			String updatedName = producerNameTxtField.getText();
 			String updatedEmail = emailTxtField.getText();
-			//If documentary exists, send the ID, if not send -1 (-1 ID will never match any item)
-			int documentaryChosenId = (documentariesComboBox.getSelectionModel().getSelectedIndex() < docs.size()) ? 
-					docs.get(documentariesComboBox.getSelectionModel().getSelectedIndex()).getItemId() : -1;
+			String updatedStyle = styleTxtField.getText();
+			String updatedNationality = nationalityTxtField.getText();
+			
+			int comboBoxIndex = documentariesComboBox.getSelectionModel().getSelectedIndex();
+			int documentaryId = -1;
+			int comboBoxSize = documentariesComboBox.getItems().size();
+			
+			if(comboBoxIndex < comboBoxSize - 1) {
+				documentaryId = docs.get(comboBoxIndex).getItemId();
+			} else if (comboBoxIndex == comboBoxSize - 1) {
+				documentaryId = -1;
+			}/* else {
+				documentaryId = -2;
+			}*/
+
 			boolean addDocumentary = ((RadioButton) addRemoveGroup.getSelectedToggle()).getText().equalsIgnoreCase("Add") ? true : false;
 			
-			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, style, nationality, documentaryChosenId, addDocumentary);
+			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, updatedStyle, updatedNationality, documentaryId, addDocumentary);
 			showUpdatedAlert(updatedProducer, id);
 		});
 		
@@ -167,6 +184,7 @@ public class DocumentaryProducerUpdate {
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox4,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox5,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox6,  new Insets(0, 0, 0, 170));
 		vbox.setAlignment(Pos.CENTER);
 		
@@ -193,5 +211,34 @@ public class DocumentaryProducerUpdate {
 		}
 	}
 	
-
+	private static void addDocumentariesToComboBox(ComboBox<String> comboBox, int producerId) {
+		final List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
+		final List<Integer> producerDocIds = DocumentaryProducerAccess.getDocumentaryList(producerId);
+		
+		comboBox.getItems().clear();
+		for(Documentary doc : docs) {
+			boolean notFound = true;
+			for(int prodDoc : producerDocIds) {
+				if(doc.getItemId() == prodDoc) {
+					notFound = false;
+				}
+			}
+			
+			if(notFound) {
+				comboBox.getItems().add(doc.getTitle());
+			}
+		}
+		comboBox.getItems().add("Do Nothing");
+		comboBox.getSelectionModel().select("Do Nothing");
+	}
+	
+	private static void removeDocumentariesToComboBox(ComboBox<String> comboBox, int producerId) {
+		final List<Integer> producerDocs = DocumentaryProducerAccess.getDocumentaryList(producerId);
+		comboBox.getItems().clear();
+		for(int docId : producerDocs) {
+			comboBox.getItems().add(DocumentaryAccess.getDocumentary(docId).getTitle());
+		}
+		comboBox.getItems().add("Do Nothing");
+		comboBox.getSelectionModel().select("Do Nothing");
+	}
 }

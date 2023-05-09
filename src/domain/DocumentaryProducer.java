@@ -114,7 +114,7 @@ public class DocumentaryProducer
 
 	@Override
 	public String toString() {
-		return "DocumentaryProducer \nid=" + id + "\nname=" + name + "\nemail=" + email + "\nstyle=" + style + "\nationality=" + nationality + "\ndocumentary=" + DocumentaryProducerAccess.getDocumentaries(id);
+		return "DocumentaryProducer \nid=" + id + "\nname=" + name + "\nemail=" + email + "\nstyle=" + style + "\nnationality=" + nationality + "\ndocumentary=" + DocumentaryProducerAccess.getDocumentaries(id);
 	}
 
 }
