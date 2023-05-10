@@ -33,7 +33,7 @@ public class DocumentaryCreate {
 		Label lengthLbl = new Label("Enter Length: ");
 		Label releaseDateLbl = new Label("Enter Release Date: ");
 		Label statusLbl = new Label("Available?: ");
-		Label producerLbl = new Label("Select Producers: ");
+		Label producerLbl = new Label("Select Producer: ");
 		
 		TextField titleTxtField = new TextField();
 		TextField descTxtField = new TextField();

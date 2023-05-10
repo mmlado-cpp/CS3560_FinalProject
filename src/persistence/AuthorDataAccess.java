@@ -1,11 +1,19 @@
 package persistence;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import domain.Author;
 import domain.Book;
+import domain.Documentary;
+import domain.DocumentaryProducer;
 
 public class AuthorDataAccess {
 	public static boolean createAuthor(String name, String email, String subject, String nationality, int bookId)
@@ -24,6 +32,7 @@ public class AuthorDataAccess {
 			
 			if(tempBook != null) { // Book ID exists
 				tempBook.addAuthor(tempAuthor); //Add author to book
+				tempAuthor.addBook(tempBook);
 				session.save(tempBook);
 			} else { // Book ID doesn't match with anything
 				System.out.println("Book ID does not match with any existing book");
@@ -73,11 +82,66 @@ public class AuthorDataAccess {
 		return tempAuthor;
 	}
 	
-	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail, String updatedSubject, String updatedNationality) { //Overload (When you don't want to change book ID)
-		return updateAuthor(authorId, updatedName, updatedEmail, updatedSubject, updatedNationality, -1);
+	public static List<Integer> getBookList(int code){
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Author.class).addAnnotatedClass(Book.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		List<Integer> bookIds = new ArrayList<Integer>();
+		
+		try
+		{
+			
+			session.beginTransaction();
+			
+			List<Book> books = session.get(Author.class, code).getBooks();
+			
+			if(books != null) {
+				for(Book book : books) {
+					bookIds.add(book.getItemId());
+				}
+			}
+			
+			session.getTransaction().commit();
+		
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return bookIds;
 	}
 	
-	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail, String updatedSubject, String updatedNationality, int updatedBookId)
+	public static List<Author> getAllAuthors(){
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Author.class).addAnnotatedClass(Book.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		List<Author> authors = null;
+		
+		try
+		{
+			
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Author> criteria = builder.createQuery(Author.class);
+			criteria.from(Author.class);
+			
+			authors = session.createQuery(criteria).getResultList();
+			
+			session.getTransaction().commit();
+		
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return authors;
+	}
+	
+	public static boolean updateAuthor(int authorId, String updatedName, String updatedEmail, String updatedSubject, String updatedNationality, int updatedBookId, boolean addBook)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Author.class)
 																				   .addAnnotatedClass(Book.class).buildSessionFactory();
@@ -90,28 +154,24 @@ public class AuthorDataAccess {
 			session.beginTransaction();
 			
 			tempAuthor = session.get(Author.class, authorId);
+			Book tempBook = session.get(Book.class, updatedBookId);
 			
-			if(tempAuthor == null) {
-				System.out.println("Author ID does not match with any existing author");
-				return flag;
-			}
-			if(updatedBookId != -1) {
-				tempAuthor.setBook(session.get(Book.class, updatedBookId));
+			if(tempBook != null) { // Documentary ID exists
+				if(addBook) {
+					tempBook.addAuthor(tempAuthor); //Add producer to doc
+					tempAuthor.addBook(tempBook); //Add documentary to producer
+					session.save(tempBook);
+				} else {
+					tempBook.removeAuthor(tempAuthor);
+					tempAuthor.removeBook(tempBook);
+					session.save(tempBook);
+				}
 			}
 			
 			tempAuthor.setName(updatedName);
 			tempAuthor.setEmail(updatedEmail);
 			tempAuthor.setSubject(updatedSubject);
 			tempAuthor.setNationality(updatedNationality);
-			
-			Book tempBook = session.get(Book.class, updatedBookId);
-			
-			if(tempBook != null) {
-				tempBook.addAuthor(tempAuthor);
-				session.save(tempBook);
-			} else {
-				System.out.println("Book ID does not match with any existing book");
-			}
 			
 			session.save(tempAuthor);
 			

@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -31,9 +35,8 @@ public class Author
 	@Column(name = "nationality")
 	private String nationality;
 
-	@ManyToOne(cascade={CascadeType.PERSIST})
-	@JoinColumn(name="item_id")
-	private Book book;
+	@ManyToMany(mappedBy="authors", cascade={CascadeType.PERSIST})
+	private List<Book> books;
 	
 	public Author(String name, String email)
 	{
@@ -78,12 +81,12 @@ public class Author
 		this.authorId = authorId;
 	}
 
-	public Book getBook() {
-		return book;
+	public List<Book> getBooks() {
+		return books;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 
 	public String getSubject() {
@@ -100,6 +103,18 @@ public class Author
 
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
+	}
+	
+	public void addBook(Book tempBook) {
+		if(books == null) {
+			books = new ArrayList<Book>();
+		}
+		
+		books.add(tempBook);
+	}
+	
+	public void removeBook(Book tempBook) {
+		books.remove(tempBook);
 	}
 
 	@Override
