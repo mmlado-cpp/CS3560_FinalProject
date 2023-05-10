@@ -23,16 +23,21 @@ public class LoanDataAccess {
 		try
 		{
 			session.beginTransaction();
-			
-			Student student = session.get(Student.class, broncoId);
+		
 			Item item = session.get(Item.class, itemId);
-			Loan loan = new Loan(student, item, dueDate);
 			
-			session.save(loan);
+			if(item.getIsAvailable())
+			{
+				Student student = session.get(Student.class, broncoId);
+				
+				Loan loan = new Loan(student, item, dueDate);
 			
-			session.getTransaction().commit();
+				session.save(loan);
 			
-			flag = true;
+				session.getTransaction().commit();
+			
+				flag = true;
+			}
 		} catch(Exception e)
 		{
 			 System.out.println("Problem creating session factory");

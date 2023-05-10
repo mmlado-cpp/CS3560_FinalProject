@@ -1,15 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
 <hibernate-configuration>
- <session-factory>
-  <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-  <property name="hibernate.connection.password">123</property>
-  <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/LibraryManagementSystem</property>
-  <property name="hibernate.connection.username">postgres</property>
-  <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-  <property name="hibernate.connection.pool_size">1</property>
-  <property name="hibernate.show_sql">true</property>
-  <property name="hibernate.current_session_context_class">thread</property>
- </session-factory>
+
+    <session-factory>
+
+        <!-- JDBC Database connection settings -->
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/LibraryManagementSystem</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">123</property>
+
+        <!-- JDBC connection pool settings ... using built-in test pool -->
+        <property name="connection.pool_size">1</property>
+
+        <!-- Select our SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Echo the SQL to stdout -->
+        <property name="show_sql">true</property>
+
+		<!-- Set the current session context -->
+		<property name="current_session_context_class">thread</property>
+ 
+    </session-factory>
+
 </hibernate-configuration>
