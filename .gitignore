@@ -10,4 +10,6 @@
 /src/domain/test.java
 
 # ignore bin
-/bin/
+bin/
+
+bin/domain/
