@@ -20,6 +20,16 @@ import javafx.scene.control.Label;
 //import presentation.StudentMenu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import domain.Student;
+import domain.Item;
+import domain.Loan;
 
 public class CreateLoan {
 	static Scene createLoanScene(Stage primaryStage){
@@ -62,8 +72,10 @@ public class CreateLoan {
 				int broncoId = Integer.valueOf(broncoIdTxtField.getText());
 				int itemId = Integer.valueOf(itemIdTxtField.getText());
 				String loanDueDate = loanDueDateTxtField.getText();
-				boolean loanCreated = LoanDataAccess.createLoan(broncoId, itemId, loanDueDate);
+				String loanCreated = LoanDataAccess.createLoan(broncoId, itemId, loanDueDate);
 				showLoanCreatedAlert(loanCreated);
+				List<Loan> overDueLoans = LoanDataAccess.getLoans(broncoId);
+				
 		});
 		
 		btnBack.setOnAction(e ->{
@@ -86,12 +98,19 @@ public class CreateLoan {
 		return studentRegistrationScene;
 	}
 	
-	private static void showLoanCreatedAlert(boolean createdStudent) {
-		if(createdStudent)
+	private static void showLoanCreatedAlert(String loanCreated) {
+		if(loanCreated.equals("created"))
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Loan Added!");
 			alert.setContentText("Loan is added into the system!");
+			alert.showAndWait();
+		}
+		else if(loanCreated.equals("itemNotAvailable"))
+		{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Item Availability");
+			alert.setContentText("Item is not available for loaning");
 			alert.showAndWait();
 		}
 		else
