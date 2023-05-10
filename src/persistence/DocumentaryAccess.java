@@ -134,6 +134,37 @@ public class DocumentaryAccess {
 		return producers;
 	}
 	
+	public static List<Integer> getProducerIds(int code){
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		List<Integer> producerIds = new ArrayList<Integer>();
+		
+		try
+		{
+			
+			session.beginTransaction();
+			
+			List<DocumentaryProducer> producers = session.get(Documentary.class, code).getProducers();
+			
+			if(producers != null) {
+				for(DocumentaryProducer producer : producers) {
+					producerIds.add(producer.getId());
+				}
+			}
+			
+			session.getTransaction().commit();
+		
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return producerIds;
+	}
+	
 	public static List<Documentary> getAllDocumentaries(){
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
@@ -163,7 +194,7 @@ public class DocumentaryAccess {
 	}
 	
 	public static boolean updateDocumentary(int code, boolean updated_status, String updated_title, String updated_description, 
-			   String updated_location, double updated_dailyPrice, String updated_director, int updated_length, String updated_releaseDate)
+			   String updated_location, double updated_dailyPrice, String updated_director, int updated_length, String updated_releaseDate, int updated_producer_id, boolean addProducer)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Documentary.class).addAnnotatedClass(DocumentaryProducer.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
@@ -176,6 +207,7 @@ public class DocumentaryAccess {
 			session.beginTransaction();
 			
 			documentary = session.get(Documentary.class, code);
+			DocumentaryProducer tempProducer = session.get(DocumentaryProducer.class, updated_producer_id);
 			
 			documentary.setIsAvailable(updated_status);
 			documentary.setTitle(updated_title);
@@ -185,6 +217,20 @@ public class DocumentaryAccess {
 			documentary.setDirector(updated_director);
 			documentary.setLength(updated_length);
 			documentary.setReleaseDate(updated_releaseDate);
+			
+			if(tempProducer != null) { // Documentary ID exists
+				if(addProducer) {
+					documentary.addProducer(tempProducer); //Add producer to doc
+					tempProducer.addDocumentary(documentary); //Add documentary to producer
+					session.save(tempProducer);
+				} else {
+					documentary.removeProducer(tempProducer);
+					tempProducer.removeDocumentary(documentary);
+					session.save(tempProducer);
+				}
+			}
+			
+			session.save(documentary);
 			
 			session.getTransaction().commit();
 			

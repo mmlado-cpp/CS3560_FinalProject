@@ -28,6 +28,8 @@ import persistence.StudentDataAccess;
 
 public class DocumentaryProducerUpdate {
 	
+	static List<Integer> documentaryIds;
+	
 	static Scene updateDocumentaryProducerScene(Stage primaryStage)
 	{
 		Text title= new Text("Update Producer");
@@ -111,9 +113,6 @@ public class DocumentaryProducerUpdate {
         remove.setToggleGroup(addRemoveGroup);
         addRemoveGroup.selectToggle(add);
 		
-		//Add all documentary titles to the Combo box
-		addDocumentariesToComboBox(documentariesComboBox, id);
-		
 		HBox hbox1 = new HBox(producerNameLbl, producerNameTxtField);
 		HBox hbox2 = new HBox(producerEmailLbl, emailTxtField);
 		HBox hbox3 = new HBox(producerStyleLbl, styleTxtField);
@@ -138,12 +137,14 @@ public class DocumentaryProducerUpdate {
 		btnBack.setMinWidth(100);
 		btnBack.setMinHeight(40);
 		
+		documentaryIds = addDocumentariesToComboBox(documentariesComboBox, id);
+		
 		add.setOnAction(e -> {
-			addDocumentariesToComboBox(documentariesComboBox, id);
+			documentaryIds = addDocumentariesToComboBox(documentariesComboBox, id);
 		});
 		
 		remove.setOnAction(e -> {
-			removeDocumentariesToComboBox(documentariesComboBox, id);
+			documentaryIds = removeDocumentariesToComboBox(documentariesComboBox, id);
 		});
 		
 		btnUpdateProducer.setOnAction(e ->{
@@ -159,17 +160,19 @@ public class DocumentaryProducerUpdate {
 			int comboBoxSize = documentariesComboBox.getItems().size();
 			
 			if(comboBoxIndex < comboBoxSize - 1) {
-				documentaryId = docs.get(comboBoxIndex).getItemId();
-			} else if (comboBoxIndex == comboBoxSize - 1) {
-				documentaryId = -1;
-			}/* else {
-				documentaryId = -2;
-			}*/
+				documentaryId = documentaryIds.get(comboBoxIndex);
+			}
 
 			boolean addDocumentary = ((RadioButton) addRemoveGroup.getSelectedToggle()).getText().equalsIgnoreCase("Add") ? true : false;
 			
 			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, updatedStyle, updatedNationality, documentaryId, addDocumentary);
 			showUpdatedAlert(updatedProducer, id);
+			
+			if(addDocumentary) {
+				documentaryIds = addDocumentariesToComboBox(documentariesComboBox, id);
+			} else {
+				documentaryIds = removeDocumentariesToComboBox(documentariesComboBox, id);
+			}
 		});
 		
 		btnBack.setOnAction(e ->{
@@ -211,9 +214,10 @@ public class DocumentaryProducerUpdate {
 		}
 	}
 	
-	private static void addDocumentariesToComboBox(ComboBox<String> comboBox, int producerId) {
+	private static List<Integer> addDocumentariesToComboBox(ComboBox<String> comboBox, int producerId) {
 		final List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
 		final List<Integer> producerDocIds = DocumentaryProducerAccess.getDocumentaryList(producerId);
+		final List<Integer> currentIdList = new ArrayList<Integer>();
 		
 		comboBox.getItems().clear();
 		for(Documentary doc : docs) {
@@ -226,13 +230,16 @@ public class DocumentaryProducerUpdate {
 			
 			if(notFound) {
 				comboBox.getItems().add(doc.getTitle());
+				currentIdList.add(doc.getItemId());
 			}
 		}
 		comboBox.getItems().add("Do Nothing");
 		comboBox.getSelectionModel().select("Do Nothing");
+		
+		return currentIdList;
 	}
 	
-	private static void removeDocumentariesToComboBox(ComboBox<String> comboBox, int producerId) {
+	private static List<Integer> removeDocumentariesToComboBox(ComboBox<String> comboBox, int producerId) {
 		final List<Integer> producerDocs = DocumentaryProducerAccess.getDocumentaryList(producerId);
 		comboBox.getItems().clear();
 		for(int docId : producerDocs) {
@@ -240,5 +247,7 @@ public class DocumentaryProducerUpdate {
 		}
 		comboBox.getItems().add("Do Nothing");
 		comboBox.getSelectionModel().select("Do Nothing");
+		
+		return producerDocs;
 	}
 }

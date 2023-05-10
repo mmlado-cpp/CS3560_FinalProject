@@ -206,12 +206,12 @@ public class DocumentaryProducerAccess {
 				documentaryProducer.setDocumentaries(null);
 			}
 			
-			session.save(documentaryProducer);
-			
 			documentaryProducer.setName(updated_name);
 			documentaryProducer.setEmail(updated_email);
 			documentaryProducer.setStyle(updated_style);
 			documentaryProducer.setNationality(updated_nationality);
+			
+			session.save(documentaryProducer);
 			
 			session.getTransaction().commit();
 			
