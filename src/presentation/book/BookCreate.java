@@ -1,5 +1,9 @@
 package presentation.book;
 
+import java.util.List;
+
+import domain.Author;
+import domain.DocumentaryProducer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,11 +13,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import persistence.AuthorDataAccess;
 import persistence.BookDataAccess;
+import persistence.DocumentaryProducerAccess;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -30,6 +37,7 @@ public class BookCreate {
 		Label publisherLbl = new Label("Enter Publisher: ");
 		Label releaseDate = new Label("Enter Publication Date: ");
 		Label statusLbl = new Label("Enter Status: ");
+		Label authorLbl = new Label("Select Author: ");
 
 		TextField titleTxtField = new TextField();
 		TextField descTxtField = new TextField();
@@ -38,11 +46,22 @@ public class BookCreate {
 		TextField lengthTxtField = new TextField();
 		TextField publisherTxtField = new TextField();
 		TextField releaseDateTxtField = new TextField();
-		TextField statusTxtField= new TextField();
+		
+		ComboBox<Boolean> statusComboBox = new ComboBox<Boolean>();
+		statusComboBox.getItems().add(true);
+		statusComboBox.getItems().add(false);
+		statusComboBox.getSelectionModel().selectFirst();
+		ComboBox<String> authorComboBox = new ComboBox<String>();
+		List<Author> authors = AuthorDataAccess.getAllAuthors();
+		for(Author author : authors) {
+			authorComboBox.getItems().add(author.getName());
+		}
+		authorComboBox.getItems().add("None");
+		authorComboBox.getSelectionModel().selectLast();
 
-		VBox labelVBox = new VBox(titleLbl, descLbl, locationLbl, dailyPriceLbl, lengthLbl, publisherLbl, releaseDate, statusLbl);
+		VBox labelVBox = new VBox(titleLbl, descLbl, locationLbl, dailyPriceLbl, lengthLbl, publisherLbl, releaseDate, statusLbl, authorLbl);
 		labelVBox.setSpacing(14);
-		VBox inputVBox = new VBox(titleTxtField, descTxtField, locationTxtField, dailyPriceTxtField, lengthTxtField, publisherTxtField, releaseDateTxtField, statusTxtField);
+		VBox inputVBox = new VBox(titleTxtField, descTxtField, locationTxtField, dailyPriceTxtField, lengthTxtField, publisherTxtField, releaseDateTxtField, statusComboBox, authorComboBox);
 		inputVBox.setSpacing(6);
 
 		Button btnCreateBook = new Button("Create Book");
@@ -67,10 +86,14 @@ public class BookCreate {
 			double dailyPrice = Double.valueOf(dailyPriceTxtField.getText());
 			int length = Integer.valueOf(lengthTxtField.getText());
 			String publisher = publisherTxtField.getText();
-			String release = releaseDateTxtField.getText(); //TODO: parse Date
-			Boolean status = Boolean.valueOf(statusTxtField.getText());
+			String release = releaseDateTxtField.getText();
+			Boolean status = Boolean.valueOf(statusComboBox.getSelectionModel().getSelectedItem());
+			
+			int authorId = (authorComboBox.getSelectionModel().getSelectedIndex() < authors.size()) ? 
+					authors.get(authorComboBox.getSelectionModel().getSelectedIndex()).getAuthorId() : -1;
 
-			boolean createdBook = BookDataAccess.createBook(status, title, description, location, dailyPrice, length, null, publisher, null);
+			boolean createdBook = BookDataAccess.createBook(status, title, description, location, dailyPrice, 
+					length, publisher, release, authorId);
 			showSubmittedAlert(createdBook, title);
 		});
 

@@ -1,7 +1,9 @@
-package presentation.documentaryProducer;
+package presentation.author;
 
 import java.util.List;
 
+import domain.Author;
+import domain.Book;
 import domain.Documentary;
 import domain.DocumentaryProducer;
 import javafx.application.Application;
@@ -11,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import persistence.AuthorDataAccess;
+import persistence.BookDataAccess;
 import persistence.DocumentaryAccess;
 import persistence.DocumentaryProducerAccess;
 import javafx.scene.Scene;
@@ -26,26 +30,26 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class DocumentaryProducerCreate {
-	static Scene documentaryProducerCreateScene(Stage primaryStage){
-		Text text = new Text("Create Documentary Producer");
+public class AuthorCreate {
+	static Scene authorCreateScene(Stage primaryStage){
+		Text text = new Text("Create Author");
 		
-		Label idLbl = new Label("Choose documentary: ");
+		Label idLbl = new Label("Choose book: ");
 		Label nameLbl = new Label("Enter Name: ");
 		Label emailLbl = new Label("Enter Email: ");
-		Label styleLbl = new Label("Enter Style: ");
+		Label styleLbl = new Label("Enter Subject: ");
 		Label nationalityLbl = new Label("Enter Nationality: ");
 		
 		
-		ComboBox<String> documentariesComboBox = new ComboBox<>();
+		ComboBox<String> booksComboBox = new ComboBox<>();
 		//Add all documentary titles to the Combo box
-		List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
-		for(Documentary doc : docs) {
-			documentariesComboBox.getItems().add(doc.getTitle());
+		List<Book> books = BookDataAccess.getAllBooks();
+		for(Book book : books) {
+			booksComboBox.getItems().add(book.getTitle());
 		}
 		
-		documentariesComboBox.getItems().add("None");
-		documentariesComboBox.getSelectionModel().selectLast();
+		booksComboBox.getItems().add("None");
+		booksComboBox.getSelectionModel().selectLast();
 		
 		
 		TextField nameTxtField = new TextField();
@@ -54,7 +58,7 @@ public class DocumentaryProducerCreate {
 		TextField nationalityTxtField= new TextField();
 		
 		
-		HBox hbox1 = new HBox(idLbl, documentariesComboBox);
+		HBox hbox1 = new HBox(idLbl, booksComboBox);
 		HBox hbox2 = new HBox(nameLbl, nameTxtField);
 		HBox hbox3 = new HBox(emailLbl, emailTxtField);
 		HBox hbox4 = new HBox(styleLbl, styleTxtField);
@@ -66,7 +70,7 @@ public class DocumentaryProducerCreate {
 		hbox4.setSpacing(85);
 		hbox5.setSpacing(50);
 		
-		Button btnCreateProducer = new Button("Create Documentary Producer");
+		Button btnCreateProducer = new Button("Create Author");
 		Button btnBack = new Button("Back");
 		
 		HBox hbox6 = new HBox(btnBack, btnCreateProducer);
@@ -81,21 +85,21 @@ public class DocumentaryProducerCreate {
 		btnBack.setMinHeight(40);
 		
 		btnCreateProducer.setOnAction(e ->{
-			int documentaryChosenId = (documentariesComboBox.getSelectionModel().getSelectedIndex() < docs.size()) ? 
-					docs.get(documentariesComboBox.getSelectionModel().getSelectedIndex()).getItemId() : -1;
+			int documentaryChosenId = (booksComboBox.getSelectionModel().getSelectedIndex() < books.size()) ? 
+					books.get(booksComboBox.getSelectionModel().getSelectedIndex()).getItemId() : -1;
 			String name = nameTxtField.getText();
 			String email = emailTxtField.getText();
 			String style = styleTxtField.getText();
 			String nationality = nationalityTxtField.getText();
 			
-			DocumentaryProducer tempProducer = DocumentaryProducerAccess.createDocumentaryProducer(name, email, style, nationality, documentaryChosenId);
+			Author tempAuthor = AuthorDataAccess.createAuthor(name, email, style, nationality, documentaryChosenId);
 			
-			boolean createdProducer = (tempProducer != null);
+			boolean createdProducer = (tempAuthor != null);
 			showCreatedAlert(createdProducer, name);
 		});
 		
 		btnBack.setOnAction(e ->{
-			Scene scene = DocumentaryProducerMenu.documentaryProducerMenuScene(primaryStage);
+			Scene scene = AuthorMenu.authorMenuScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
@@ -120,7 +124,7 @@ public class DocumentaryProducerCreate {
 		if(createdProducer)
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Producer Added!");
+			alert.setHeaderText("Author Added!");
 			alert.setContentText(name + " is added into the system!");
 			alert.showAndWait();
 		}
@@ -128,7 +132,7 @@ public class DocumentaryProducerCreate {
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Error!");
-			alert.setContentText("There was a problem with adding the producer into the system.");
+			alert.setContentText("There was a problem with adding the author into the system.");
 			alert.showAndWait();
 		}
 	}

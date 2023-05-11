@@ -1,6 +1,8 @@
 package presentation.book;
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
+import presentation.author.AuthorMenu;
+import presentation.documentaryProducer.DocumentaryProducerMenu;
 import presentation.mainMenu.MainMenu;
 import presentation.student.ViewStudents;
 import javafx.geometry.Pos;
@@ -20,6 +22,7 @@ public class BookMenu {
 		Button btnReadBook = new Button("Read Book");
 		Button btnUpdateBook = new Button("Update Book");
 		Button btnDeleteBook = new Button("Delete Book");
+		Button btnAuthor = new Button("Manage Authors");
 		Button btnBack = new Button("Back");
 
 		text.setFont(new Font(30));
@@ -52,6 +55,13 @@ public class BookMenu {
 			Scene scene = BookDelete.bookDeleteScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
+		
+		btnAuthor.setMinWidth(150);
+		btnAuthor.setMinHeight(50);
+		btnAuthor.setOnAction(e ->{
+			Scene scene = AuthorMenu.authorMenuScene(primaryStage);
+			primaryStage.setScene(scene);
+		});
 
 		btnBack.setMinWidth(150);
 		btnBack.setMinHeight(50);
@@ -60,9 +70,9 @@ public class BookMenu {
 			primaryStage.setScene(scene);
 		});
 
-		VBox vbox = new VBox(text, btnCreateBook, btnReadBook, btnUpdateBook, btnDeleteBook, btnBack);
+		VBox vbox = new VBox(text, btnCreateBook, btnReadBook, btnUpdateBook, btnDeleteBook, btnAuthor, btnBack);
 
-		vbox.setSpacing(50);
+		vbox.setSpacing(40);
 
 		vbox.setAlignment(Pos.CENTER);
 
