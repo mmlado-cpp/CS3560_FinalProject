@@ -93,11 +93,11 @@ public class LoanDataAccess {
 		return loans;
 	}
 	
-	public static boolean updateLoan(int broncoId, String updatedName, String updatedCourse, String updatedEmail)
+	public static boolean updateLoan(int loanId, String updateDueDate, String loanDate)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class).addAnnotatedClass(Item.class).addAnnotatedClass(Loan.class).buildSessionFactory();		
 		Session session = factory.getCurrentSession();
-		Student student = null;
+		Loan loan = null;
 		boolean flag = false;
 		
 		try
@@ -105,11 +105,11 @@ public class LoanDataAccess {
 			
 			session.beginTransaction();
 			
-			student = session.get(Student.class, broncoId);
+			loan = session.get(Loan.class, loanId);
 			
-			student.setName(updatedName);
-			student.setCourse(updatedCourse);
-			student.setEmail(updatedEmail);
+			loan.setLoanID(loanId);
+			loan.setDuedate(updateDueDate);
+			loan.setLoanDate(loanDate);
 			
 			session.getTransaction().commit();
 			
