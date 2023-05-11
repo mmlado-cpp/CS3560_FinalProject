@@ -6,19 +6,23 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import domain.Student;
+import domain.Loan;
+import domain.Item;
 
 public class StudentDataAccess {
 	
-	public static boolean createStudent(int broncoId, String name, String course, String email)
+	public static boolean createStudent(String name, String course, String email)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
+																				   .addAnnotatedClass(Loan.class)
+																				   .addAnnotatedClass(Item.class).buildSessionFactory();
 		boolean flag = false;
 		Session session = factory.getCurrentSession();
 		
 		try
 		{
 			
-			Student student = new Student(broncoId, name, course, email);
+			Student student = new Student(name, course, email);
 			
 			session.beginTransaction();
 			
@@ -40,7 +44,9 @@ public class StudentDataAccess {
 	
 	public static Student getStudent(int broncoId)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
+																				   .addAnnotatedClass(Loan.class)
+																				   .addAnnotatedClass(Item.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		Student student = null;
 		
@@ -66,7 +72,9 @@ public class StudentDataAccess {
 	
 	public static boolean updateStudent(int broncoId, String updatedName, String updatedCourse, String updatedEmail)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
+				   																   .addAnnotatedClass(Loan.class)
+				   																   .addAnnotatedClass(Item.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		Student student = null;
 		boolean flag = false;
@@ -98,7 +106,9 @@ public class StudentDataAccess {
 	
 	public static boolean deleteStudent(int broncoId)
 	{
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
+				   																   .addAnnotatedClass(Loan.class)
+				   																   .addAnnotatedClass(Item.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		Student student = null;
 		boolean flag = false;

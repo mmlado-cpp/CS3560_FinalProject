@@ -18,6 +18,7 @@ import presentation.mainMenu.MainMenu;
 //- check overdue loans
 //- generate financial report
 import presentation.student.StudentRegistration;
+import presentation.loan.CreateLoan;
 
 public class LoanMenu {
 	public static Scene loanMenuScene(Stage primaryStage)
@@ -62,8 +63,8 @@ public class LoanMenu {
 		});
 		
 		btnCreateLoan.setOnAction(e ->{
-			//Scene scene = StudentRegistration.studentRegistrationScene(primaryStage);
-			//primaryStage.setScene(scene);
+			Scene scene = CreateLoan.createLoanScene(primaryStage);
+			primaryStage.setScene(scene);
 		});
 		btnUpdateLoan.setOnAction(e ->{
 			//Scene scene = StudentRegistration.studentRegistrationScene(primaryStage);
@@ -93,7 +94,7 @@ public class LoanMenu {
 		
 		VBox vbox = new VBox(text, btnCreateLoan, btnUpdateLoan, btnSearchLoan, btnDeleteLoan, btnCheckOverdue, btnGFR, btnBack);
 	
-		vbox.setSpacing(50);
+		vbox.setSpacing(25);
 		
 		vbox.setAlignment(Pos.CENTER);
 		

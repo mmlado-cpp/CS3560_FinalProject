@@ -1,15 +1,23 @@
 package domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.io.*;
+import java.util.*;
 
 @Entity
 @Table(name = "student")
 public class Student
 {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "bronco_id")
 	private int broncoId;
 	
@@ -22,11 +30,14 @@ public class Student
 	@Column(name="email")
 	private String email;
 	
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+	private List<Loan> loans;
+	
+	
 	//create a list of loans that the student has 
 
-	public Student(int broncoId, String name, String course, String email)
+	public Student(String name, String course, String email)
 	{
-		this.broncoId = broncoId;
 		this.name = name;
 		this.course = course;
 		this.email = email;
@@ -68,6 +79,20 @@ public class Student
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public List<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
+	
+//	public List<Loan> createOverdueLoansList(List<Loan> loans) {
+//		for(Loan loan : loans) {
+//			
+//		}
+//	}
 
 	@Override
 	public String toString() {

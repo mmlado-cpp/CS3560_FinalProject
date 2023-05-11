@@ -2,7 +2,10 @@ package domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.Table;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Table(name = "item")
@@ -36,6 +41,9 @@ public class Item
 	
 	@Column(name = "daily_price")
 	private double dailyPrice;
+	
+//	@OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
+//	private Loan loan;
 	
 	public Item(boolean isAvailable, String title, String description, 
 					   String location, double dailyPrice)

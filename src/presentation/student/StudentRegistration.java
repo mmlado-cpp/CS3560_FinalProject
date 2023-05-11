@@ -24,23 +24,18 @@ public class StudentRegistration {
 	static Scene studentRegistrationScene(Stage primaryStage){
 		Text text = new Text("Create Student");
 		
-		Label broncoIdLbl = new Label("Enter BroncoID: ");
 		Label studentNameLbl = new Label("Enter Student Name: ");
 		Label studentCourseLbl = new Label("Enter Student Course: ");
 		Label studentEmailLbl = new Label("Email: ");
 		
-		TextField broncoIdTxtField = new TextField();
 		TextField studentNameTxtField = new TextField();
 		TextField studentCourseTxtField= new TextField();
 		TextField studentEmailTxtField = new TextField();
 		
-		
-		HBox hbox1 = new HBox(broncoIdLbl, broncoIdTxtField);
 		HBox hbox2 = new HBox(studentNameLbl, studentNameTxtField);
 		HBox hbox3 = new HBox(studentCourseLbl, studentCourseTxtField);
 		HBox hbox4 = new HBox(studentEmailLbl, studentEmailTxtField);
 		
-		hbox1.setSpacing(55);
 		hbox2.setSpacing(27);
 		hbox3.setSpacing(25);
 		hbox4.setSpacing(108);
@@ -60,11 +55,10 @@ public class StudentRegistration {
 		btnBack.setMinHeight(40);
 		
 		btnCreateStudent.setOnAction(e ->{
-			int broncoId = Integer.valueOf(broncoIdTxtField.getText());
 			String name = studentNameTxtField.getText();
 			String course = studentCourseTxtField.getText();
 			String email = studentEmailTxtField.getText();			
-			boolean createdStudent = StudentDataAccess.createStudent(broncoId, name, course, email);
+			boolean createdStudent = StudentDataAccess.createStudent(name, course, email);
 			showCreatedAlert(createdStudent, name);
 		});
 		
@@ -73,10 +67,9 @@ public class StudentRegistration {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox4, hbox5);
+		VBox vbox = new VBox(text, hbox2, hbox3, hbox4, hbox5);
 	
 		vbox.setSpacing(50);
-		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox4,  new Insets(0, 0, 0, 170));
