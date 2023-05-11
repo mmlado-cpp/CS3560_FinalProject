@@ -106,7 +106,7 @@ public class Loan {
 
 	public double calculateFinalLoanPrice() {
 		
-		double dailyItemPrice = 0.5; //needs to be implemented as a foreign key
+		double dailyItemPrice = this.item.getDailyPrice(); //needs to be implemented as a foreign key
 		double totalPrice = 0.0;
 		
 		Date current = new Date();
