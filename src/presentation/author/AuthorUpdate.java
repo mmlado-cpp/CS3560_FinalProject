@@ -1,8 +1,10 @@
-package presentation.documentaryProducer;
+package presentation.author;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import domain.Author;
+import domain.Book;
 import domain.Documentary;
 import domain.DocumentaryProducer;
 import domain.Student;
@@ -22,20 +24,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import persistence.AuthorDataAccess;
+import persistence.BookDataAccess;
 import persistence.DocumentaryAccess;
 import persistence.DocumentaryProducerAccess;
 import persistence.StudentDataAccess;
 
-public class DocumentaryProducerUpdate {
+public class AuthorUpdate {
 	
-	static List<Integer> documentaryIds;
+	static List<Integer> bookIds;
 	
-	static Scene updateDocumentaryProducerScene(Stage primaryStage)
+	static Scene updateAuthorScene(Stage primaryStage)
 	{
-		Text title= new Text("Update Producer");
+		Text title= new Text("Update Author");
 		title.setFont(new Font(30));
 		
-		Label lbl = new Label("Enter Producer Id: ");
+		Label lbl = new Label("Enter Author Id: ");
 		
 		TextField textField = new TextField();
 		
@@ -54,13 +58,13 @@ public class DocumentaryProducerUpdate {
 		
 		btnSubmit.setOnAction(e -> {
 			int id = Integer.valueOf(textField.getText());
-			DocumentaryProducer producer = DocumentaryProducerAccess.getdocumentaryProducer(id);
-			Scene scene = updateProducerScene2(primaryStage, producer.getId(), producer.getName(), producer.getEmail(), producer.getStyle(), producer.getNationality(), producer.getDocumentaries());
+			Author author = AuthorDataAccess.getAuthor(id);
+			Scene scene = updateProducerScene2(primaryStage, author.getAuthorId(), author.getName(), author.getEmail(), author.getSubject(), author.getNationality(), author.getBooks());
 			primaryStage.setScene(scene);
 		});
 		
 		btnBack.setOnAction(e ->{
-			Scene scene = DocumentaryProducerMenu.documentaryProducerMenuScene(primaryStage);
+			Scene scene = AuthorMenu.authorMenuScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
@@ -83,13 +87,13 @@ public class DocumentaryProducerUpdate {
 		return scene;
 	}
 	
-	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, String style, String nationality, List<Documentary> documentaries)
+	static Scene updateProducerScene2(Stage primaryStage, int id, String name, String email, String style, String nationality, List<Book> books)
 	{
-		Label producerNameLbl = new Label("Update Producer Name: ");
-		Label producerEmailLbl = new Label("Update Producer Email: ");
-		Label producerStyleLbl = new Label("Update Producer Style: ");
-		Label producerNationalityLbl = new Label("Update Producer Nationality: ");
-		Label documentaryLbl = new Label("Choose Documentary: ");
+		Label producerNameLbl = new Label("Update Author Name: ");
+		Label producerEmailLbl = new Label("Update Author Email: ");
+		Label producerStyleLbl = new Label("Update Author Subject: ");
+		Label producerNationalityLbl = new Label("Update Author Nationality: ");
+		Label documentaryLbl = new Label("Choose Book: ");
 		
 		TextField producerNameTxtField = new TextField();
 		producerNameTxtField.setText(String.valueOf(name));
@@ -125,7 +129,7 @@ public class DocumentaryProducerUpdate {
 		hbox4.setSpacing(18);
 		hbox5.setSpacing(5);
 		
-		Button btnUpdateProducer= new Button("Update Producer");
+		Button btnUpdateProducer= new Button("Update Author");
 		Button btnBack = new Button("Back");
 		
 		HBox hbox6 = new HBox(btnBack, btnUpdateProducer);
@@ -137,14 +141,14 @@ public class DocumentaryProducerUpdate {
 		btnBack.setMinWidth(100);
 		btnBack.setMinHeight(40);
 		
-		documentaryIds = addDocumentariesToComboBox(documentariesComboBox, id);
+		bookIds = addDocumentariesToComboBox(documentariesComboBox, id);
 		
 		add.setOnAction(e -> {
-			documentaryIds = addDocumentariesToComboBox(documentariesComboBox, id);
+			bookIds = addDocumentariesToComboBox(documentariesComboBox, id);
 		});
 		
 		remove.setOnAction(e -> {
-			documentaryIds = removeDocumentariesToComboBox(documentariesComboBox, id);
+			bookIds = removeDocumentariesToComboBox(documentariesComboBox, id);
 		});
 		
 		btnUpdateProducer.setOnAction(e ->{
@@ -158,23 +162,23 @@ public class DocumentaryProducerUpdate {
 			int comboBoxSize = documentariesComboBox.getItems().size();
 			
 			if(comboBoxIndex < comboBoxSize - 1) {
-				documentaryId = documentaryIds.get(comboBoxIndex);
+				documentaryId = bookIds.get(comboBoxIndex);
 			}
 
 			boolean addDocumentary = ((RadioButton) addRemoveGroup.getSelectedToggle()).getText().equalsIgnoreCase("Add") ? true : false;
 			
-			boolean updatedProducer = DocumentaryProducerAccess.updateDocumentaryProducer(id, updatedName, updatedEmail, updatedStyle, updatedNationality, documentaryId, addDocumentary);
+			boolean updatedProducer = AuthorDataAccess.updateAuthor(id, updatedName, updatedEmail, updatedStyle, updatedNationality, documentaryId, addDocumentary);
 			showUpdatedAlert(updatedProducer, id);
 			
 			if(addDocumentary) {
-				documentaryIds = addDocumentariesToComboBox(documentariesComboBox, id);
+				bookIds = addDocumentariesToComboBox(documentariesComboBox, id);
 			} else {
-				documentaryIds = removeDocumentariesToComboBox(documentariesComboBox, id);
+				bookIds = removeDocumentariesToComboBox(documentariesComboBox, id);
 			}
 		});
 		
 		btnBack.setOnAction(e ->{
-			Scene scene = DocumentaryProducerMenu.documentaryProducerMenuScene(primaryStage);
+			Scene scene = AuthorMenu.authorMenuScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
@@ -212,23 +216,23 @@ public class DocumentaryProducerUpdate {
 		}
 	}
 	
-	private static List<Integer> addDocumentariesToComboBox(ComboBox<String> comboBox, int producerId) {
-		final List<Documentary> docs = DocumentaryAccess.getAllDocumentaries();
-		final List<Integer> producerDocIds = DocumentaryProducerAccess.getDocumentaryList(producerId);
+	private static List<Integer> addDocumentariesToComboBox(ComboBox<String> comboBox, int authorId) {
+		final List<Book> books = BookDataAccess.getAllBooks();
+		final List<Integer> authorIds = AuthorDataAccess.getBookList(authorId);
 		final List<Integer> currentIdList = new ArrayList<Integer>();
 		
 		comboBox.getItems().clear();
-		for(Documentary doc : docs) {
+		for(Book book : books) {
 			boolean notFound = true;
-			for(int prodDoc : producerDocIds) {
-				if(doc.getItemId() == prodDoc) {
+			for(int author : authorIds) {
+				if(book.getItemId() == author) {
 					notFound = false;
 				}
 			}
 			
 			if(notFound) {
-				comboBox.getItems().add(doc.getTitle());
-				currentIdList.add(doc.getItemId());
+				comboBox.getItems().add(book.getTitle());
+				currentIdList.add(book.getItemId());
 			}
 		}
 		comboBox.getItems().add("Do Nothing");
@@ -237,15 +241,15 @@ public class DocumentaryProducerUpdate {
 		return currentIdList;
 	}
 	
-	private static List<Integer> removeDocumentariesToComboBox(ComboBox<String> comboBox, int producerId) {
-		final List<Integer> producerDocs = DocumentaryProducerAccess.getDocumentaryList(producerId);
+	private static List<Integer> removeDocumentariesToComboBox(ComboBox<String> comboBox, int authorId) {
+		final List<Integer> bookIds = AuthorDataAccess.getBookList(authorId);
 		comboBox.getItems().clear();
-		for(int docId : producerDocs) {
-			comboBox.getItems().add(DocumentaryAccess.getDocumentary(docId).getTitle());
+		for(int book : bookIds) {
+			comboBox.getItems().add(BookDataAccess.getBook(book).getTitle());
 		}
 		comboBox.getItems().add("Do Nothing");
 		comboBox.getSelectionModel().select("Do Nothing");
 		
-		return producerDocs;
+		return bookIds;
 	}
 }

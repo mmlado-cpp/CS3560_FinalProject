@@ -16,11 +16,11 @@ import domain.Documentary;
 import domain.DocumentaryProducer;
 
 public class AuthorDataAccess {
-	public static boolean createAuthor(String name, String email, String subject, String nationality, int bookId)
+	public static Author createAuthor(String name, String email, String subject, String nationality, int bookId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Book.class)
 																				   .addAnnotatedClass(Author.class).buildSessionFactory();
-		boolean flag = false;
+		Author tempAuthor = null;
 		Session session = factory.getCurrentSession();
 		
 		try
@@ -28,7 +28,7 @@ public class AuthorDataAccess {
 			session.beginTransaction();
 			
 			Book tempBook = session.get(Book.class, bookId);
-			Author tempAuthor = new Author(name, email, subject, nationality);
+			tempAuthor = new Author(name, email, subject, nationality);
 			
 			if(tempBook != null) { // Book ID exists
 				tempBook.addAuthor(tempAuthor); //Add author to book
@@ -41,8 +41,7 @@ public class AuthorDataAccess {
 			session.save(tempAuthor);
 			
 			session.getTransaction().commit();
-			
-			flag = true;
+
 		} catch(Exception e)
 		{
 			 System.out.println("Problem creating session factory");
@@ -51,7 +50,7 @@ public class AuthorDataAccess {
 			factory.close();
 		
 		}
-		return flag;
+		return tempAuthor;
 	}
 	
 	public static Author getAuthor(int authorId)
@@ -189,19 +188,19 @@ public class AuthorDataAccess {
 		return flag;
 	}
 	
-	public static Author deleteAuthor(int authorId)
+	public static boolean deleteAuthor(int authorId)
 	{
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Author.class)
 																				   .addAnnotatedClass(Book.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
-		Author tempAuthor = null;
+		boolean flag = true;
 		
 		try
 		{
 			
 			session.beginTransaction();
 		
-			tempAuthor = session.get(Author.class, authorId);
+			Author tempAuthor = session.get(Author.class, authorId);
 			
 			session.delete(tempAuthor);
 			
@@ -209,12 +208,13 @@ public class AuthorDataAccess {
 
 		} catch(Exception e)
 		{
-			 System.out.println("Problem creating session factory");
-		     e.printStackTrace();
+			flag = false;
+			System.out.println("Problem creating session factory");
+		    e.printStackTrace();
 		} finally {
 			factory.close();
 		
 		}
-		return tempAuthor;
+		return flag;
 	}
 }
