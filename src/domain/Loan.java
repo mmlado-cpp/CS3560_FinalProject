@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +16,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.time.temporal.ChronoUnit;
 
 
 @Entity
@@ -51,7 +53,7 @@ public class Loan {
 		this.student = student;
 		this.item = item;
 		this.duedate = duedate;
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date obj = new Date();
 		this.loanDate = formatter.format(obj);
 	}
@@ -103,9 +105,70 @@ public class Loan {
 	}
 
 	public double calculateFinalLoanPrice() {
-		double finalPrice = 0.0;
-		return finalPrice;
 		
+		double dailyItemPrice = this.item.getDailyPrice(); //needs to be implemented as a foreign key
+		double totalPrice = 0.0;
+		
+		Date current = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		double totalprice = 0.0;
+		
+		int daysBetween;
+		int daysLoanBetween;
+		
+		Date dateDueDate;
+		Date dateLoanDate;
+		
+		try {
+            
+            dateDueDate = new SimpleDateFormat("MM/dd/yyyy").parse(this.duedate);
+            dateLoanDate = new SimpleDateFormat("MM/dd/yyyy").parse(this.loanDate);
+            daysBetween = daysBetween(current, dateDueDate);
+            daysLoanBetween = daysBetween(dateLoanDate, dateDueDate);
+            if(this.isOverdue()) {
+    			int daysOverdue =( -1* daysBetween) - daysLoanBetween;
+    			totalPrice = dailyItemPrice * daysBetween + (0.1*dailyItemPrice)*daysOverdue;
+    		}
+            else {
+            	totalPrice = dailyItemPrice * daysBetween;
+            }
+            
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }  
+		return totalPrice;
+
+	}
+	public static int daysBetween(Date d1, Date d2){
+	    return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+	}
+	
+	public boolean isOverdue() {
+		
+		Date current = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		double totalprice = 0.0;
+		boolean isOverdue = false;
+		
+		
+		Date dateDueDate;
+		try {
+			dateDueDate = new SimpleDateFormat("MM/dd/yyyy").parse(this.duedate);
+			if(current.compareTo(dateDueDate)==1){
+		         isOverdue =true;
+		         overdueLoans.add(this);
+		    }
+			isOverdue = false;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return isOverdue;
+	
+       
+   
 	}
 	
 	public void checkOverdueLoans() {
