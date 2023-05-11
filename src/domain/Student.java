@@ -30,8 +30,8 @@ public class Student
 	@Column(name="email")
 	private String email;
 	
-	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-	private List<Loan> loans;
+//	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+//	private List<Loan> loans;
 	
 	
 	//create a list of loans that the student has 
