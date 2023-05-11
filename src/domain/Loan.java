@@ -33,7 +33,7 @@ public class Loan {
 	@Column(name = "loan_id")
 	private int loanID;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "bronco_id")
 	private Student student;
 	
@@ -177,4 +177,18 @@ public class Loan {
 		
 		
 	}
+
+	@Override
+	public String toString() {
+		return "Loan [loanID=" + loanID + ", student=" + student + ", item=" + item + ", duedate=" + duedate
+				+ ", loanDate=" + loanDate + "]";
+	}
+	
+	
+	
+	
+
+	
+
+
 }
