@@ -42,8 +42,8 @@ public class Item
 	@Column(name = "daily_price")
 	private double dailyPrice;
 	
-	@OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
-	private Loan loan;
+//	@OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
+//	private Loan loan;
 	
 	public Item(boolean isAvailable, String title, String description, 
 					   String location, double dailyPrice)
