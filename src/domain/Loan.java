@@ -14,8 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 import java.text.SimpleDateFormat;
+//import java.lang.module.Configuration;
 import java.text.DateFormat;
+import org.hibernate.cfg.Configuration;
 
 
 @Entity
@@ -125,27 +132,49 @@ public class Loan {
 		
 		
 	}
+	
 	public static void deleteLoan(int loanID) { //Is this supposed to be static?
 		
 		
 	}
+	
 	public static void convertToFinancialReport() { //I think this would go in the student class as generate financial report
 		
 		
 	}
-	public static void updateLoan(int loanID) { //Is this supposed to be static?
-			
-			
-		}
+
+	public static void updateLoan(int loanID, Item newItem, String newDueDate) {
+	    SessionFactory factory = new Configuration().configure().addAnnotatedClass(Loan.class).buildSessionFactory();
+	    Session session = null;
+	    Transaction transaction = null;
+
+	    try {
+	        session = factory.openSession();
+	        transaction = session.beginTransaction();
+
+	        Loan loan = session.get(Loan.class, loanID);
+	        if (loan != null) {
+	            loan.setItem(newItem);
+	            loan.setDuedate(newDueDate);
+	        }
+
+	        transaction.commit();
+	    } catch (Exception e) {
+	        if (transaction != null) {
+	            transaction.rollback();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	        if (session != null) {
+	            session.close();
+	        }
+	        factory.close();
+	    }
+	}
+
+
 	public static void displayReciept() { //Is this supposed to be static?
 		
 		
 	}
-	
-	
-	
-	
-
-	
-
 }

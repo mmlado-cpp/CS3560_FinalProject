@@ -80,9 +80,11 @@ public class Student
 		this.email = email;
 	}
 	
-	public List<Loan> createOverdueLoansList() {
-		
-	}
+	/*public List<Loan> createOverdueLoansList(List<Loan> loans) {
+		for(Loan loan : loans) {
+			
+		}
+	}*/
 
 	@Override
 	public String toString() {
