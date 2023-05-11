@@ -5,7 +5,7 @@
 -- Dumped from database version 15.2
 -- Dumped by pg_dump version 15.2
 
--- Started on 2023-05-10 20:51:42
+-- Started on 2023-05-11 00:35:27
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -542,7 +542,7 @@ ALTER TABLE ONLY public.loan
     ADD CONSTRAINT student_fk FOREIGN KEY (bronco_id) REFERENCES public.student(bronco_id);
 
 
--- Completed on 2023-05-10 20:51:42
+-- Completed on 2023-05-11 00:35:28
 
 --
 -- PostgreSQL database dump complete
