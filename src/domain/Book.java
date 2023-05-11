@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -19,25 +22,29 @@ public class Book extends Item
 	@Column(name = "number_pages")
 	private int numberPages;
 
-	@OneToMany(mappedBy="book", cascade={CascadeType.PERSIST})
+	@ManyToMany(cascade={CascadeType.PERSIST})
+	@JoinTable(
+	        name = "book_author", 
+	        joinColumns = { @JoinColumn(name = "item_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "author_id") }
+	    )
 	private List<Author> authors;
 	
 	@Column(name = "publisher")
 	private String publisher;
 	
 	@Column(name = "publication_date")
-	private Date publicationDate;
+	private String publicationDate;
 	
 	public Book() {
 		
 	}
 	
 	public Book(boolean isAvailable, String title, String description, String location, double dailyPrice, 
-			int numberPages, List<Author> authors, String publisher, Date publicationDate)
+			int numberPages, String publisher, String publicationDate)
 	{
 		super(isAvailable, title, description, location, dailyPrice);
 		this.numberPages = numberPages;
-		this.authors = authors;
 		this.publisher = publisher;
 		this.publicationDate = publicationDate;
 	}
@@ -66,11 +73,11 @@ public class Book extends Item
 		this.publisher = publisher;
 	}
 
-	public Date getPublicationDate() {
+	public String getPublicationDate() {
 		return publicationDate;
 	}
 
-	public void setPublicationDate(Date publicationDate) {
+	public void setPublicationDate(String publicationDate) {
 		this.publicationDate = publicationDate;
 	}
 	
@@ -80,7 +87,10 @@ public class Book extends Item
 		}
 		
 		authors.add(tempAuthor);
-		tempAuthor.setBook(this);
+	}
+	
+	public void removeAuthor(Author author) {
+		authors.remove(author);
 	}
 	
 	//@Override TODO: remove comment when superclass is implemented

@@ -1,14 +1,20 @@
 package presentation.documentary;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 
 import domain.Documentary;
+import domain.DocumentaryProducer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,8 +22,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import persistence.DocumentaryAccess;
+import persistence.DocumentaryProducerAccess;
 
 public class DocumentaryUpdate {
+	
+	static List<Integer> producerIds;
 	
 	public static Scene documentaryUpdateScene(Stage primaryStage)
 	{
@@ -71,7 +80,7 @@ public class DocumentaryUpdate {
 		return scene;
 	}
 	
-	static Scene updateDocumentaryScene2(Stage primaryStage, int code, boolean status, String title, String description, 
+	static Scene updateDocumentaryScene2(Stage primaryStage, int id, boolean status, String title, String description, 
 			   String location, double dailyPrice, String director, int length, String releaseDate)
 	{
 		Text text = new Text("Update Documentary");
@@ -84,6 +93,7 @@ public class DocumentaryUpdate {
 		Label lengthLbl = new Label("Update Length: ");
 		Label releaseDateLbl = new Label("Update Release Date: ");
 		Label statusLbl = new Label("Update Status: ");
+		Label producerLbl = new Label("Select Producers: ");
 		
 		TextField titleTxtField = new TextField();
 		titleTxtField.setText(String.valueOf(title));
@@ -106,8 +116,20 @@ public class DocumentaryUpdate {
 		TextField releaseDateTxtField = new TextField();
 		releaseDateTxtField.setText(String.valueOf(releaseDate));
 		
-		TextField statusTxtField= new TextField();
-		statusTxtField.setText(String.valueOf(status));
+		ComboBox<Boolean> statusComboBox = new ComboBox<Boolean>();
+		statusComboBox.getItems().add(true);
+		statusComboBox.getItems().add(false);
+		statusComboBox.getSelectionModel().select(Boolean.valueOf(status));
+		
+		ComboBox<String> producerComboBox = new ComboBox<String>();
+		
+		RadioButton add = new RadioButton("Add");
+        RadioButton remove = new RadioButton("Remove");
+        
+        ToggleGroup addRemoveGroup = new ToggleGroup();
+        add.setToggleGroup(addRemoveGroup);
+        remove.setToggleGroup(addRemoveGroup);
+        addRemoveGroup.selectToggle(add);
 		
 		HBox hbox2 = new HBox(titleLbl, titleTxtField);
 		HBox hbox3 = new HBox(descLbl, descTxtField);
@@ -116,7 +138,8 @@ public class DocumentaryUpdate {
 		HBox hbox6 = new HBox(directorLbl, directorTxtField);
 		HBox hbox7 = new HBox(lengthLbl, lengthTxtField);
 		HBox hbox8 = new HBox(releaseDateLbl, releaseDateTxtField);
-		HBox hbox9 = new HBox(statusLbl, statusTxtField);
+		HBox hbox9 = new HBox(statusLbl, statusComboBox);
+		HBox hbox10 = new HBox(producerLbl, producerComboBox, add, remove);
 		
 		hbox2.setSpacing(40);
 		hbox3.setSpacing(75);
@@ -142,6 +165,16 @@ public class DocumentaryUpdate {
 		btnBack.setMinWidth(100);
 		btnBack.setMinHeight(40);
 		
+		producerIds = addProducersToComboBox(producerComboBox, id);
+		
+		add.setOnAction(e -> {
+			producerIds = addProducersToComboBox(producerComboBox, id);
+		});
+		
+		remove.setOnAction(e -> {
+			producerIds = removeProducersToComboBox(producerComboBox, id);
+		});
+		
 		btnUpdateDocumentary.setOnAction(e ->{
 			String updated_title = titleTxtField.getText();
 			String updated_description = descTxtField.getText();
@@ -150,11 +183,27 @@ public class DocumentaryUpdate {
 			String updated_director = directorTxtField.getText();
 			int updated_length = Integer.valueOf(lengthTxtField.getText());
 			String updated_release = releaseDateTxtField.getText();
+			Boolean updated_status = Boolean.valueOf(statusComboBox.getSelectionModel().getSelectedItem());
 			
-			Boolean updated_status = Boolean.valueOf(statusTxtField.getText());
+			int comboBoxIndex = producerComboBox.getSelectionModel().getSelectedIndex();
+			int producerId = -1;
+			int comboBoxSize = producerComboBox.getItems().size();
 			
-			boolean updated_Documentary = DocumentaryAccess.updateDocumentary(code, updated_status, updated_title, updated_description, updated_location, updated_dailyPrice, updated_director, updated_length, updated_release);
-			showUpdatedAlert(updated_Documentary, code);
+			if(comboBoxIndex < comboBoxSize - 1) {
+				producerId = producerIds.get(comboBoxIndex);
+			}
+			
+			boolean addProducer = ((RadioButton) addRemoveGroup.getSelectedToggle()).getText().equalsIgnoreCase("Add") ? true : false;
+			
+			System.out.println("producerId = " + producerId);
+			boolean updated_Documentary = DocumentaryAccess.updateDocumentary(id, updated_status, updated_title, updated_description, updated_location, updated_dailyPrice, updated_director, updated_length, updated_release, producerId, addProducer);
+			showUpdatedAlert(updated_Documentary, id);
+			
+			if(addProducer) {
+				producerIds = addProducersToComboBox(producerComboBox, id);
+			} else {
+				producerIds = removeProducersToComboBox(producerComboBox, id);
+			}
 		});
 		
 		btnBack.setOnAction(e ->{
@@ -162,7 +211,7 @@ public class DocumentaryUpdate {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(text, hbox2, hbox3, hbox4, hbox5, hbox6, hbox7, hbox8, hbox9, hbox0);
+		VBox vbox = new VBox(text, hbox2, hbox3, hbox4, hbox5, hbox6, hbox7, hbox8, hbox9, hbox10, hbox0);
 	
 		vbox.setSpacing(15);
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
@@ -173,6 +222,7 @@ public class DocumentaryUpdate {
 		vbox.setMargin(hbox7,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox8,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox9,  new Insets(0, 0, 0, 170));
+		vbox.setMargin(hbox10,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox0,  new Insets(0, 0, 0, 170));
 		vbox.setAlignment(Pos.CENTER);
 		
@@ -199,5 +249,41 @@ public class DocumentaryUpdate {
 		}
 	}
 	
-
+	private static List<Integer> addProducersToComboBox(ComboBox<String> comboBox, int docId) {
+		final List<DocumentaryProducer> producers = DocumentaryProducerAccess.getAllProducers();
+		final List<Integer> docIds = DocumentaryAccess.getProducerIds(docId);
+		final List<Integer> currentIdList = new ArrayList<Integer>();
+		
+		comboBox.getItems().clear();
+		for(DocumentaryProducer producer : producers) {
+			boolean notFound = true;
+			for(int prodDoc : docIds) {
+				if(producer.getId() == prodDoc) {
+					notFound = false;
+				}
+			}
+			
+			if(notFound) {
+				comboBox.getItems().add(producer.getName());
+				currentIdList.add(producer.getId());
+			}
+		}
+		comboBox.getItems().add("Do Nothing");
+		comboBox.getSelectionModel().select("Do Nothing");
+		
+		return currentIdList;
+	}
+	
+	private static List<Integer> removeProducersToComboBox(ComboBox<String> comboBox, int docId) {
+		final List<Integer> docIds = DocumentaryAccess.getProducerIds(docId);
+		
+		comboBox.getItems().clear();
+		for(int prodDoc : docIds) {
+			comboBox.getItems().add(DocumentaryProducerAccess.getdocumentaryProducer(prodDoc).getName());
+		}
+		comboBox.getItems().add("Do Nothing");
+		comboBox.getSelectionModel().select("Do Nothing");
+		
+		return docIds;
+	}
 }
