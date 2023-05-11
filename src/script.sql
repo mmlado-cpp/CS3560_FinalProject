@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.2
--- Dumped by pg_dump version 15.2
+-- Dumped from database version 15.1
+-- Dumped by pg_dump version 15.1
 
--- Started on 2023-05-08 13:38:44
+-- Started on 2023-05-09 00:47:40
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 214 (class 1259 OID 16506)
+-- TOC entry 214 (class 1259 OID 41030)
 -- Name: author; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -37,7 +37,7 @@ CREATE TABLE public.author (
 ALTER TABLE public.author OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 16511)
+-- TOC entry 215 (class 1259 OID 41035)
 -- Name: author_author_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -53,7 +53,7 @@ CREATE SEQUENCE public.author_author_id_seq
 ALTER TABLE public.author_author_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3356 (class 0 OID 0)
+-- TOC entry 3368 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: author_author_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -62,7 +62,7 @@ ALTER SEQUENCE public.author_author_id_seq OWNED BY public.author.author_id;
 
 
 --
--- TOC entry 216 (class 1259 OID 16512)
+-- TOC entry 216 (class 1259 OID 41036)
 -- Name: book; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -77,7 +77,7 @@ CREATE TABLE public.book (
 ALTER TABLE public.book OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 16517)
+-- TOC entry 217 (class 1259 OID 41041)
 -- Name: book_book_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -93,7 +93,7 @@ CREATE SEQUENCE public.book_book_id_seq
 ALTER TABLE public.book_book_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3357 (class 0 OID 0)
+-- TOC entry 3369 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: book_book_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -102,7 +102,7 @@ ALTER SEQUENCE public.book_book_id_seq OWNED BY public.book.item_id;
 
 
 --
--- TOC entry 220 (class 1259 OID 16537)
+-- TOC entry 218 (class 1259 OID 41042)
 -- Name: documentary; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -117,7 +117,7 @@ CREATE TABLE public.documentary (
 ALTER TABLE public.documentary OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 16536)
+-- TOC entry 219 (class 1259 OID 41047)
 -- Name: documentary_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -133,7 +133,7 @@ CREATE SEQUENCE public.documentary_item_id_seq
 ALTER TABLE public.documentary_item_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3358 (class 0 OID 0)
+-- TOC entry 3370 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: documentary_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -142,7 +142,7 @@ ALTER SEQUENCE public.documentary_item_id_seq OWNED BY public.documentary.item_i
 
 
 --
--- TOC entry 222 (class 1259 OID 16546)
+-- TOC entry 220 (class 1259 OID 41048)
 -- Name: item; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -159,7 +159,7 @@ CREATE TABLE public.item (
 ALTER TABLE public.item OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 16545)
+-- TOC entry 221 (class 1259 OID 41053)
 -- Name: item_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -175,7 +175,7 @@ CREATE SEQUENCE public.item_item_id_seq
 ALTER TABLE public.item_item_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3359 (class 0 OID 0)
+-- TOC entry 3371 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: item_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -184,22 +184,88 @@ ALTER SEQUENCE public.item_item_id_seq OWNED BY public.item.item_id;
 
 
 --
--- TOC entry 218 (class 1259 OID 16518)
+-- TOC entry 225 (class 1259 OID 41098)
+-- Name: loan; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.loan (
+    loan_id integer NOT NULL,
+    bronco_id integer NOT NULL,
+    item_id integer NOT NULL,
+    due_date text NOT NULL,
+    loan_date text NOT NULL
+);
+
+
+ALTER TABLE public.loan OWNER TO postgres;
+
+--
+-- TOC entry 224 (class 1259 OID 41097)
+-- Name: loan_loan_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.loan_loan_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.loan_loan_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3372 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: loan_loan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.loan_loan_id_seq OWNED BY public.loan.loan_id;
+
+
+--
+-- TOC entry 222 (class 1259 OID 41054)
 -- Name: student; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.student (
-    bronco_id integer NOT NULL,
-    name text,
-    course text,
-    email text
+    name text NOT NULL,
+    course text NOT NULL,
+    email text NOT NULL,
+    bronco_id integer NOT NULL
 );
 
 
 ALTER TABLE public.student OWNER TO postgres;
 
 --
--- TOC entry 3192 (class 2604 OID 16523)
+-- TOC entry 223 (class 1259 OID 41088)
+-- Name: student_bronco_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.student_bronco_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.student_bronco_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3373 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: student_bronco_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.student_bronco_id_seq OWNED BY public.student.bronco_id;
+
+
+--
+-- TOC entry 3198 (class 2604 OID 41059)
 -- Name: author author_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -207,7 +273,7 @@ ALTER TABLE ONLY public.author ALTER COLUMN author_id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3193 (class 2604 OID 16524)
+-- TOC entry 3199 (class 2604 OID 41060)
 -- Name: book item_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -215,7 +281,7 @@ ALTER TABLE ONLY public.book ALTER COLUMN item_id SET DEFAULT nextval('public.bo
 
 
 --
--- TOC entry 3194 (class 2604 OID 16540)
+-- TOC entry 3200 (class 2604 OID 41061)
 -- Name: documentary item_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -223,7 +289,7 @@ ALTER TABLE ONLY public.documentary ALTER COLUMN item_id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 3195 (class 2604 OID 16549)
+-- TOC entry 3201 (class 2604 OID 41062)
 -- Name: item item_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -231,16 +297,23 @@ ALTER TABLE ONLY public.item ALTER COLUMN item_id SET DEFAULT nextval('public.it
 
 
 --
--- TOC entry 3201 (class 2606 OID 16526)
--- Name: student Student_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3203 (class 2604 OID 41101)
+-- Name: loan loan_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.student
-    ADD CONSTRAINT "Student_pkey" PRIMARY KEY (bronco_id);
+ALTER TABLE ONLY public.loan ALTER COLUMN loan_id SET DEFAULT nextval('public.loan_loan_id_seq'::regclass);
 
 
 --
--- TOC entry 3197 (class 2606 OID 16528)
+-- TOC entry 3202 (class 2604 OID 41089)
+-- Name: student bronco_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student ALTER COLUMN bronco_id SET DEFAULT nextval('public.student_bronco_id_seq'::regclass);
+
+
+--
+-- TOC entry 3205 (class 2606 OID 41066)
 -- Name: author author_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -249,7 +322,7 @@ ALTER TABLE ONLY public.author
 
 
 --
--- TOC entry 3199 (class 2606 OID 16530)
+-- TOC entry 3207 (class 2606 OID 41068)
 -- Name: book book_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -258,7 +331,7 @@ ALTER TABLE ONLY public.book
 
 
 --
--- TOC entry 3203 (class 2606 OID 16544)
+-- TOC entry 3209 (class 2606 OID 41070)
 -- Name: documentary documentary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -267,7 +340,7 @@ ALTER TABLE ONLY public.documentary
 
 
 --
--- TOC entry 3205 (class 2606 OID 16553)
+-- TOC entry 3211 (class 2606 OID 41072)
 -- Name: item item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -276,7 +349,25 @@ ALTER TABLE ONLY public.item
 
 
 --
--- TOC entry 3206 (class 2606 OID 16531)
+-- TOC entry 3215 (class 2606 OID 41105)
+-- Name: loan loan_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.loan
+    ADD CONSTRAINT loan_pkey PRIMARY KEY (loan_id);
+
+
+--
+-- TOC entry 3213 (class 2606 OID 41096)
+-- Name: student student_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student
+    ADD CONSTRAINT student_pkey PRIMARY KEY (bronco_id);
+
+
+--
+-- TOC entry 3216 (class 2606 OID 41073)
 -- Name: author fk_book_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -285,7 +376,7 @@ ALTER TABLE ONLY public.author
 
 
 --
--- TOC entry 3208 (class 2606 OID 16554)
+-- TOC entry 3218 (class 2606 OID 41078)
 -- Name: documentary item_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -294,7 +385,7 @@ ALTER TABLE ONLY public.documentary
 
 
 --
--- TOC entry 3207 (class 2606 OID 16559)
+-- TOC entry 3217 (class 2606 OID 41083)
 -- Name: book item_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -302,9 +393,26 @@ ALTER TABLE ONLY public.book
     ADD CONSTRAINT item_id_fk FOREIGN KEY (item_id) REFERENCES public.item(item_id) NOT VALID;
 
 
--- Completed on 2023-05-08 13:38:45
+--
+-- TOC entry 3219 (class 2606 OID 41111)
+-- Name: loan loan_bronco_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.loan
+    ADD CONSTRAINT loan_bronco_id_fkey FOREIGN KEY (bronco_id) REFERENCES public.student(bronco_id);
+
+
+--
+-- TOC entry 3220 (class 2606 OID 41106)
+-- Name: loan loan_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.loan
+    ADD CONSTRAINT loan_item_id_fkey FOREIGN KEY (item_id) REFERENCES public.item(item_id);
+
+
+-- Completed on 2023-05-09 00:47:40
 
 --
 -- PostgreSQL database dump complete
 --
-
