@@ -30,8 +30,8 @@ public class Student
 	@Column(name="email")
 	private String email;
 	
-//	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-//	private List<Loan> loans;
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+	private List<Loan> loans;
 	
 	
 	//create a list of loans that the student has 
@@ -80,11 +80,19 @@ public class Student
 		this.email = email;
 	}
 	
-	public List<Loan> createOverdueLoansList(List<Loan> loans) {
-		for(Loan loan : loans) {
-			
-		}
+	public List<Loan> getLoans() {
+		return loans;
 	}
+
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
+	
+//	public List<Loan> createOverdueLoansList(List<Loan> loans) {
+//		for(Loan loan : loans) {
+//			
+//		}
+//	}
 
 	@Override
 	public String toString() {
