@@ -117,15 +117,11 @@ public class Item
 		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
 	}
 	
-	public void updateItemAvailability(boolean isAvailable) {
-		this.isAvailable = isAvailable;
-	}
-	
 	/* End Methods */
 
 	@Override
 	public String toString() {
-		return "Item \ncode=" + itemId + "\nisAvailable=" + isAvailable + "\ntitle=" + title + "\ndescription=" + description
+		return "Item \nitem_id=" + itemId + "\nisAvailable=" + isAvailable + "\ntitle=" + title + "\ndescription=" + description
 				+ "\nlocation=" + location + "\ndailyPrice=" + dailyPrice;
 
 	}
