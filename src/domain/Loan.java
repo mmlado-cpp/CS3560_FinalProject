@@ -133,9 +133,8 @@ public class Loan {
 		
 	}
 	
-	public static void deleteLoan(int loanID) { //Is this supposed to be static?
-		
-		
+	public static boolean deleteLoan(int loanID) { //Is this supposed to be static?
+		return true;
 	}
 	
 	public static void convertToFinancialReport() { //I think this would go in the student class as generate financial report
@@ -183,12 +182,4 @@ public class Loan {
 		return "Loan [loanID=" + loanID + ", student=" + student + ", item=" + item + ", duedate=" + duedate
 				+ ", loanDate=" + loanDate + "]";
 	}
-	
-	
-	
-	
-
-	
-
-
 }
