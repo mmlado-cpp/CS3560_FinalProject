@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -18,7 +20,12 @@ public class Documentary extends Item
 	@Column(name = "director")
 	private String director;
 	
-	@OneToMany(mappedBy="documentary", cascade={CascadeType.PERSIST})
+	@ManyToMany(cascade={CascadeType.PERSIST})
+	@JoinTable(
+	        name = "documentary_documentary_producer", 
+	        joinColumns = { @JoinColumn(name = "item_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "producer_id") }
+	    )
 	private List<DocumentaryProducer> producers;
 	
 	@Column(name = "length")
@@ -55,6 +62,10 @@ public class Documentary extends Item
 	public void setProducers(List<DocumentaryProducer> producers) {
 		this.producers = producers;
 	}
+	
+	public void removeProducer(DocumentaryProducer producer) {
+		producers.remove(producer);
+	}
 
 	public int getLength() {
 		return length;
@@ -71,14 +82,13 @@ public class Documentary extends Item
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-	
+
 	public void addProducer(DocumentaryProducer tempProducer) {
 		if(producers == null) {
 			producers = new ArrayList<DocumentaryProducer>();
 		}
 		
 		producers.add(tempProducer);
-		tempProducer.setDocumentary(this);
 	}
 
 	@Override

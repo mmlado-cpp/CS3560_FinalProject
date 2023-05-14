@@ -1,10 +1,11 @@
-package presentation.documentaryProducer;
+package presentation.author;
 
 import javafx.scene.Scene;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button; 
 import javafx.stage.Stage;
+import persistence.AuthorDataAccess;
 import persistence.DocumentaryProducerAccess;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -13,14 +14,14 @@ import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 
-public class DocumentaryProducerSearch {
+public class AuthorSearch {
 	
-	public static Scene documentaryProducerSearchScene(Stage primaryStage)
+	public static Scene authorSearchScene(Stage primaryStage)
 	{
-		Text title= new Text("Producer Search");
+		Text title= new Text("Author Search");
 		title.setFont(new Font(30));
 		
-		Label lbl = new Label("Enter Producer ID: ");
+		Label lbl = new Label("Enter Author ID: ");
 		
 		TextField textField = new TextField();
 		
@@ -39,12 +40,12 @@ public class DocumentaryProducerSearch {
 		
 		btnSearch.setOnAction(e -> {
 			int id = Integer.valueOf(textField.getText());
-			String producer = String.valueOf(DocumentaryProducerAccess.getdocumentaryProducer(id));
+			String producer = String.valueOf(AuthorDataAccess.getAuthor(id));
 			textDocumentaryDetails.setText(producer);
 		});
 		
 		btnBack.setOnAction(e ->{
-			Scene scene = DocumentaryProducerMenu.documentaryProducerMenuScene(primaryStage);
+			Scene scene = AuthorMenu.authorMenuScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 		
