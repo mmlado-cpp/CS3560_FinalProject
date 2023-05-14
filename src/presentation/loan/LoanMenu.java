@@ -67,16 +67,16 @@ public class LoanMenu {
 			primaryStage.setScene(scene);
 		});
 		btnUpdateLoan.setOnAction(e ->{
-			//Scene scene = StudentRegistration.studentRegistrationScene(primaryStage);
-			//primaryStage.setScene(scene);
+			Scene scene = UpdateLoan.updateLoanScene(primaryStage);
+			primaryStage.setScene(scene);
 		});
 		btnSearchLoan.setOnAction(e ->{
 			//Scene scene = StudentRegistration.studentRegistrationScene(primaryStage);
 			//primaryStage.setScene(scene);
 		});
 		btnDeleteLoan.setOnAction(e ->{
-			//Scene scene = StudentRegistration.studentRegistrationScene(primaryStage);
-			//primaryStage.setScene(scene);
+			Scene scene = DeleteLoan.deleteLoanScene(primaryStage);
+			primaryStage.setScene(scene);
 		});
 		btnCheckOverdue.setOnAction(e ->{
 			//Scene scene = StudentRegistration.studentRegistrationScene(primaryStage);

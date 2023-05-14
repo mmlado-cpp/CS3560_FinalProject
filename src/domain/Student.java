@@ -80,9 +80,12 @@ public class Student
 		this.email = email;
 	}
 	
+
+
 	public List<Loan> getLoans() {
 		return loans;
 	}
+
 
 	public void setLoans(List<Loan> loans) {
 		this.loans = loans;

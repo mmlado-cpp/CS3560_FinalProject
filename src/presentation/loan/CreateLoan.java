@@ -44,7 +44,7 @@ public class CreateLoan {
 		TextField itemIdTxtField = new TextField();
 		TextField loanDueDateTxtField= new TextField();
 		
-		
+	
 		
 		HBox hbox1 = new HBox(broncoIdLbl, broncoIdTxtField);
 		HBox hbox2 = new HBox(itemIdLbl, itemIdTxtField);
