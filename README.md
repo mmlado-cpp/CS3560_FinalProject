@@ -8,4 +8,4 @@ Spring 2023 CS3560 Final Project (Library Database System)
 - Vaibhavi Jhawar
 
 
-Link to Video:
+Link to Video: https://youtu.be/MaZwALCb-qA
