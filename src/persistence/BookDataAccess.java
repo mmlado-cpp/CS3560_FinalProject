@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import domain.Book;
 import domain.DocumentaryProducer;
+import domain.Item;
 import domain.Student;
 import domain.Author;
 
@@ -226,5 +227,42 @@ public class BookDataAccess {
 		
 		}
 		return tempBook;
+	}
+	
+	public static boolean returnBook(int bookId)
+	{
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Author.class)
+																				   .addAnnotatedClass(Book.class).buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		Item tempBook = null;
+		boolean flag = false;
+		
+		try
+		{
+			
+			session.beginTransaction();
+		
+			tempBook = session.get(Book.class, bookId);
+			
+			if(tempBook == null) {
+				System.out.println("Book ID does not match with any existing book");
+				return flag;
+			}
+			
+			tempBook.setIsAvailable(true);
+			
+			session.getTransaction().commit();
+			
+			flag = true;
+
+		} catch(Exception e)
+		{
+			 System.out.println("Problem creating session factory");
+		     e.printStackTrace();
+		} finally {
+			factory.close();
+		
+		}
+		return flag;
 	}
 }

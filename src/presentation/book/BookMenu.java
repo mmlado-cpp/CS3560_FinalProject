@@ -23,6 +23,7 @@ public class BookMenu {
 		Button btnUpdateBook = new Button("Update Book");
 		Button btnDeleteBook = new Button("Delete Book");
 		Button btnAuthor = new Button("Manage Authors");
+		Button btnReturnBook = new Button("Return Book");
 		Button btnBack = new Button("Back");
 
 		text.setFont(new Font(30));
@@ -60,6 +61,12 @@ public class BookMenu {
 		btnAuthor.setMinHeight(50);
 		btnAuthor.setOnAction(e ->{
 			Scene scene = AuthorMenu.authorMenuScene(primaryStage);
+		});
+		
+		btnReturnBook.setMinWidth(150);
+		btnReturnBook.setMinHeight(50);
+		btnReturnBook.setOnAction(e ->{
+			Scene scene = BookReturn.bookReturnScene(primaryStage);
 			primaryStage.setScene(scene);
 		});
 
@@ -70,13 +77,13 @@ public class BookMenu {
 			primaryStage.setScene(scene);
 		});
 
-		VBox vbox = new VBox(text, btnCreateBook, btnReadBook, btnUpdateBook, btnDeleteBook, btnAuthor, btnBack);
+		VBox vbox = new VBox(text, btnCreateBook, btnReadBook, btnUpdateBook, btnDeleteBook, btnAuthor, btnReturnBook, btnBack);
 
 		vbox.setSpacing(40);
 
 		vbox.setAlignment(Pos.CENTER);
 
-		Scene documentaryMenuScene = new Scene(vbox, 600, 600);
+		Scene documentaryMenuScene = new Scene(vbox, 800, 800);
 
 
 		return documentaryMenuScene;
