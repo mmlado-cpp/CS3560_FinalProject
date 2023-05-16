@@ -74,9 +74,9 @@ public class LoanDataAccess {
 			 
 			String hql = "FROM Loan L WHERE L.student.broncoId = " + broncoId;
 			Query<Loan> query = session.createQuery(hql);
-			List<Loan> listLoans = query.list();
+			loans = query.list();
 			
-			for(Loan loan : listLoans) {
+			for(Loan loan : loans) {
 				System.out.println("Row" + loan.toString());
 			}
 			

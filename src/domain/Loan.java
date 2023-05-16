@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
@@ -63,6 +64,18 @@ public class Loan {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date obj = new Date();
 		this.loanDate = formatter.format(obj);
+		
+		Calendar now = Calendar.getInstance();  
+		Date loanDateType = null;
+		try {
+			loanDateType = formatter.parse(loanDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		now.setTime(loanDateType);
+        now.add(Calendar.MONTH, 6);
+        this.duedate = formatter.format(now.getTime());;
 	}
 	
 	public Loan()
