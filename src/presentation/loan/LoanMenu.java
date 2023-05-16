@@ -71,8 +71,8 @@ public class LoanMenu {
 			primaryStage.setScene(scene);
 		});
 		btnSearchLoan.setOnAction(e ->{
-			//Scene scene = StudentRegistration.studentRegistrationScene(primaryStage);
-			//primaryStage.setScene(scene);
+			Scene scene = SearchLoan.searchLoanScene(primaryStage);
+			primaryStage.setScene(scene);
 		});
 		btnDeleteLoan.setOnAction(e ->{
 			Scene scene = DeleteLoan.deleteLoanScene(primaryStage);

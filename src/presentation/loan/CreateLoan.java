@@ -48,11 +48,11 @@ public class CreateLoan {
 		
 		HBox hbox1 = new HBox(broncoIdLbl, broncoIdTxtField);
 		HBox hbox2 = new HBox(itemIdLbl, itemIdTxtField);
-		HBox hbox3 = new HBox(loanDueDateLbl, loanDueDateTxtField);
+//		HBox hbox3 = new HBox(loanDueDateLbl, loanDueDateTxtField);
 		
 		hbox1.setSpacing(35);
 		hbox2.setSpacing(90);
-		hbox3.setSpacing(65);
+//		hbox3.setSpacing(65);
 		
 		Button btnCreateLoan = new Button("Create Loan");
 		Button btnBack = new Button("Back");
@@ -74,7 +74,7 @@ public class CreateLoan {
 				String loanDueDate = loanDueDateTxtField.getText();
 				String loanCreated = LoanDataAccess.createLoan(broncoId, itemId, loanDueDate);
 				showLoanCreatedAlert(loanCreated);
-				List<Loan> overDueLoans = LoanDataAccess.getLoans(broncoId);
+//				List<Loan> overDueLoans = LoanDataAccess.getLoans(broncoId);
 				
 		});
 		
@@ -83,12 +83,12 @@ public class CreateLoan {
 			primaryStage.setScene(scene);
 		});
 		
-		VBox vbox = new VBox(text, hbox1, hbox2, hbox3, hbox5);
+		VBox vbox = new VBox(text, hbox1, hbox2, hbox5);
 	
 		vbox.setSpacing(50);
 		vbox.setMargin(hbox1,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox2,  new Insets(0, 0, 0, 170));
-		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
+//		vbox.setMargin(hbox3,  new Insets(0, 0, 0, 170));
 		vbox.setMargin(hbox5,  new Insets(0, 0, 0, 170));
 		vbox.setAlignment(Pos.CENTER);
 		

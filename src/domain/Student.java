@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.*;
 import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "student")
@@ -96,6 +98,41 @@ public class Student
 //			
 //		}
 //	}
+	
+	public List<Loan> createOverdueLoansList2() {
+		
+		List<Loan> overdueLoans = new ArrayList<Loan>();
+		
+		for(Loan loan : this.loans) {
+			String loanDueDateStr = loan.getDuedate();
+			
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			//dates to be compare 
+			Date currentDate = new Date();
+			
+			String currentDateFormatted;
+			Date currentDateFinal;
+			
+			Date loanDueDate = null;
+			try {
+				currentDateFormatted = formatter.format(currentDate);
+				currentDateFinal = formatter.parse(currentDateFormatted);
+				loanDueDate = formatter.parse(loanDueDateStr); 
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+			
+			//comparing dates  
+			if(currentDate.compareTo(loanDueDate) > 0)   
+			{  
+				System.out.println(loan);
+				overdueLoans.add(loan);
+			}     
+		}
+		return overdueLoans;
+	}
 
 	@Override
 	public String toString() {
